@@ -14,6 +14,8 @@ import java.util.List;
 
 @Repository
 public class GenreDao implements IGenreDao{
+
+    private static final String GET_ALL_GENRES_SQL = "select genre_id, name from genre;";
     Logger log = LoggerFactory.getLogger(getClass());
 
     private static final String GET_GENRE_LIST_BY_MOVIE_SQL = "select g.genre_id, g.name from genre g " +
@@ -28,6 +30,14 @@ public class GenreDao implements IGenreDao{
         List<Genre> genreList = jdbcTemplate.query(GET_GENRE_LIST_BY_MOVIE_SQL, new Object[]{movie.getId()}, new GenreRowMapper());
         log.info("Calling method getGenreListByMove. with query = {}", GET_GENRE_LIST_BY_MOVIE_SQL);
         log.info("Calling method getGenreListByMove with movie_id = {}, result = {}", movie.getId(), genreList);
+        return genreList;
+    }
+
+    @Override
+    public List<Genre> getAllGenres() {
+        List<Genre> genreList = jdbcTemplate.query(GET_ALL_GENRES_SQL, new GenreRowMapper());
+        log.info("Calling method getAllGenres with query {}" , GET_ALL_GENRES_SQL);
+        log.info("Calling method getAllGenres. Result = {}" , genreList);
         return genreList;
     }
 

@@ -3,8 +3,10 @@ package com.luxoft.sdemenkov.movielend.controllers;
 import com.luxoft.sdemenkov.movielend.models.Country;
 import com.luxoft.sdemenkov.movielend.models.Genre;
 import com.luxoft.sdemenkov.movielend.models.Movie;
+import com.luxoft.sdemenkov.movielend.models.responces.ResponceGetAllGenres;
 import com.luxoft.sdemenkov.movielend.models.responces.ResponceGetAllMovies;
 import com.luxoft.sdemenkov.movielend.models.responces.ResponceGetThreeRandomMovies;
+import com.luxoft.sdemenkov.movielend.services.GenreService;
 import com.luxoft.sdemenkov.movielend.services.MovieService;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,11 +25,13 @@ public class MovieControllerTest {
     ApplicationContext context;
     MovieController movieController;
     MovieService mockedMovieService;
+    GenreService mockedGenreService;
     @Before
     public void setUp() throws Exception {
         context = new FileSystemXmlApplicationContext("./src/main/webapp/WEB-INF/spring/spring-test-config.xml");
         movieController = (MovieController) context.getBean("movieController");
         mockedMovieService = mock(MovieService.class);
+        mockedGenreService = mock(GenreService.class);
 
     }
 
@@ -72,7 +76,6 @@ public class MovieControllerTest {
                 getMovieForTest(),
                 getMovieForTest(),
                 getMovieForTest()}));
-        System.out.println(movieList.size());
         when(mockedMovieService.getThreeRundomMovies()).thenReturn(movieList);
         movieController.setMovieService(mockedMovieService);
 
@@ -80,6 +83,27 @@ public class MovieControllerTest {
         assertEquals(3, responceGetThreeRandomMovies.size());
         assertNotEquals(0, responceGetThreeRandomMovies.get(0).getCountryList().size());
         assertNotEquals(0, responceGetThreeRandomMovies.get(0).getGenreList().size());
+
+    }
+
+
+    @Test
+    public void getAllGenresTest() throws Exception {
+
+        // Mocking GenreService for test
+        List<Genre> genreList = new ArrayList<>(Arrays.asList(new Genre[]{
+                getGenreForTest(),
+                getGenreForTest(),
+                getGenreForTest()
+        }));
+        when(mockedGenreService.getAllGenres()).thenReturn(genreList);
+        movieController.setGenreService(mockedGenreService);
+
+        // Test
+        List<ResponceGetAllGenres> responceGetAllGenresList = movieController.getAllGenres();
+        assertEquals(3, responceGetAllGenresList.size());
+        assertEquals(1, responceGetAllGenresList.get(0).getId());
+        assertEquals("Name", responceGetAllGenresList.get(0).getName());
 
     }
 
@@ -99,6 +123,13 @@ public class MovieControllerTest {
         countryList.add(new Country());
         movie.setCountryList(countryList);
         return movie;
+    }
+
+    public Genre getGenreForTest() {
+        Genre genre = new Genre();
+        genre.setId(1);
+        genre.setName("Name");
+        return genre;
     }
 
 }

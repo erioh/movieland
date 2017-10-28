@@ -11,5 +11,6 @@ import java.util.List;
 public interface IGenreDao {
 
     List<Genre> getGenreListByMove(Movie movie);
+    List<Genre> getAllGenres();
 
 }

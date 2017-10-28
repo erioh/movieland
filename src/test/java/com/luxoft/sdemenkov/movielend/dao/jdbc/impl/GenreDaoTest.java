@@ -31,4 +31,11 @@ public class GenreDaoTest {
 
     }
 
+    @Test
+    public void getAllGenres() throws Exception {
+        GenreDao genreDao = (GenreDao) context.getBean("genreDao");
+        List<Genre> genreList = genreDao.getAllGenres();
+        assertEquals(15, genreList.size());
+    }
+
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <appender name="log_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>moviland.log</file>
+        <file>movieland.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <FileNamePattern>moviland-%d{yyyy-MM-dd}.log.%i</FileNamePattern>
+            <FileNamePattern>movieland-%d{yyyy-MM-dd}.log.%i</FileNamePattern>
             <MaxFileSize>5MB</MaxFileSize>
         </rollingPolicy>
         <encoder>
