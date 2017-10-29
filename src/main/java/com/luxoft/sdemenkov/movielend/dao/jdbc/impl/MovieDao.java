@@ -1,6 +1,5 @@
 package com.luxoft.sdemenkov.movielend.dao.jdbc.impl;
 
-import com.luxoft.sdemenkov.movielend.dao.jdbc.IMovieDao;
 import com.luxoft.sdemenkov.movielend.dao.mappers.MovieRowMapper;
 import com.luxoft.sdemenkov.movielend.models.Movie;
 import org.slf4j.Logger;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class MovieDao implements IMovieDao{
+public class MovieDao {
 
     Logger log = LoggerFactory.getLogger(getClass());
 

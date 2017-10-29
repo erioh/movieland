@@ -36,12 +36,11 @@ public class MovieController {
         long startTime = System.currentTimeMillis();
         List<ResponceGetAllMovies> responceGetAllMoviesList = new ArrayList<ResponceGetAllMovies>();
         List<Movie> movieList = movieService.getAllMovies();
-        log.info("Method getAllMovies. Filling responceGetAllMoviesList with movies {}", movieList);
         for (Movie movie :
                 movieList) {
             responceGetAllMoviesList.add(new ResponceGetAllMovies(movie));
         }
-        log.info("Method getAllMovies. Calling  getAllMovies with {}. It took {} ms", responceGetAllMoviesList, System.currentTimeMillis() - startTime);
+        log.info("Method getAllMovies.  It took {} ms", System.currentTimeMillis() - startTime);
 
         return responceGetAllMoviesList;
     }
@@ -52,12 +51,11 @@ public class MovieController {
         long startTime = System.currentTimeMillis();
         List<ResponceGetThreeRandomMovies> responceGetThreeRandomMovies = new ArrayList<ResponceGetThreeRandomMovies>();
         List<Movie> movieList = movieService.getThreeRundomMovies();
-        log.info("Method getThreeRandomMovies. Filling responceGetThreeRandomMovies with movies", movieList);
         for (Movie movie :
                 movieList) {
             responceGetThreeRandomMovies.add(new ResponceGetThreeRandomMovies(movie));
         }
-        log.info("Method getThreeRandomMovies. Calling  getThreeRandomMovies with {}. It took {} ms", responceGetThreeRandomMovies, System.currentTimeMillis() - startTime);
+        log.info("Method getThreeRandomMovies.  It took {} ms", System.currentTimeMillis() - startTime);
 
         return responceGetThreeRandomMovies;
     }
@@ -74,7 +72,7 @@ public class MovieController {
             responceGetAllGenresList.add(new ResponceGetAllGenres(genre));
         }
 
-        log.info("Method getThreeRandomMovies. Calling  getThreeRandomMovies with {}. It took {} ms", responceGetAllGenresList, System.currentTimeMillis() - startTime);
+        log.info("Method getThreeRandomMovies.  It took {} ms", System.currentTimeMillis() - startTime);
         return responceGetAllGenresList;
 
     }

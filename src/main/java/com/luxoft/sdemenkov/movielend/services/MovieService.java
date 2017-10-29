@@ -44,7 +44,7 @@ public class MovieService {
             randomMovie.setGenreList(genreDao.getGenreListByMove(randomMovie));
             threeRundomMovies.add(randomMovie);
         }
-        log.info("Calling method getThreeRundomMovies, result = {}", threeRundomMovies);
+        log.info("Calling method getThreeRundomMovies");
         return threeRundomMovies;
 
     }

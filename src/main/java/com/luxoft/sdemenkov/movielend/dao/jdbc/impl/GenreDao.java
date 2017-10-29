@@ -1,6 +1,5 @@
 package com.luxoft.sdemenkov.movielend.dao.jdbc.impl;
 
-import com.luxoft.sdemenkov.movielend.dao.jdbc.IGenreDao;
 import com.luxoft.sdemenkov.movielend.dao.mappers.GenreRowMapper;
 import com.luxoft.sdemenkov.movielend.models.Genre;
 import com.luxoft.sdemenkov.movielend.models.Movie;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class GenreDao implements IGenreDao{
+public class GenreDao {
 
     private static final String GET_ALL_GENRES_SQL = "select genre_id, name from genre;";
     Logger log = LoggerFactory.getLogger(getClass());
@@ -29,15 +28,13 @@ public class GenreDao implements IGenreDao{
     public List<Genre> getGenreListByMove(Movie movie) {
         List<Genre> genreList = jdbcTemplate.query(GET_GENRE_LIST_BY_MOVIE_SQL, new Object[]{movie.getId()}, new GenreRowMapper());
         log.info("Calling method getGenreListByMove. with query = {}", GET_GENRE_LIST_BY_MOVIE_SQL);
-        log.info("Calling method getGenreListByMove with movie_id = {}, result = {}", movie.getId(), genreList);
+        log.info("Calling method getGenreListByMove with movie_id = {}, ", movie.getId());
         return genreList;
     }
 
-    @Override
     public List<Genre> getAllGenres() {
         List<Genre> genreList = jdbcTemplate.query(GET_ALL_GENRES_SQL, new GenreRowMapper());
         log.info("Calling method getAllGenres with query {}" , GET_ALL_GENRES_SQL);
-        log.info("Calling method getAllGenres. Result = {}" , genreList);
         return genreList;
     }
 

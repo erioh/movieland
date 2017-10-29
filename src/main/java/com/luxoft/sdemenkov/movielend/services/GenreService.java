@@ -23,7 +23,7 @@ public class GenreService {
 
     public List<Genre> getAllGenres() {
         List<Genre> genreList = genreDao.getAllGenres();
-        log.info("Calling method getAllMovies, result = {}", genreList);
+        log.info("Calling method getAllMovies");
         return genreList;
 
     }

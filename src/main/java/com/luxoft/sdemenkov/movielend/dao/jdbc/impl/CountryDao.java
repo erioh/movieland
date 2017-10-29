@@ -1,6 +1,5 @@
 package com.luxoft.sdemenkov.movielend.dao.jdbc.impl;
 
-import com.luxoft.sdemenkov.movielend.dao.jdbc.ICountryDao;
 import com.luxoft.sdemenkov.movielend.dao.mappers.CountryRowMapper;
 import com.luxoft.sdemenkov.movielend.models.Country;
 import com.luxoft.sdemenkov.movielend.models.Movie;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class CountryDao implements ICountryDao {
+public class CountryDao  {
     Logger log = LoggerFactory.getLogger(getClass());
 
     private static final String GET_CONTRY_BY_MOVIE_SQL = "select c.country_id, " +
@@ -28,7 +27,7 @@ public class CountryDao implements ICountryDao {
     public List<Country> getCountryListByMovie(Movie movie) {
         List<Country> countryList = jdbcTemplate.query(GET_CONTRY_BY_MOVIE_SQL, new Object[]{movie.getId()}, new CountryRowMapper());
         log.info("Calling method getCountryListByMovie. with query = {}", GET_CONTRY_BY_MOVIE_SQL);
-        log.info("Calling method getCountryListByMovie with movie_id = {}, result = {}", movie.getId(), countryList);
+        log.info("Calling method getCountryListByMovie with movie_id = {}", movie.getId());
         return countryList;
 
     }
