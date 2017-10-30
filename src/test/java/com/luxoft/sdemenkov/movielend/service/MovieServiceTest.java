@@ -35,6 +35,7 @@ public class MovieServiceTest {
         mockedMovieDao = mock(MovieDao.class);
 
     }
+
     @Test
     public void getAllMovies() throws Exception {
 

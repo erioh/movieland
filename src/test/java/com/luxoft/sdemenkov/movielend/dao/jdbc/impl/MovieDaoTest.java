@@ -12,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 public class MovieDaoTest {
     private ApplicationContext context;
+
     @Before
     public void setUp() throws Exception {
         context = new FileSystemXmlApplicationContext("./src/main/webapp/WEB-INF/spring/spring-test-config.xml");

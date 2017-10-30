@@ -30,13 +30,13 @@ public class MovieRowMapperTest {
 
         // Test
         MovieRowMapper movieRowMapper = new MovieRowMapper();
-        Movie movie = movieRowMapper.mapRow(resultSet,0);
+        Movie movie = movieRowMapper.mapRow(resultSet, 0);
         assertEquals(movie.getId(), 1);
-        assertEquals("Побег из Шоушенка",movie.getNameRussian());
-        assertEquals("The Shawshank Redemption",movie.getNameNative());
+        assertEquals("Побег из Шоушенка", movie.getNameRussian());
+        assertEquals("The Shawshank Redemption", movie.getNameNative());
         assertEquals("https://images-na.ssl-images-amazon.com/images/M/MV5BODU4MjU4NjIwNl5BMl5BanBnXkFtZTgwMDU2MjEyMDE@._V1._SY209_CR0,0,140,209_.jpg", movie.getPicturePath());
         assertEquals("Успешный банкир Энди Дюфрейн обвинен в убийстве собственной жены и ее любовника. Оказавшись в тюрьме под названием Шоушенк, он сталкивается с жестокостью и беззаконием, царящими по обе стороны решетки. Каждый, кто попадает в эти стены, становится их рабом до конца жизни. Но Энди, вооруженный живым умом и доброй душой, отказывается мириться с приговором судьбы и начинает разрабатывать невероятно дерзкий план своего освобождения.", movie.getDescription());
-        assertEquals(8.9,movie.getRating(), 0);
+        assertEquals(8.9, movie.getRating(), 0);
         assertEquals(123.45, movie.getPrice(), 0);
 
     }

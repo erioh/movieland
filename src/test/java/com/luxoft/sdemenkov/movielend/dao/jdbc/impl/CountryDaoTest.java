@@ -19,6 +19,7 @@ public class CountryDaoTest {
     public void setUp() throws Exception {
         context = new FileSystemXmlApplicationContext("./src/main/webapp/WEB-INF/spring/spring-test-config.xml");
     }
+
     @Test
     public void getCountryListByMovie() throws Exception {
         CountryDao countryDao = (CountryDao) context.getBean("countryDao");

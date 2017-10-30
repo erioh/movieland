@@ -34,7 +34,7 @@ public class GenreDao {
 
     public List<Genre> getAllGenres() {
         List<Genre> genreList = jdbcTemplate.query(GET_ALL_GENRES_SQL, new GenreRowMapper());
-        log.info("Calling method getAllGenres with query {}" , GET_ALL_GENRES_SQL);
+        log.info("Calling method getAllGenres with query {}", GET_ALL_GENRES_SQL);
         return genreList;
     }
 

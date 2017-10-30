@@ -12,6 +12,6 @@
     </appender>
 
     <root>
-        <appender-ref ref="log_file" level="DEBUG" />
+        <appender-ref ref="log_file" level="DEBUG"/>
     </root>
 </configuration>

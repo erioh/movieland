@@ -26,6 +26,7 @@ public class MovieControllerTest {
     private MovieController movieController;
     private MovieService mockedMovieService;
     private GenreService mockedGenreService;
+
     @Before
     public void setUp() throws Exception {
         context = new FileSystemXmlApplicationContext("./src/main/webapp/WEB-INF/spring/spring-test-config.xml");
@@ -116,7 +117,7 @@ public class MovieControllerTest {
         movie.setRating(8.6);
         movie.setPrice(175.0);
         movie.setPicturePath("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg");
-                List<Genre> genreList = new ArrayList<>();
+        List<Genre> genreList = new ArrayList<>();
         genreList.add(new Genre());
         movie.setGenreList(genreList);
         List<Country> countryList = new ArrayList<>();

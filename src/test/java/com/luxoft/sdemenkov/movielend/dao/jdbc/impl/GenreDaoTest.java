@@ -13,10 +13,12 @@ import static org.junit.Assert.*;
 
 public class GenreDaoTest {
     private ApplicationContext context;
+
     @Before
     public void setUp() throws Exception {
         context = new FileSystemXmlApplicationContext("./src/main/webapp/WEB-INF/spring/spring-test-config.xml");
     }
+
     @Test
     public void getGenreListByMove() throws Exception {
         GenreDao genreDao = (GenreDao) context.getBean("genreDao");
