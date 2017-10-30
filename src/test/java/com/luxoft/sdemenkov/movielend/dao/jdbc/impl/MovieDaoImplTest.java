@@ -15,7 +15,7 @@ public class MovieDaoImplTest {
 
     @Before
     public void setUp() throws Exception {
-        context = new FileSystemXmlApplicationContext("./src/main/webapp/WEB-INF/spring/spring-test-config.xml");
+        context = new FileSystemXmlApplicationContext("./src/test/resources/spring-test-config.xml");
     }
 
     @Test

@@ -29,7 +29,7 @@ public class MovieControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        context = new FileSystemXmlApplicationContext("./src/main/webapp/WEB-INF/spring/spring-test-config.xml");
+        context = new FileSystemXmlApplicationContext("./src/test/resources/spring-test-config.xml");
         movieController = (MovieController) context.getBean("movieController");
         mockedMovieService = mock(MovieService.class);
         mockedGenreService = mock(GenreService.class);
