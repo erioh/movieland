@@ -1,4 +1,4 @@
-package com.luxoft.sdemenkov.movielend.model.responce;
+package com.luxoft.sdemenkov.movielend.web.responce;
 
 import com.luxoft.sdemenkov.movielend.model.Genre;
 

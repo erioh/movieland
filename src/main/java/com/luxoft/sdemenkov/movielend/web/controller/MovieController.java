@@ -1,12 +1,12 @@
-package com.luxoft.sdemenkov.movielend.controller;
+package com.luxoft.sdemenkov.movielend.web.controller;
 
 import com.luxoft.sdemenkov.movielend.model.Genre;
 import com.luxoft.sdemenkov.movielend.model.Movie;
-import com.luxoft.sdemenkov.movielend.model.responce.ResponceGetAllGenres;
-import com.luxoft.sdemenkov.movielend.model.responce.ResponceGetAllMovies;
-import com.luxoft.sdemenkov.movielend.model.responce.ResponceGetThreeRandomMovies;
-import com.luxoft.sdemenkov.movielend.service.GenreService;
-import com.luxoft.sdemenkov.movielend.service.MovieService;
+import com.luxoft.sdemenkov.movielend.web.responce.ResponceGetAllGenres;
+import com.luxoft.sdemenkov.movielend.web.responce.ResponceGetAllMovies;
+import com.luxoft.sdemenkov.movielend.web.responce.ResponceGetThreeRandomMovies;
+import com.luxoft.sdemenkov.movielend.web.service.GenreService;
+import com.luxoft.sdemenkov.movielend.web.service.MovieService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

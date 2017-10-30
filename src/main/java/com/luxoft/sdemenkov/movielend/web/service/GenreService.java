@@ -1,7 +1,6 @@
-package com.luxoft.sdemenkov.movielend.service;
+package com.luxoft.sdemenkov.movielend.web.service;
 
 import com.luxoft.sdemenkov.movielend.dao.jdbc.GenreDao;
-import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.GenreDaoImpl;
 import com.luxoft.sdemenkov.movielend.model.Genre;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
