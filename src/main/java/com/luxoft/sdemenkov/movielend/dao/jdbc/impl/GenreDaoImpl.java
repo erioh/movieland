@@ -1,5 +1,6 @@
 package com.luxoft.sdemenkov.movielend.dao.jdbc.impl;
 
+import com.luxoft.sdemenkov.movielend.dao.jdbc.GenreDao;
 import com.luxoft.sdemenkov.movielend.dao.mapper.GenreRowMapper;
 import com.luxoft.sdemenkov.movielend.model.Genre;
 import com.luxoft.sdemenkov.movielend.model.Movie;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class GenreDao {
+public class GenreDaoImpl implements GenreDao {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
     private static final String GET_ALL_GENRES_SQL = "select genre_id, name from genre;";

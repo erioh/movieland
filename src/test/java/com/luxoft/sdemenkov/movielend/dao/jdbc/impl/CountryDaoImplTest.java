@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class CountryDaoTest {
+public class CountryDaoImplTest {
     private ApplicationContext context;
 
 
@@ -22,10 +22,10 @@ public class CountryDaoTest {
 
     @Test
     public void getCountryListByMovie() throws Exception {
-        CountryDao countryDao = (CountryDao) context.getBean("countryDao");
+        CountryDaoImpl countryDaoImpl = (CountryDaoImpl) context.getBean("countryDaoImpl");
         Movie movie = new Movie();
         movie.setId(6);
-        List<Country> actualCountryList = countryDao.getCountryListByMovie(movie);
+        List<Country> actualCountryList = countryDaoImpl.getCountryListByMovie(movie);
         assertEquals(2, actualCountryList.size());
         assertEquals(1, actualCountryList.get(0).getId());
         assertEquals(3, actualCountryList.get(1).getId());

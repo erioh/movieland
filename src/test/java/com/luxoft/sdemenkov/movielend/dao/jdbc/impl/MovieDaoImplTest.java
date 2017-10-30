@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class MovieDaoTest {
+public class MovieDaoImplTest {
     private ApplicationContext context;
 
     @Before
@@ -20,8 +20,8 @@ public class MovieDaoTest {
 
     @Test
     public void getAllMovies() throws Exception {
-        MovieDao movieDao = (MovieDao) context.getBean("movieDao");
-        List<Movie> movieList = movieDao.getAllMovies();
+        MovieDaoImpl movieDaoImpl = (MovieDaoImpl) context.getBean("movieDaoImpl");
+        List<Movie> movieList = movieDaoImpl.getAllMovies();
         Movie expectedMovie = new Movie();
         expectedMovie.setId(15);
         expectedMovie.setNameRussian("Gladiator");

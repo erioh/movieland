@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class GenreDaoTest {
+public class GenreDaoImplTest {
     private ApplicationContext context;
 
     @Before
@@ -21,10 +21,10 @@ public class GenreDaoTest {
 
     @Test
     public void getGenreListByMove() throws Exception {
-        GenreDao genreDao = (GenreDao) context.getBean("genreDao");
+        GenreDaoImpl genreDaoImpl = (GenreDaoImpl) context.getBean("genreDaoImpl");
         Movie movie = new Movie();
         movie.setId(1);
-        List<Genre> actualGenreList = genreDao.getGenreListByMove(movie);
+        List<Genre> actualGenreList = genreDaoImpl.getGenreListByMove(movie);
         assertEquals(2, actualGenreList.size());
         assertEquals(1, actualGenreList.get(0).getId());
         assertEquals(2, actualGenreList.get(1).getId());
@@ -35,8 +35,8 @@ public class GenreDaoTest {
 
     @Test
     public void getAllGenres() throws Exception {
-        GenreDao genreDao = (GenreDao) context.getBean("genreDao");
-        List<Genre> genreList = genreDao.getAllGenres();
+        GenreDaoImpl genreDaoImpl = (GenreDaoImpl) context.getBean("genreDaoImpl");
+        List<Genre> genreList = genreDaoImpl.getAllGenres();
         assertEquals(15, genreList.size());
     }
 

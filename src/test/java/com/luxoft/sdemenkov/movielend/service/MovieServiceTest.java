@@ -1,8 +1,8 @@
 package com.luxoft.sdemenkov.movielend.service;
 
-import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.CountryDao;
-import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.GenreDao;
-import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.MovieDao;
+import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.CountryDaoImpl;
+import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.GenreDaoImpl;
+import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.MovieDaoImpl;
 import com.luxoft.sdemenkov.movielend.model.Country;
 import com.luxoft.sdemenkov.movielend.model.Genre;
 import com.luxoft.sdemenkov.movielend.model.Movie;
@@ -22,17 +22,17 @@ import static org.mockito.Mockito.when;
 public class MovieServiceTest {
     private ApplicationContext context;
     private MovieService movieService;
-    private CountryDao mockedCountryDao;
-    private GenreDao mockedGenreDao;
-    private MovieDao mockedMovieDao;
+    private CountryDaoImpl mockedCountryDaoImpl;
+    private GenreDaoImpl mockedGenreDaoImpl;
+    private MovieDaoImpl mockedMovieDaoImpl;
 
     @Before
     public void setUp() throws Exception {
         context = new FileSystemXmlApplicationContext("./src/main/webapp/WEB-INF/spring/spring-test-config.xml");
         movieService = (MovieService) context.getBean("movieService");
-        mockedCountryDao = mock(CountryDao.class);
-        mockedGenreDao = mock(GenreDao.class);
-        mockedMovieDao = mock(MovieDao.class);
+        mockedCountryDaoImpl = mock(CountryDaoImpl.class);
+        mockedGenreDaoImpl = mock(GenreDaoImpl.class);
+        mockedMovieDaoImpl = mock(MovieDaoImpl.class);
 
     }
 
@@ -53,8 +53,8 @@ public class MovieServiceTest {
         // Mocking objects
         List<Movie> list = new ArrayList<>();
         list.add(expectedMovie);
-        when(mockedMovieDao.getAllMovies()).thenReturn(list);
-        movieService.setMovieDao(mockedMovieDao);
+        when(mockedMovieDaoImpl.getAllMovies()).thenReturn(list);
+        movieService.setMovieDaoImpl(mockedMovieDaoImpl);
 
         // Test
         List<Movie> movieList = movieService.getAllMovies();
@@ -86,12 +86,12 @@ public class MovieServiceTest {
         movieList.add(movie);
 
         //Mocking objects
-        when(mockedMovieDao.getAllMovies()).thenReturn(movieList);
-        when(mockedCountryDao.getCountryListByMovie((Movie) any())).thenReturn(countryList);
-        when(mockedGenreDao.getGenreListByMove((Movie) any())).thenReturn(genreList);
-        movieService.setMovieDao(mockedMovieDao);
-        movieService.setGenreDao(mockedGenreDao);
-        movieService.setCountryDao(mockedCountryDao);
+        when(mockedMovieDaoImpl.getAllMovies()).thenReturn(movieList);
+        when(mockedCountryDaoImpl.getCountryListByMovie((Movie) any())).thenReturn(countryList);
+        when(mockedGenreDaoImpl.getGenreListByMove((Movie) any())).thenReturn(genreList);
+        movieService.setMovieDaoImpl(mockedMovieDaoImpl);
+        movieService.setGenreDaoImpl(mockedGenreDaoImpl);
+        movieService.setCountryDaoImpl(mockedCountryDaoImpl);
 
         // Test
         List<Movie> actualMovieList = movieService.getThreeRundomMovies();
