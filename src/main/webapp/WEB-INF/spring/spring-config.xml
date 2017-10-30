@@ -16,6 +16,5 @@
     <bean name="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="dataSource"/>
     </bean>
-    <bean name="randomGenerator" class="java.util.Random"/>
 
 </beans>

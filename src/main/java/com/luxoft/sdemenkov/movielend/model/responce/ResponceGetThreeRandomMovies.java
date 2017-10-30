@@ -113,4 +113,20 @@ public class ResponceGetThreeRandomMovies {
     public void setGenreList(List<Genre> genreList) {
         this.genreList = genreList;
     }
+
+    @Override
+    public String toString() {
+        return "ResponceGetThreeRandomMovies{" +
+                "id=" + id +
+                ", nameRussian='" + nameRussian + '\'' +
+                ", nameNative='" + nameNative + '\'' +
+                ", yearOfRelease=" + yearOfRelease +
+                ", description='" + description + '\'' +
+                ", rating=" + rating +
+                ", price=" + price +
+                ", picturePath='" + picturePath + '\'' +
+                ", countryList=" + countryList +
+                ", genreList=" + genreList +
+                '}';
+    }
 }

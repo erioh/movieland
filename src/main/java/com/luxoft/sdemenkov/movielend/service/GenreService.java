@@ -29,11 +29,6 @@ public class GenreService {
 
     }
 
-
-    public GenreDao getGenreDaoImpl() {
-        return genreDaoImpl;
-    }
-
     public void setGenreDaoImpl(GenreDao genreDaoImpl) {
         this.genreDaoImpl = genreDaoImpl;
     }

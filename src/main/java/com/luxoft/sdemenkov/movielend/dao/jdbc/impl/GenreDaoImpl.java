@@ -26,24 +26,19 @@ public class GenreDaoImpl implements GenreDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    private GenreRowMapper genreRowMapper = new GenreRowMapper();
+
     public List<Genre> getGenreListByMove(Movie movie) {
-        List<Genre> genreList = jdbcTemplate.query(GET_GENRE_LIST_BY_MOVIE_SQL, new Object[]{movie.getId()}, new GenreRowMapper());
+        List<Genre> genreList = jdbcTemplate.query(GET_GENRE_LIST_BY_MOVIE_SQL, new Object[]{movie.getId()}, genreRowMapper);
         log.debug("Calling method getGenreListByMove. with query = {}", GET_GENRE_LIST_BY_MOVIE_SQL);
         log.debug("Calling method getGenreListByMove with movie_id = {}, ", movie.getId());
         return genreList;
     }
 
     public List<Genre> getAllGenres() {
-        List<Genre> genreList = jdbcTemplate.query(GET_ALL_GENRES_SQL, new GenreRowMapper());
+        List<Genre> genreList = jdbcTemplate.query(GET_ALL_GENRES_SQL, genreRowMapper);
         log.debug("Calling method getAllGenres with query {}", GET_ALL_GENRES_SQL);
         return genreList;
     }
 
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
-    }
-
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 }

@@ -77,16 +77,8 @@ public class MovieController {
 
     }
 
-    public MovieService getMovieService() {
-        return movieService;
-    }
-
     public void setMovieService(MovieService movieService) {
         this.movieService = movieService;
-    }
-
-    public GenreService getGenreService() {
-        return genreService;
     }
 
     public void setGenreService(GenreService genreService) {

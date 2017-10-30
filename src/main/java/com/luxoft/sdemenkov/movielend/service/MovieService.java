@@ -26,8 +26,8 @@ public class MovieService {
     private CountryDao countryDaoImpl;
     @Autowired
     private GenreDao genreDaoImpl;
-    @Autowired
-    private Random randomGenerator;
+
+    private Random randomGenerator = new Random();
 
     public List<Movie> getAllMovies() {
         List<Movie> allMovies = movieDaoImpl.getAllMovies();
@@ -50,35 +50,16 @@ public class MovieService {
 
     }
 
-    public MovieDao getMovieDaoImpl() {
-        return movieDaoImpl;
-    }
 
     public void setMovieDaoImpl(MovieDao movieDaoImpl) {
         this.movieDaoImpl = movieDaoImpl;
-    }
-
-    public CountryDao getCountryDaoImpl() {
-        return countryDaoImpl;
     }
 
     public void setCountryDaoImpl(CountryDao countryDaoImpl) {
         this.countryDaoImpl = countryDaoImpl;
     }
 
-    public GenreDao getGenreDaoImpl() {
-        return genreDaoImpl;
-    }
-
     public void setGenreDaoImpl(GenreDao genreDaoImpl) {
         this.genreDaoImpl = genreDaoImpl;
-    }
-
-    public Random getRandomGenerator() {
-        return randomGenerator;
-    }
-
-    public void setRandomGenerator(Random randomGenerator) {
-        this.randomGenerator = randomGenerator;
     }
 }
