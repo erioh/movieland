@@ -26,8 +26,8 @@ public class CountryDao {
 
     public List<Country> getCountryListByMovie(Movie movie) {
         List<Country> countryList = jdbcTemplate.query(GET_CONTRY_BY_MOVIE_SQL, new Object[]{movie.getId()}, new CountryRowMapper());
-        log.info("Calling method getCountryListByMovie. with query = {}", GET_CONTRY_BY_MOVIE_SQL);
-        log.info("Calling method getCountryListByMovie with movie_id = {}", movie.getId());
+        log.debug("Calling method getCountryListByMovie. with query = {}", GET_CONTRY_BY_MOVIE_SQL);
+        log.debug("Calling method getCountryListByMovie with movie_id = {}", movie.getId());
         return countryList;
 
     }

@@ -28,7 +28,7 @@ public class MovieService {
 
     public List<Movie> getAllMovies() {
         List<Movie> allMovies = movieDao.getAllMovies();
-        log.info("Calling method getAllMovies, result = {}", allMovies);
+        log.debug("Calling method getAllMovies, result = {}", allMovies);
         return allMovies;
     }
 
@@ -42,7 +42,7 @@ public class MovieService {
             randomMovie.setGenreList(genreDao.getGenreListByMove(randomMovie));
             threeRundomMovies.add(randomMovie);
         }
-        log.info("Calling method getThreeRundomMovies");
+        log.debug("Calling method getThreeRundomMovies");
         return threeRundomMovies;
 
     }

@@ -27,14 +27,14 @@ public class GenreDao {
 
     public List<Genre> getGenreListByMove(Movie movie) {
         List<Genre> genreList = jdbcTemplate.query(GET_GENRE_LIST_BY_MOVIE_SQL, new Object[]{movie.getId()}, new GenreRowMapper());
-        log.info("Calling method getGenreListByMove. with query = {}", GET_GENRE_LIST_BY_MOVIE_SQL);
-        log.info("Calling method getGenreListByMove with movie_id = {}, ", movie.getId());
+        log.debug("Calling method getGenreListByMove. with query = {}", GET_GENRE_LIST_BY_MOVIE_SQL);
+        log.debug("Calling method getGenreListByMove with movie_id = {}, ", movie.getId());
         return genreList;
     }
 
     public List<Genre> getAllGenres() {
         List<Genre> genreList = jdbcTemplate.query(GET_ALL_GENRES_SQL, new GenreRowMapper());
-        log.info("Calling method getAllGenres with query {}", GET_ALL_GENRES_SQL);
+        log.debug("Calling method getAllGenres with query {}", GET_ALL_GENRES_SQL);
         return genreList;
     }
 

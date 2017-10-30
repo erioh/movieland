@@ -26,8 +26,8 @@ public class MovieDao {
 
     public List<Movie> getAllMovies() {
         List<Movie> movieList = jdbcTemplate.query(GET_ALL_MOVIES_SQL, new MovieRowMapper());
-        log.info("Calling method getAllMovies. with query = {}", GET_ALL_MOVIES_SQL);
-        log.info("Calling method getAllMovies. Result = {}", movieList);
+        log.debug("Calling method getAllMovies. with query = {}", GET_ALL_MOVIES_SQL);
+        log.debug("Calling method getAllMovies. Result = {}", movieList);
         return movieList;
     }
 

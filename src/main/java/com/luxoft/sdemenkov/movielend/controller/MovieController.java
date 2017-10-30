@@ -40,7 +40,7 @@ public class MovieController {
                 movieList) {
             responceGetAllMoviesList.add(new ResponceGetAllMovies(movie));
         }
-        log.info("Method getAllMovies.  It took {} ms", System.currentTimeMillis() - startTime);
+        log.debug("Method getAllMovies.  It took {} ms", System.currentTimeMillis() - startTime);
 
         return responceGetAllMoviesList;
     }
@@ -55,7 +55,7 @@ public class MovieController {
                 movieList) {
             responceGetThreeRandomMovies.add(new ResponceGetThreeRandomMovies(movie));
         }
-        log.info("Method getThreeRandomMovies.  It took {} ms", System.currentTimeMillis() - startTime);
+        log.debug("Method getThreeRandomMovies.  It took {} ms", System.currentTimeMillis() - startTime);
 
         return responceGetThreeRandomMovies;
     }
@@ -66,13 +66,13 @@ public class MovieController {
         long startTime = System.currentTimeMillis();
         List<ResponceGetAllGenres> responceGetAllGenresList = new ArrayList<>();
         List<Genre> genreList = genreService.getAllGenres();
-        log.info("Method getAllGenres. Filling responceGetAllGenresList with genres");
+        log.debug("Method getAllGenres. Filling responceGetAllGenresList with genres");
         for (Genre genre :
                 genreList) {
             responceGetAllGenresList.add(new ResponceGetAllGenres(genre));
         }
 
-        log.info("Method getThreeRandomMovies.  It took {} ms", System.currentTimeMillis() - startTime);
+        log.debug("Method getThreeRandomMovies.  It took {} ms", System.currentTimeMillis() - startTime);
         return responceGetAllGenresList;
 
     }
