@@ -1,6 +1,6 @@
-package com.luxoft.sdemenkov.movielend.dao.mappers;
+package com.luxoft.sdemenkov.movielend.dao.mapper;
 
-import com.luxoft.sdemenkov.movielend.models.Country;
+import com.luxoft.sdemenkov.movielend.model.Country;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

@@ -1,10 +1,9 @@
 package com.luxoft.sdemenkov.movielend.dao.jdbc.impl;
 
-import com.luxoft.sdemenkov.movielend.models.Movie;
+import com.luxoft.sdemenkov.movielend.model.Movie;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class MovieDaoTest {
-    ApplicationContext context;
+    private ApplicationContext context;
     @Before
     public void setUp() throws Exception {
         context = new FileSystemXmlApplicationContext("./src/main/webapp/WEB-INF/spring/spring-test-config.xml");

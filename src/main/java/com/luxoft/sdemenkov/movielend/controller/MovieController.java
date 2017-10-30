@@ -1,12 +1,12 @@
-package com.luxoft.sdemenkov.movielend.controllers;
+package com.luxoft.sdemenkov.movielend.controller;
 
-import com.luxoft.sdemenkov.movielend.models.Genre;
-import com.luxoft.sdemenkov.movielend.models.Movie;
-import com.luxoft.sdemenkov.movielend.models.responces.ResponceGetAllGenres;
-import com.luxoft.sdemenkov.movielend.models.responces.ResponceGetAllMovies;
-import com.luxoft.sdemenkov.movielend.models.responces.ResponceGetThreeRandomMovies;
-import com.luxoft.sdemenkov.movielend.services.GenreService;
-import com.luxoft.sdemenkov.movielend.services.MovieService;
+import com.luxoft.sdemenkov.movielend.model.Genre;
+import com.luxoft.sdemenkov.movielend.model.Movie;
+import com.luxoft.sdemenkov.movielend.model.responce.ResponceGetAllGenres;
+import com.luxoft.sdemenkov.movielend.model.responce.ResponceGetAllMovies;
+import com.luxoft.sdemenkov.movielend.model.responce.ResponceGetThreeRandomMovies;
+import com.luxoft.sdemenkov.movielend.service.GenreService;
+import com.luxoft.sdemenkov.movielend.service.MovieService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class MovieController {
     @ResponseBody
     public List<ResponceGetAllMovies> getAllMovies() {
         long startTime = System.currentTimeMillis();
-        List<ResponceGetAllMovies> responceGetAllMoviesList = new ArrayList<ResponceGetAllMovies>();
+        List<ResponceGetAllMovies> responceGetAllMoviesList = new ArrayList<>();
         List<Movie> movieList = movieService.getAllMovies();
         for (Movie movie :
                 movieList) {
@@ -49,7 +49,7 @@ public class MovieController {
     @ResponseBody
     public List<ResponceGetThreeRandomMovies> getThreeRandomMovies() {
         long startTime = System.currentTimeMillis();
-        List<ResponceGetThreeRandomMovies> responceGetThreeRandomMovies = new ArrayList<ResponceGetThreeRandomMovies>();
+        List<ResponceGetThreeRandomMovies> responceGetThreeRandomMovies = new ArrayList<>();
         List<Movie> movieList = movieService.getThreeRundomMovies();
         for (Movie movie :
                 movieList) {

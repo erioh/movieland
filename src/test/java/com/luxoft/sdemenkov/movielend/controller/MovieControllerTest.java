@@ -1,13 +1,13 @@
-package com.luxoft.sdemenkov.movielend.controllers;
+package com.luxoft.sdemenkov.movielend.controller;
 
-import com.luxoft.sdemenkov.movielend.models.Country;
-import com.luxoft.sdemenkov.movielend.models.Genre;
-import com.luxoft.sdemenkov.movielend.models.Movie;
-import com.luxoft.sdemenkov.movielend.models.responces.ResponceGetAllGenres;
-import com.luxoft.sdemenkov.movielend.models.responces.ResponceGetAllMovies;
-import com.luxoft.sdemenkov.movielend.models.responces.ResponceGetThreeRandomMovies;
-import com.luxoft.sdemenkov.movielend.services.GenreService;
-import com.luxoft.sdemenkov.movielend.services.MovieService;
+import com.luxoft.sdemenkov.movielend.model.Country;
+import com.luxoft.sdemenkov.movielend.model.Genre;
+import com.luxoft.sdemenkov.movielend.model.Movie;
+import com.luxoft.sdemenkov.movielend.model.responce.ResponceGetAllGenres;
+import com.luxoft.sdemenkov.movielend.model.responce.ResponceGetAllMovies;
+import com.luxoft.sdemenkov.movielend.model.responce.ResponceGetThreeRandomMovies;
+import com.luxoft.sdemenkov.movielend.service.GenreService;
+import com.luxoft.sdemenkov.movielend.service.MovieService;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -22,10 +22,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class MovieControllerTest {
-    ApplicationContext context;
-    MovieController movieController;
-    MovieService mockedMovieService;
-    GenreService mockedGenreService;
+    private ApplicationContext context;
+    private MovieController movieController;
+    private MovieService mockedMovieService;
+    private GenreService mockedGenreService;
     @Before
     public void setUp() throws Exception {
         context = new FileSystemXmlApplicationContext("./src/main/webapp/WEB-INF/spring/spring-test-config.xml");
@@ -107,7 +107,7 @@ public class MovieControllerTest {
 
     }
 
-    public Movie getMovieForTest() {
+    private Movie getMovieForTest() {
         Movie movie = new Movie();
         movie.setId(15);
         movie.setNameRussian("Gladiator");
@@ -125,7 +125,7 @@ public class MovieControllerTest {
         return movie;
     }
 
-    public Genre getGenreForTest() {
+    private Genre getGenreForTest() {
         Genre genre = new Genre();
         genre.setId(1);
         genre.setName("Name");

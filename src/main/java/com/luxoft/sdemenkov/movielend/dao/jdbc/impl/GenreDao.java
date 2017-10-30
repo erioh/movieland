@@ -1,8 +1,8 @@
 package com.luxoft.sdemenkov.movielend.dao.jdbc.impl;
 
-import com.luxoft.sdemenkov.movielend.dao.mappers.GenreRowMapper;
-import com.luxoft.sdemenkov.movielend.models.Genre;
-import com.luxoft.sdemenkov.movielend.models.Movie;
+import com.luxoft.sdemenkov.movielend.dao.mapper.GenreRowMapper;
+import com.luxoft.sdemenkov.movielend.model.Genre;
+import com.luxoft.sdemenkov.movielend.model.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,8 @@ import java.util.List;
 @Repository
 public class GenreDao {
 
+    private final Logger log = LoggerFactory.getLogger(getClass());
     private static final String GET_ALL_GENRES_SQL = "select genre_id, name from genre;";
-    Logger log = LoggerFactory.getLogger(getClass());
 
     private static final String GET_GENRE_LIST_BY_MOVIE_SQL = "select g.genre_id, g.name from genre g " +
             "join movie_genre mg " +

@@ -1,7 +1,7 @@
 package com.luxoft.sdemenkov.movielend.dao.jdbc.impl;
 
-import com.luxoft.sdemenkov.movielend.dao.mappers.MovieRowMapper;
-import com.luxoft.sdemenkov.movielend.models.Movie;
+import com.luxoft.sdemenkov.movielend.dao.mapper.MovieRowMapper;
+import com.luxoft.sdemenkov.movielend.model.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public class MovieDao {
 
-    Logger log = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

@@ -1,10 +1,20 @@
-package com.luxoft.sdemenkov.movielend.models;
+package com.luxoft.sdemenkov.movielend.model.responce;
 
-public class Country {
+import com.luxoft.sdemenkov.movielend.model.Genre;
+
+/**
+ * Created by sergeydemenkov on 28.10.17.
+ */
+public class ResponceGetAllGenres {
     private int id;
     private String name;
 
-    public Country() {
+    public ResponceGetAllGenres() {
+    }
+
+    public ResponceGetAllGenres(Genre genre) {
+        id = genre.getId();
+        name = genre.getName();
     }
 
     public int getId() {
@@ -25,7 +35,7 @@ public class Country {
 
     @Override
     public String toString() {
-        return "Country{" +
+        return "ResponceGetAllGenres{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

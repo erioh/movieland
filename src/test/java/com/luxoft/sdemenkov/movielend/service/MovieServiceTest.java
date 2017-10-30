@@ -1,11 +1,11 @@
-package com.luxoft.sdemenkov.movielend.services;
+package com.luxoft.sdemenkov.movielend.service;
 
 import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.CountryDao;
 import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.GenreDao;
 import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.MovieDao;
-import com.luxoft.sdemenkov.movielend.models.Country;
-import com.luxoft.sdemenkov.movielend.models.Genre;
-import com.luxoft.sdemenkov.movielend.models.Movie;
+import com.luxoft.sdemenkov.movielend.model.Country;
+import com.luxoft.sdemenkov.movielend.model.Genre;
+import com.luxoft.sdemenkov.movielend.model.Movie;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -20,11 +20,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class MovieServiceTest {
-    ApplicationContext context;
-    MovieService movieService;
-    CountryDao mockedCountryDao;
-    GenreDao mockedGenreDao;
-    MovieDao mockedMovieDao;
+    private ApplicationContext context;
+    private MovieService movieService;
+    private CountryDao mockedCountryDao;
+    private GenreDao mockedGenreDao;
+    private MovieDao mockedMovieDao;
 
     @Before
     public void setUp() throws Exception {
@@ -50,7 +50,7 @@ public class MovieServiceTest {
 
 
         // Mocking objects
-        List<Movie> list = new ArrayList<Movie>();
+        List<Movie> list = new ArrayList<>();
         list.add(expectedMovie);
         when(mockedMovieDao.getAllMovies()).thenReturn(list);
         movieService.setMovieDao(mockedMovieDao);
@@ -73,15 +73,15 @@ public class MovieServiceTest {
 
         // Creating expected movies, countries and genres
         Country country = new Country();
-        List<Country> countryList = new ArrayList<Country>();
+        List<Country> countryList = new ArrayList<>();
         countryList.add(country);
 
         Genre genre = new Genre();
-        List<Genre> genreList = new ArrayList<Genre>();
+        List<Genre> genreList = new ArrayList<>();
         genreList.add(genre);
 
         Movie movie = new Movie();
-        List<Movie> movieList = new ArrayList<Movie>();
+        List<Movie> movieList = new ArrayList<>();
         movieList.add(movie);
 
         //Mocking objects

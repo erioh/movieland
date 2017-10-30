@@ -1,7 +1,7 @@
-package com.luxoft.sdemenkov.movielend.services;
+package com.luxoft.sdemenkov.movielend.service;
 
 import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.GenreDao;
-import com.luxoft.sdemenkov.movielend.models.Genre;
+import com.luxoft.sdemenkov.movielend.model.Genre;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -19,9 +19,9 @@ import static org.mockito.Mockito.when;
  */
 public class GenreServiceTest {
 
-    ApplicationContext context;
-    GenreService genreService;
-    GenreDao mockedGenreDao;
+    private ApplicationContext context;
+    private GenreService genreService;
+    private GenreDao mockedGenreDao;
 
     @Before
     public void setUp() throws Exception {

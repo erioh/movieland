@@ -1,11 +1,9 @@
-package com.luxoft.sdemenkov.movielend.services;
+package com.luxoft.sdemenkov.movielend.service;
 
 import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.CountryDao;
 import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.GenreDao;
 import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.MovieDao;
-import com.luxoft.sdemenkov.movielend.models.Country;
-import com.luxoft.sdemenkov.movielend.models.Movie;
-import com.luxoft.sdemenkov.movielend.models.responces.ResponceGetAllMovies;
+import com.luxoft.sdemenkov.movielend.model.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,7 @@ import java.util.Random;
 
 @Service
 public class MovieService {
-    Logger log = LoggerFactory.getLogger(getClass());
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private MovieDao movieDao;
@@ -36,7 +34,7 @@ public class MovieService {
 
     public List<Movie> getThreeRundomMovies() {
         List<Movie> movieList = movieDao.getAllMovies();
-        List<Movie> threeRundomMovies = new ArrayList<Movie>();
+        List<Movie> threeRundomMovies = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             int index = randomGenerator.nextInt(movieList.size());
             Movie randomMovie = movieList.get(index);

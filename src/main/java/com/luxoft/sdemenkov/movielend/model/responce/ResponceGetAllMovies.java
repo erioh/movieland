@@ -1,21 +1,27 @@
-package com.luxoft.sdemenkov.movielend.models;
+package com.luxoft.sdemenkov.movielend.model.responce;
 
-import java.util.List;
+import com.luxoft.sdemenkov.movielend.model.Movie;
 
-public class Movie {
+public class ResponceGetAllMovies {
     private int id;
     private String nameRussian;
     private String nameNative;
     private int yearOfRelease;
-    private String description;
     private double rating;
     private double price;
     private String picturePath;
-    private List<Country> countryList;
-    private List<Genre> genreList;
 
+    public ResponceGetAllMovies() {
+    }
 
-    public Movie() {
+    public ResponceGetAllMovies(Movie movie) {
+        id = movie.getId();
+        nameRussian = movie.getNameRussian();
+        nameNative = movie.getNameNative();
+        yearOfRelease = movie.getYearOfRelease();
+        rating = movie.getRating();
+        price = movie.getPrice();
+        picturePath = movie.getPicturePath();
     }
 
     public int getId() {
@@ -74,43 +80,16 @@ public class Movie {
         this.picturePath = picturePath;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<Country> getCountryList() {
-        return countryList;
-    }
-
-    public void setCountryList(List<Country> countryList) {
-        this.countryList = countryList;
-    }
-
-    public List<Genre> getGenreList() {
-        return genreList;
-    }
-
-    public void setGenreList(List<Genre> genreList) {
-        this.genreList = genreList;
-    }
-
     @Override
     public String toString() {
-        return "Movie{" +
+        return "ResponceGetAllMovies{" +
                 "id=" + id +
                 ", nameRussian='" + nameRussian + '\'' +
                 ", nameNative='" + nameNative + '\'' +
                 ", yearOfRelease=" + yearOfRelease +
-                ", description='" + description + '\'' +
                 ", rating=" + rating +
                 ", price=" + price +
                 ", picturePath='" + picturePath + '\'' +
-                ", countryList=" + countryList +
-                ", genreList=" + genreList +
                 '}';
     }
 }

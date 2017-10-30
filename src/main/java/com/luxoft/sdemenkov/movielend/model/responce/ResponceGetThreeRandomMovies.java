@@ -1,8 +1,8 @@
-package com.luxoft.sdemenkov.movielend.models.responces;
+package com.luxoft.sdemenkov.movielend.model.responce;
 
-import com.luxoft.sdemenkov.movielend.models.Country;
-import com.luxoft.sdemenkov.movielend.models.Genre;
-import com.luxoft.sdemenkov.movielend.models.Movie;
+import com.luxoft.sdemenkov.movielend.model.Country;
+import com.luxoft.sdemenkov.movielend.model.Genre;
+import com.luxoft.sdemenkov.movielend.model.Movie;
 
 import java.util.List;
 

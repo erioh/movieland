@@ -1,6 +1,6 @@
-package com.luxoft.sdemenkov.movielend.dao.mappers;
+package com.luxoft.sdemenkov.movielend.dao.mapper;
 
-import com.luxoft.sdemenkov.movielend.models.Genre;
+import com.luxoft.sdemenkov.movielend.model.Genre;
 import org.junit.Test;
 
 import java.sql.ResultSet;

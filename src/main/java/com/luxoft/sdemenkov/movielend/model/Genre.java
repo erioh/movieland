@@ -1,4 +1,4 @@
-package com.luxoft.sdemenkov.movielend.models;
+package com.luxoft.sdemenkov.movielend.model;
 
 public class Genre {
     private int id;
