@@ -40,5 +40,8 @@ public class GenreDaoImpl implements GenreDao {
         log.debug("Calling method getAllGenres with query {}", GET_ALL_GENRES_SQL);
         return genreList;
     }
+    public List<Movie> enrichMoviesByGenres(List<Movie> movieList) {
+
+    }
 
 }

@@ -2,6 +2,7 @@ package com.luxoft.sdemenkov.movielend.web.service;
 
 import com.luxoft.sdemenkov.movielend.dao.jdbc.GenreDao;
 import com.luxoft.sdemenkov.movielend.model.Genre;
+import com.luxoft.sdemenkov.movielend.model.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,12 @@ public class GenreService {
         log.debug("Calling method getAllMovies");
         return genreList;
 
+    }
+
+    public List<Movie> enrichMoviesByGenres(List<Movie> movieList) {
+        List<Movie> returnList = genreDaoImpl.enrichMoviesByGenres(movieList);
+        log.debug("Calling enrichMoviesByGenres");
+        return returnList;
     }
 
     public void setGenreDaoImpl(GenreDao genreDaoImpl) {

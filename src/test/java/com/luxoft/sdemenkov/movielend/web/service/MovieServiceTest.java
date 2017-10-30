@@ -94,7 +94,7 @@ public class MovieServiceTest {
         movieService.setCountryDaoImpl(mockedCountryDaoImpl);
 
         // Test
-        List<Movie> actualMovieList = movieService.getThreeRundomMovies();
+        List<Movie> actualMovieList = movieService.getThreeRandomMovies();
         assertEquals(3, actualMovieList.size());
         assertNotEquals(0, actualMovieList.get(0).getCountryList().size());
         assertNotEquals(0, actualMovieList.get(0).getGenreList().size());

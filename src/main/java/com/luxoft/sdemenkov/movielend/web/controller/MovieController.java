@@ -50,7 +50,7 @@ public class MovieController {
     public List<ResponceGetThreeRandomMovies> getThreeRandomMovies() {
         long startTime = System.currentTimeMillis();
         List<ResponceGetThreeRandomMovies> responceGetThreeRandomMovies = new ArrayList<>();
-        List<Movie> movieList = movieService.getThreeRundomMovies();
+        List<Movie> movieList = movieService.getThreeRandomMovies();
         for (Movie movie :
                 movieList) {
             responceGetThreeRandomMovies.add(new ResponceGetThreeRandomMovies(movie));

@@ -3,6 +3,8 @@ package com.luxoft.sdemenkov.movielend.web.service;
 import com.luxoft.sdemenkov.movielend.dao.jdbc.CountryDao;
 import com.luxoft.sdemenkov.movielend.dao.jdbc.GenreDao;
 import com.luxoft.sdemenkov.movielend.dao.jdbc.MovieDao;
+import com.luxoft.sdemenkov.movielend.model.Country;
+import com.luxoft.sdemenkov.movielend.model.Genre;
 import com.luxoft.sdemenkov.movielend.model.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 @Service
@@ -20,11 +23,9 @@ public class MovieService {
     @Autowired
     private MovieDao movieDaoImpl;
     @Autowired
-    private CountryDao countryDaoImpl;
+    private GenreService genreService;
     @Autowired
-    private GenreDao genreDaoImpl;
-
-    private Random randomGenerator = new Random();
+    private CountryService countryService;
 
     public List<Movie> getAllMovies() {
         List<Movie> allMovies = movieDaoImpl.getAllMovies();
@@ -32,31 +33,18 @@ public class MovieService {
         return allMovies;
     }
 
-    public List<Movie> getThreeRundomMovies() {
-        List<Movie> movieList = movieDaoImpl.getAllMovies();
-        List<Movie> threeRundomMovies = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            int index = randomGenerator.nextInt(movieList.size());
-            Movie randomMovie = movieList.get(index);
-            randomMovie.setCountryList(countryDaoImpl.getCountryListByMovie(randomMovie));
-            randomMovie.setGenreList(genreDaoImpl.getGenreListByMove(randomMovie));
-            threeRundomMovies.add(randomMovie);
-        }
-        log.debug("Calling method getThreeRundomMovies");
-        return threeRundomMovies;
-
+    public List<Movie> getThreeRandomMovies() {
+        List<Movie> threeRandomMovies = movieDaoImpl.getThreeRandomMovies();
+        threeRandomMovies = genreService.enrichMoviesByGenres(threeRandomMovies);
+        threeRandomMovies = countryService.ecrichMoviesByCountries(threeRandomMovies);
+        log.debug("Calling method getThreeRandomMovies");
+        return threeRandomMovies;
     }
-
 
     public void setMovieDaoImpl(MovieDao movieDaoImpl) {
         this.movieDaoImpl = movieDaoImpl;
     }
-
-    public void setCountryDaoImpl(CountryDao countryDaoImpl) {
-        this.countryDaoImpl = countryDaoImpl;
-    }
-
-    public void setGenreDaoImpl(GenreDao genreDaoImpl) {
-        this.genreDaoImpl = genreDaoImpl;
+    public void setGenreService(GenreService genreService) {
+        this.genreService = genreService;
     }
 }

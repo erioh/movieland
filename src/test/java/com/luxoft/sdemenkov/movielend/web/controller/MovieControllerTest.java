@@ -77,7 +77,7 @@ public class MovieControllerTest {
                 getMovieForTest(),
                 getMovieForTest(),
                 getMovieForTest()}));
-        when(mockedMovieService.getThreeRundomMovies()).thenReturn(movieList);
+        when(mockedMovieService.getThreeRandomMovies()).thenReturn(movieList);
         movieController.setMovieService(mockedMovieService);
 
         List<ResponceGetThreeRandomMovies> responceGetThreeRandomMovies = movieController.getThreeRandomMovies();

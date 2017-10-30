@@ -47,4 +47,36 @@ public class MovieDaoImplTest {
 
     }
 
+    @Test
+    public void getCountOfMovies() throws Exception {
+        MovieDaoImpl movieDaoImpl = (MovieDaoImpl) context.getBean("movieDaoImpl");
+        assertEquals(25, movieDaoImpl.getCountOfMovies());
+    }
+
+    @Test
+    public void getMovieById() throws Exception {
+        MovieDaoImpl movieDaoImpl = (MovieDaoImpl) context.getBean("movieDaoImpl");
+
+        // Expected movie
+        Movie expectedMovie = new Movie();
+        expectedMovie.setId(15);
+        expectedMovie.setNameRussian("Gladiator");
+        expectedMovie.setNameNative("Gladiator");
+        expectedMovie.setYearOfRelease(2000);
+        expectedMovie.setRating(8.6);
+        expectedMovie.setPrice(175.0);
+        expectedMovie.setPicturePath("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg");
+
+        //Test
+        Movie actualMovie = movieDaoImpl.getMovieById(15);
+        assertEquals(expectedMovie.getId(), actualMovie.getId());
+        assertEquals(expectedMovie.getNameRussian(), actualMovie.getNameRussian());
+        assertEquals(expectedMovie.getNameNative(), actualMovie.getNameNative());
+        assertEquals(expectedMovie.getYearOfRelease(), actualMovie.getYearOfRelease());
+        assertEquals(expectedMovie.getRating(), actualMovie.getRating(), 0);
+        assertEquals(expectedMovie.getPrice(), actualMovie.getPrice(), 0);
+        assertEquals(expectedMovie.getPicturePath(), actualMovie.getPicturePath());
+
+    }
+
 }
