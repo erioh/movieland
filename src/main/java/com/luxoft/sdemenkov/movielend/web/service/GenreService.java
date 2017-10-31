@@ -30,9 +30,10 @@ public class GenreService {
     }
 
     public List<Movie> enrichMoviesByGenres(List<Movie> movieList) {
-        List<Movie> returnList = genreDaoImpl.enrichMoviesByGenres(movieList);
-        log.debug("Calling enrichMoviesByGenres");
-        return returnList;
+//        List<Movie> returnList = genreDaoImpl.enrichMoviesByGenres(movieList);
+//        log.debug("Calling enrichMoviesByGenres");
+//        return returnList;
+        return null;
     }
 
     public void setGenreDaoImpl(GenreDao genreDaoImpl) {

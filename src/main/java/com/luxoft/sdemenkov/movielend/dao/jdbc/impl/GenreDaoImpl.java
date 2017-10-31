@@ -41,7 +41,7 @@ public class GenreDaoImpl implements GenreDao {
         return genreList;
     }
     public List<Movie> enrichMoviesByGenres(List<Movie> movieList) {
-
+return null;
     }
 
 }

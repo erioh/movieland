@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -54,7 +55,7 @@ public class MovieDaoImplTest {
     }
 
     @Test
-    public void getMovieById() throws Exception {
+    public void getMovieListByIds() throws Exception {
         MovieDaoImpl movieDaoImpl = (MovieDaoImpl) context.getBean("movieDaoImpl");
 
         // Expected movie
@@ -68,7 +69,10 @@ public class MovieDaoImplTest {
         expectedMovie.setPicturePath("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg");
 
         //Test
-        Movie actualMovie = movieDaoImpl.getMovieById(15);
+        List<Integer> ids = new ArrayList<>();
+        ids.add(15);
+        List<Movie> actualMovieList = movieDaoImpl.getMovieListByIds(ids);
+        Movie actualMovie = actualMovieList.get(0);
         assertEquals(expectedMovie.getId(), actualMovie.getId());
         assertEquals(expectedMovie.getNameRussian(), actualMovie.getNameRussian());
         assertEquals(expectedMovie.getNameNative(), actualMovie.getNameNative());

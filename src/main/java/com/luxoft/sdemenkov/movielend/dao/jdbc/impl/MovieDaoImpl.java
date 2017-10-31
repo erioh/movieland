@@ -45,11 +45,12 @@ public class MovieDaoImpl implements MovieDao{
 
     @Override
     public List<Movie> getThreeRandomMovies() {
-        List<Movie> movieList = new ArrayList<>();
+        List<Integer> ids = new ArrayList<>();
         int countOfRows = getCountOfMovies();
         for (int i = 0; i < 3; i++) {
-            movieList.add(getMovieById(randomGenerator.nextInt(countOfRows)));
+            ids.add(randomGenerator.nextInt(countOfRows));
         }
+        List<Movie> movieList = getMovieListByIds(ids);
         return movieList;
     }
     @Override
@@ -60,9 +61,9 @@ public class MovieDaoImpl implements MovieDao{
     }
 
     @Override
-    public Movie getMovieById(int id) {
-        List<Movie> movie = jdbcTemplate.query(GET_MOVIE_BY_ID_SQL, new Object[]{id}, new MovieRowMapper());
-        log.debug("Movie with id = {} was selected. Movie = {}", id, movie.get(0));
-        return movie.get(0);
+    public List<Movie> getMovieListByIds(List<Integer> ids) {
+        List<Movie> movie = jdbcTemplate.query(GET_MOVIE_BY_ID_SQL, new Object[]{ids}, new MovieRowMapper());
+        log.debug("Movie with id = {} was selected. Movie = {}", ids, movie.get(0));
+        return movie;
     }
 }

@@ -24,8 +24,8 @@ public class MovieService {
     private MovieDao movieDaoImpl;
     @Autowired
     private GenreService genreService;
-    @Autowired
-    private CountryService countryService;
+//    @Autowired
+//    private CountryService countryService;
 
     public List<Movie> getAllMovies() {
         List<Movie> allMovies = movieDaoImpl.getAllMovies();
@@ -36,7 +36,7 @@ public class MovieService {
     public List<Movie> getThreeRandomMovies() {
         List<Movie> threeRandomMovies = movieDaoImpl.getThreeRandomMovies();
         threeRandomMovies = genreService.enrichMoviesByGenres(threeRandomMovies);
-        threeRandomMovies = countryService.ecrichMoviesByCountries(threeRandomMovies);
+//        threeRandomMovies = countryService.ecrichMoviesByCountries(threeRandomMovies);
         log.debug("Calling method getThreeRandomMovies");
         return threeRandomMovies;
     }
