@@ -6,7 +6,7 @@ import com.luxoft.sdemenkov.movielend.model.Movie;
 
 import java.util.List;
 
-public class ResponceGetThreeRandomMovies {
+public class ResponseGetThreeRandomMovies {
     private int id;
     private String nameRussian;
     private String nameNative;
@@ -18,7 +18,7 @@ public class ResponceGetThreeRandomMovies {
     private List<Country> countryList;
     private List<Genre> genreList;
 
-    public ResponceGetThreeRandomMovies(Movie movie) {
+    public ResponseGetThreeRandomMovies(Movie movie) {
         this.id = movie.getId();
         this.nameRussian = movie.getNameRussian();
         this.nameNative = movie.getNameNative();
@@ -31,7 +31,7 @@ public class ResponceGetThreeRandomMovies {
         this.genreList = movie.getGenreList();
     }
 
-    public ResponceGetThreeRandomMovies() {
+    public ResponseGetThreeRandomMovies() {
     }
 
     public int getId() {
@@ -76,7 +76,7 @@ public class ResponceGetThreeRandomMovies {
 
     @Override
     public String toString() {
-        return "ResponceGetThreeRandomMovies{" +
+        return "ResponseGetThreeRandomMovies{" +
                 "id=" + id +
                 ", nameRussian='" + nameRussian + '\'' +
                 ", nameNative='" + nameNative + '\'' +

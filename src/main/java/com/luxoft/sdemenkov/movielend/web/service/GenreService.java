@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Created by sergeydemenkov on 28.10.17.
+ */
 
 @Service
 public class GenreService {

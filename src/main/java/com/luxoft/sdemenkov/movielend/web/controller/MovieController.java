@@ -4,7 +4,7 @@ import com.luxoft.sdemenkov.movielend.model.Genre;
 import com.luxoft.sdemenkov.movielend.model.Movie;
 import com.luxoft.sdemenkov.movielend.web.responce.ResponseGetAllGenres;
 import com.luxoft.sdemenkov.movielend.web.responce.ResponseGetAllMovies;
-import com.luxoft.sdemenkov.movielend.web.responce.ResponceGetThreeRandomMovies;
+import com.luxoft.sdemenkov.movielend.web.responce.ResponseGetThreeRandomMovies;
 import com.luxoft.sdemenkov.movielend.web.service.GenreService;
 import com.luxoft.sdemenkov.movielend.web.service.MovieService;
 import org.slf4j.Logger;
@@ -47,17 +47,17 @@ public class MovieController {
 
     @RequestMapping(value = "/random", method = RequestMethod.GET)
     @ResponseBody
-    public List<ResponceGetThreeRandomMovies> getThreeRandomMovies() {
+    public List<ResponseGetThreeRandomMovies> getThreeRandomMovies() {
         long startTime = System.currentTimeMillis();
-        List<ResponceGetThreeRandomMovies> responceGetThreeRandomMovies = new ArrayList<>();
+        List<ResponseGetThreeRandomMovies> responseGetThreeRandomMovies = new ArrayList<>();
         List<Movie> movieList = movieService.getThreeRandomMovies();
         for (Movie movie :
                 movieList) {
-            responceGetThreeRandomMovies.add(new ResponceGetThreeRandomMovies(movie));
+            responseGetThreeRandomMovies.add(new ResponseGetThreeRandomMovies(movie));
         }
         log.debug("Method getThreeRandomMovies.  It took {} ms", System.currentTimeMillis() - startTime);
 
-        return responceGetThreeRandomMovies;
+        return responseGetThreeRandomMovies;
     }
 
     @RequestMapping(value = "/genre", method = RequestMethod.GET)

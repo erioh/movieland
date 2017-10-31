@@ -2,7 +2,9 @@ package com.luxoft.sdemenkov.movielend.web.responce;
 
 import com.luxoft.sdemenkov.movielend.model.Genre;
 
-
+/**
+ * Created by sergeydemenkov on 28.10.17.
+ */
 public class ResponseGetAllGenres {
     private int id;
     private String name;
