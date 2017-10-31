@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ public class MovieDaoImpl implements MovieDao{
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private MovieRowMapper movieRowMapper = new MovieRowMapper();
     private final Random randomGenerator = new Random();
@@ -33,7 +37,7 @@ public class MovieDaoImpl implements MovieDao{
             "m.year_of_release, m.description, m.rating, m.price, p.picture_path from movie m " +
             "inner join movie_poster mp on m.movie_id = mp.movie_id " +
             "inner join poster p on mp.picture_id = p.picture_id " +
-            "where m.movie_id = ?";
+            "where m.movie_id in (:ids)";
 
     @Override
     public List<Movie> getAllMovies() {
@@ -62,7 +66,9 @@ public class MovieDaoImpl implements MovieDao{
 
     @Override
     public List<Movie> getMovieListByIds(List<Integer> ids) {
-        List<Movie> movie = jdbcTemplate.query(GET_MOVIE_BY_ID_SQL, new Object[]{ids}, new MovieRowMapper());
+        MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
+        sqlParameterSource.addValue("ids", ids);
+        List<Movie> movie = namedParameterJdbcTemplate.query(GET_MOVIE_BY_ID_SQL, sqlParameterSource, movieRowMapper);
         log.debug("Movie with id = {} was selected. Movie = {}", ids, movie.get(0));
         return movie;
     }
