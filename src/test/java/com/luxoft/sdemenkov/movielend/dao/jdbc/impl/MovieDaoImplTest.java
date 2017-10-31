@@ -1,28 +1,28 @@
 package com.luxoft.sdemenkov.movielend.dao.jdbc.impl;
 
+import com.luxoft.sdemenkov.movielend.dao.jdbc.MovieDao;
 import com.luxoft.sdemenkov.movielend.model.Movie;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:/spring-test-config.xml")
 public class MovieDaoImplTest {
-    private ApplicationContext context;
 
-    @Before
-    public void setUp() throws Exception {
-        context = new FileSystemXmlApplicationContext("./src/test/resources/spring-test-config.xml");
-    }
+    @Autowired
+    MovieDao movieDao;
 
     @Test
     public void getAllMovies() throws Exception {
-        MovieDaoImpl movieDaoImpl = (MovieDaoImpl) context.getBean("movieDaoImpl");
-        List<Movie> movieList = movieDaoImpl.getAllMovies();
+        List<Movie> movieList = movieDao.getAllMovies();
         Movie expectedMovie = new Movie();
         expectedMovie.setId(15);
         expectedMovie.setNameRussian("Gladiator");
@@ -50,13 +50,11 @@ public class MovieDaoImplTest {
 
     @Test
     public void getCountOfMovies() throws Exception {
-        MovieDaoImpl movieDaoImpl = (MovieDaoImpl) context.getBean("movieDaoImpl");
-        assertEquals(25, movieDaoImpl.getCountOfMovies());
+        assertEquals(25, movieDao.getCountOfMovies());
     }
 
     @Test
     public void getMovieListByIds() throws Exception {
-        MovieDaoImpl movieDaoImpl = (MovieDaoImpl) context.getBean("movieDaoImpl");
 
         // Expected movie
         Movie expectedMovie = new Movie();
@@ -71,7 +69,7 @@ public class MovieDaoImplTest {
         //Test
         List<Integer> ids = new ArrayList<>();
         ids.add(15);
-        List<Movie> actualMovieList = movieDaoImpl.getMovieListByIds(ids);
+        List<Movie> actualMovieList = movieDao.getMovieListByIds(ids);
         Movie actualMovie = actualMovieList.get(0);
         assertEquals(expectedMovie.getId(), actualMovie.getId());
         assertEquals(expectedMovie.getNameRussian(), actualMovie.getNameRussian());

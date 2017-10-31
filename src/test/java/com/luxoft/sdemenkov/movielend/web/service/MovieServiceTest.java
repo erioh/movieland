@@ -1,40 +1,29 @@
 package com.luxoft.sdemenkov.movielend.web.service;
 
-import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.CountryDaoImpl;
-import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.GenreDaoImpl;
-import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.MovieDaoImpl;
-import com.luxoft.sdemenkov.movielend.model.Country;
-import com.luxoft.sdemenkov.movielend.model.Genre;
+import com.luxoft.sdemenkov.movielend.dao.jdbc.MovieDao;
 import com.luxoft.sdemenkov.movielend.model.Movie;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class MovieServiceTest {
-    private ApplicationContext context;
+    @InjectMocks
     private MovieService movieService;
-    private CountryDaoImpl mockedCountryDaoImpl;
-    private GenreDaoImpl mockedGenreDaoImpl;
-    private MovieDaoImpl mockedMovieDaoImpl;
-
-    @Before
-    public void setUp() throws Exception {
-        context = new FileSystemXmlApplicationContext("./src/test/resources/spring-test-config.xml");
-        movieService = (MovieService) context.getBean("movieService");
-        mockedCountryDaoImpl = mock(CountryDaoImpl.class);
-        mockedGenreDaoImpl = mock(GenreDaoImpl.class);
-        mockedMovieDaoImpl = mock(MovieDaoImpl.class);
-
-    }
+    @Mock
+    private MovieDao mockedMovieDao;
+    @Mock
+    private CountryService mockedCountryService;
+    @Mock
+    private GenreService mockedGenreService;
 
     @Test
     public void getAllMovies() throws Exception {
@@ -53,13 +42,10 @@ public class MovieServiceTest {
         // Mocking objects
         List<Movie> list = new ArrayList<>();
         list.add(expectedMovie);
-        when(mockedMovieDaoImpl.getAllMovies()).thenReturn(list);
-        movieService.setMovieDaoImpl(mockedMovieDaoImpl);
-
+        when(mockedMovieDao.getAllMovies()).thenReturn(list);
         // Test
         List<Movie> movieList = movieService.getAllMovies();
         Movie actualMovie = movieList.get(0);
-        System.out.println(actualMovie);
         assertEquals(expectedMovie.getId(), actualMovie.getId());
         assertEquals(expectedMovie.getNameRussian(), actualMovie.getNameRussian());
         assertEquals(expectedMovie.getNameNative(), actualMovie.getNameNative());
@@ -69,36 +55,21 @@ public class MovieServiceTest {
         assertEquals(expectedMovie.getPicturePath(), actualMovie.getPicturePath());
     }
 
-//    @Test
+    @Test
     public void getThreeRundomMovies() throws Exception {
 
         // Creating expected movies, countries and genres
-        Country country = new Country();
-        List<Country> countryList = new ArrayList<>();
-        countryList.add(country);
-
-        Genre genre = new Genre();
-        List<Genre> genreList = new ArrayList<>();
-        genreList.add(genre);
-
-        Movie movie = new Movie();
         List<Movie> movieList = new ArrayList<>();
-        movieList.add(movie);
-
+        movieList.add(new Movie());
+        movieList.add(new Movie());
+        movieList.add(new Movie());
         //Mocking objects
-        when(mockedMovieDaoImpl.getAllMovies()).thenReturn(movieList);
-        when(mockedCountryDaoImpl.getCountryListByMovie((Movie) any())).thenReturn(countryList);
-        when(mockedGenreDaoImpl.getGenreListByMove((Movie) any())).thenReturn(genreList);
-        movieService.setMovieDaoImpl(mockedMovieDaoImpl);
-//        movieService.setGenreDaoImpl(mockedGenreDaoImpl);
-//        movieService.setCountryDaoImpl(mockedCountryDaoImpl);
-
+        when(mockedMovieDao.getThreeRandomMovies()).thenReturn(movieList);
+        when(mockedCountryService.ecrichMoviesByCountries(movieList)).thenReturn(movieList);
+        when(mockedGenreService.enrichMoviesByGenres(movieList)).thenReturn(movieList);
         // Test
         List<Movie> actualMovieList = movieService.getThreeRandomMovies();
         assertEquals(3, actualMovieList.size());
-        assertNotEquals(0, actualMovieList.get(0).getCountryList().size());
-        assertNotEquals(0, actualMovieList.get(0).getGenreList().size());
-
     }
 
 }

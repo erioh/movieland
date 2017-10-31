@@ -2,8 +2,8 @@ package com.luxoft.sdemenkov.movielend.web.controller;
 
 import com.luxoft.sdemenkov.movielend.model.Genre;
 import com.luxoft.sdemenkov.movielend.model.Movie;
-import com.luxoft.sdemenkov.movielend.web.responce.ResponceGetAllGenres;
-import com.luxoft.sdemenkov.movielend.web.responce.ResponceGetAllMovies;
+import com.luxoft.sdemenkov.movielend.web.responce.ResponseGetAllGenres;
+import com.luxoft.sdemenkov.movielend.web.responce.ResponseGetAllMovies;
 import com.luxoft.sdemenkov.movielend.web.responce.ResponceGetThreeRandomMovies;
 import com.luxoft.sdemenkov.movielend.web.service.GenreService;
 import com.luxoft.sdemenkov.movielend.web.service.MovieService;
@@ -32,17 +32,17 @@ public class MovieController {
 
     @RequestMapping(value = "/movie", method = RequestMethod.GET)
     @ResponseBody
-    public List<ResponceGetAllMovies> getAllMovies() {
+    public List<ResponseGetAllMovies> getAllMovies() {
         long startTime = System.currentTimeMillis();
-        List<ResponceGetAllMovies> responceGetAllMoviesList = new ArrayList<>();
+        List<ResponseGetAllMovies> responseGetAllMoviesList = new ArrayList<>();
         List<Movie> movieList = movieService.getAllMovies();
         for (Movie movie :
                 movieList) {
-            responceGetAllMoviesList.add(new ResponceGetAllMovies(movie));
+            responseGetAllMoviesList.add(new ResponseGetAllMovies(movie));
         }
         log.debug("Method getAllMovies.  It took {} ms", System.currentTimeMillis() - startTime);
 
-        return responceGetAllMoviesList;
+        return responseGetAllMoviesList;
     }
 
     @RequestMapping(value = "/random", method = RequestMethod.GET)
@@ -62,18 +62,18 @@ public class MovieController {
 
     @RequestMapping(value = "/genre", method = RequestMethod.GET)
     @ResponseBody
-    public List<ResponceGetAllGenres> getAllGenres() {
+    public List<ResponseGetAllGenres> getAllGenres() {
         long startTime = System.currentTimeMillis();
-        List<ResponceGetAllGenres> responceGetAllGenresList = new ArrayList<>();
+        List<ResponseGetAllGenres> responseGetAllGenresList = new ArrayList<>();
         List<Genre> genreList = genreService.getAllGenres();
-        log.debug("Method getAllGenres. Filling responceGetAllGenresList with genres");
+        log.debug("Method getAllGenres. Filling responseGetAllGenresList with genres");
         for (Genre genre :
                 genreList) {
-            responceGetAllGenresList.add(new ResponceGetAllGenres(genre));
+            responseGetAllGenresList.add(new ResponseGetAllGenres(genre));
         }
 
         log.debug("Method getThreeRandomMovies.  It took {} ms", System.currentTimeMillis() - startTime);
-        return responceGetAllGenresList;
+        return responseGetAllGenresList;
 
     }
 

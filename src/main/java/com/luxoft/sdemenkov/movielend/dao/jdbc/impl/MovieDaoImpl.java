@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Random;
 
 @Repository
-public class MovieDaoImpl implements MovieDao{
+public class MovieDaoImpl implements MovieDao {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -57,6 +57,7 @@ public class MovieDaoImpl implements MovieDao{
         List<Movie> movieList = getMovieListByIds(ids);
         return movieList;
     }
+
     @Override
     public int getCountOfMovies() {
         int countOfMovies = jdbcTemplate.queryForObject(GET_COUNT_OF_MOVIES, Integer.class);
@@ -72,4 +73,5 @@ public class MovieDaoImpl implements MovieDao{
         log.debug("Movie with id = {} was selected. Movie = {}", ids, movie.get(0));
         return movie;
     }
+
 }

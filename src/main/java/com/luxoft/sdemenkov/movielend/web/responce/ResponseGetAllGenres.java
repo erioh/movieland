@@ -5,14 +5,14 @@ import com.luxoft.sdemenkov.movielend.model.Genre;
 /**
  * Created by sergeydemenkov on 28.10.17.
  */
-public class ResponceGetAllGenres {
+public class ResponseGetAllGenres {
     private int id;
     private String name;
 
-    public ResponceGetAllGenres() {
+    public ResponseGetAllGenres() {
     }
 
-    public ResponceGetAllGenres(Genre genre) {
+    public ResponseGetAllGenres(Genre genre) {
         id = genre.getId();
         name = genre.getName();
     }
@@ -21,21 +21,13 @@ public class ResponceGetAllGenres {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public String toString() {
-        return "ResponceGetAllGenres{" +
+        return "ResponseGetAllGenres{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

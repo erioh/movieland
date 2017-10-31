@@ -2,7 +2,7 @@ package com.luxoft.sdemenkov.movielend.web.responce;
 
 import com.luxoft.sdemenkov.movielend.model.Movie;
 
-public class ResponceGetAllMovies {
+public class ResponseGetAllMovies {
     private int id;
     private String nameRussian;
     private String nameNative;
@@ -11,10 +11,10 @@ public class ResponceGetAllMovies {
     private double price;
     private String picturePath;
 
-    public ResponceGetAllMovies() {
+    public ResponseGetAllMovies() {
     }
 
-    public ResponceGetAllMovies(Movie movie) {
+    public ResponseGetAllMovies(Movie movie) {
         id = movie.getId();
         nameRussian = movie.getNameRussian();
         nameNative = movie.getNameNative();
@@ -28,61 +28,37 @@ public class ResponceGetAllMovies {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getNameRussian() {
         return nameRussian;
-    }
-
-    public void setNameRussian(String nameRussian) {
-        this.nameRussian = nameRussian;
     }
 
     public String getNameNative() {
         return nameNative;
     }
 
-    public void setNameNative(String nameNative) {
-        this.nameNative = nameNative;
-    }
 
     public int getYearOfRelease() {
         return yearOfRelease;
     }
 
-    public void setYearOfRelease(int yearOfRelease) {
-        this.yearOfRelease = yearOfRelease;
-    }
 
     public double getRating() {
         return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
 
     public String getPicturePath() {
         return picturePath;
     }
 
-    public void setPicturePath(String picturePath) {
-        this.picturePath = picturePath;
-    }
 
     @Override
     public String toString() {
-        return "ResponceGetAllMovies{" +
+        return "ResponseGetAllMovies{" +
                 "id=" + id +
                 ", nameRussian='" + nameRussian + '\'' +
                 ", nameNative='" + nameNative + '\'' +
