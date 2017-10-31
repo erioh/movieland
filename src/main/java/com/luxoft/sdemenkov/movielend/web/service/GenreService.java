@@ -19,25 +19,24 @@ public class GenreService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private GenreDao genreDaoImpl;
+    private GenreDao genreDao;
 
 
     public List<Genre> getAllGenres() {
-        List<Genre> genreList = genreDaoImpl.getAllGenres();
+        List<Genre> genreList = genreDao.getAllGenres();
         log.debug("Calling method getAllMovies");
         return genreList;
 
     }
 
     public List<Movie> enrichMoviesByGenres(List<Movie> movieList) {
-//        List<Movie> returnList = genreDaoImpl.enrichMoviesByGenres(movieList);
-//        log.debug("Calling enrichMoviesByGenres");
-//        return returnList;
-        return null;
+        List<Movie> enrichedMovieList = genreDao.enrichMoviesByGenres(movieList);
+        log.debug("ecrichMoviesByGenres is executed");
+        return enrichedMovieList;
     }
 
-    public void setGenreDaoImpl(GenreDao genreDaoImpl) {
-        this.genreDaoImpl = genreDaoImpl;
+    public void setGenreDao(GenreDao genreDao) {
+        this.genreDao = genreDao;
     }
 
 }

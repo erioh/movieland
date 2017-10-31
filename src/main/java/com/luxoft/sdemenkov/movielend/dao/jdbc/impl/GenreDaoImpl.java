@@ -8,13 +8,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class GenreDaoImpl implements GenreDao {
 
+    private static final String GET_GENRE_WITH_MAPPED_MOVIE_ID_SQL = "select mg.movie_id, g.genre_id, g.name " +
+            "from genre g inner join movie_genre mg on g.genre_id = mg.genre_id " +
+            "where mg.movie_id in (:ids);" ;
     private final Logger log = LoggerFactory.getLogger(getClass());
     private static final String GET_ALL_GENRES_SQL = "select genre_id, name from genre;";
 
@@ -25,6 +32,8 @@ public class GenreDaoImpl implements GenreDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private GenreRowMapper genreRowMapper = new GenreRowMapper();
 
@@ -41,7 +50,27 @@ public class GenreDaoImpl implements GenreDao {
         return genreList;
     }
     public List<Movie> enrichMoviesByGenres(List<Movie> movieList) {
-return null;
+        MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
+        List<Integer> movieIds = new ArrayList<>();
+        for (Movie movie : movieList) {
+            movieIds.add(movie.getId());
+        }
+        sqlParameterSource.addValue("ids", movieIds);
+        List<Map<String, Object>> list = namedParameterJdbcTemplate.queryForList(GET_GENRE_WITH_MAPPED_MOVIE_ID_SQL,sqlParameterSource);
+
+        for (Movie movie : movieList) {
+            List<Genre> genreList = new ArrayList<>();
+            for (Map<String, Object> map : list) {
+                if((Integer)map.get("movie_id") == movie.getId()) {
+                    Genre genre = new Genre();
+                    genre.setId((Integer) map.get("genre_id"));
+                    genre.setName((String) map.get("name"));
+                    genreList.add(genre);
+                }
+            }
+            movie.setGenreList(genreList);
+        }
+        return movieList;
     }
 
 }

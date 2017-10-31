@@ -1,5 +1,6 @@
 package com.luxoft.sdemenkov.movielend.dao.jdbc.impl;
 
+import com.luxoft.sdemenkov.movielend.dao.jdbc.MovieDao;
 import com.luxoft.sdemenkov.movielend.model.Movie;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +22,8 @@ public class MovieDaoImplTest {
 
     @Test
     public void getAllMovies() throws Exception {
-        MovieDaoImpl movieDaoImpl = (MovieDaoImpl) context.getBean("movieDaoImpl");
-        List<Movie> movieList = movieDaoImpl.getAllMovies();
+        MovieDao movieDao = (MovieDao) context.getBean("movieDaoImpl");
+        List<Movie> movieList = movieDao.getAllMovies();
         Movie expectedMovie = new Movie();
         expectedMovie.setId(15);
         expectedMovie.setNameRussian("Gladiator");
@@ -50,13 +51,13 @@ public class MovieDaoImplTest {
 
     @Test
     public void getCountOfMovies() throws Exception {
-        MovieDaoImpl movieDaoImpl = (MovieDaoImpl) context.getBean("movieDaoImpl");
-        assertEquals(25, movieDaoImpl.getCountOfMovies());
+        MovieDao movieDao = (MovieDao) context.getBean("movieDaoImpl");
+        assertEquals(25, movieDao.getCountOfMovies());
     }
 
     @Test
     public void getMovieListByIds() throws Exception {
-        MovieDaoImpl movieDaoImpl = (MovieDaoImpl) context.getBean("movieDaoImpl");
+        MovieDao movieDao = (MovieDao) context.getBean("movieDaoImpl");
 
         // Expected movie
         Movie expectedMovie = new Movie();
@@ -71,7 +72,7 @@ public class MovieDaoImplTest {
         //Test
         List<Integer> ids = new ArrayList<>();
         ids.add(15);
-        List<Movie> actualMovieList = movieDaoImpl.getMovieListByIds(ids);
+        List<Movie> actualMovieList = movieDao.getMovieListByIds(ids);
         Movie actualMovie = actualMovieList.get(0);
         assertEquals(expectedMovie.getId(), actualMovie.getId());
         assertEquals(expectedMovie.getNameRussian(), actualMovie.getNameRussian());

@@ -72,4 +72,5 @@ public class MovieDaoImpl implements MovieDao{
         log.debug("Movie with id = {} was selected. Movie = {}", ids, movie.get(0));
         return movie;
     }
+
 }

@@ -1,5 +1,8 @@
 package com.luxoft.sdemenkov.movielend.web.service;
 
+import com.luxoft.sdemenkov.movielend.dao.jdbc.CountryDao;
+import com.luxoft.sdemenkov.movielend.dao.jdbc.GenreDao;
+import com.luxoft.sdemenkov.movielend.dao.jdbc.MovieDao;
 import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.CountryDaoImpl;
 import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.GenreDaoImpl;
 import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.MovieDaoImpl;
@@ -16,23 +19,28 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class MovieServiceTest {
     private ApplicationContext context;
     private MovieService movieService;
-    private CountryDaoImpl mockedCountryDaoImpl;
-    private GenreDaoImpl mockedGenreDaoImpl;
-    private MovieDaoImpl mockedMovieDaoImpl;
+    private CountryDao mockedCountryDao;
+    private GenreDao mockedGenreDao;
+    private MovieDao mockedMovieDao;
+    private CountryService mockedCountryService;
+    private GenreService mockedGenreService;
 
     @Before
     public void setUp() throws Exception {
         context = new FileSystemXmlApplicationContext("./src/test/resources/spring-test-config.xml");
         movieService = (MovieService) context.getBean("movieService");
-        mockedCountryDaoImpl = mock(CountryDaoImpl.class);
-        mockedGenreDaoImpl = mock(GenreDaoImpl.class);
-        mockedMovieDaoImpl = mock(MovieDaoImpl.class);
+        mockedCountryDao = mock(CountryDaoImpl.class);
+        mockedGenreDao = mock(GenreDaoImpl.class);
+        mockedMovieDao = mock(MovieDaoImpl.class);
+        mockedCountryService = mock(CountryService.class);
+        mockedGenreService = mock(GenreService.class);
 
     }
 
@@ -53,8 +61,8 @@ public class MovieServiceTest {
         // Mocking objects
         List<Movie> list = new ArrayList<>();
         list.add(expectedMovie);
-        when(mockedMovieDaoImpl.getAllMovies()).thenReturn(list);
-        movieService.setMovieDaoImpl(mockedMovieDaoImpl);
+        when(mockedMovieDao.getAllMovies()).thenReturn(list);
+        movieService.setMovieDao(mockedMovieDao);
 
         // Test
         List<Movie> movieList = movieService.getAllMovies();
@@ -69,36 +77,22 @@ public class MovieServiceTest {
         assertEquals(expectedMovie.getPicturePath(), actualMovie.getPicturePath());
     }
 
-//    @Test
+    @Test
     public void getThreeRundomMovies() throws Exception {
 
         // Creating expected movies, countries and genres
-        Country country = new Country();
-        List<Country> countryList = new ArrayList<>();
-        countryList.add(country);
-
-        Genre genre = new Genre();
-        List<Genre> genreList = new ArrayList<>();
-        genreList.add(genre);
-
-        Movie movie = new Movie();
         List<Movie> movieList = new ArrayList<>();
-        movieList.add(movie);
-
+        movieList.add(new Movie());
+        movieList.add(new Movie());
+        movieList.add(new Movie());
         //Mocking objects
-        when(mockedMovieDaoImpl.getAllMovies()).thenReturn(movieList);
-        when(mockedCountryDaoImpl.getCountryListByMovie((Movie) any())).thenReturn(countryList);
-        when(mockedGenreDaoImpl.getGenreListByMove((Movie) any())).thenReturn(genreList);
-        movieService.setMovieDaoImpl(mockedMovieDaoImpl);
-//        movieService.setGenreDaoImpl(mockedGenreDaoImpl);
-//        movieService.setCountryDaoImpl(mockedCountryDaoImpl);
-
+        when(mockedMovieDao.getThreeRandomMovies()).thenReturn(movieList);
+        when(mockedCountryService.ecrichMoviesByCountries(movieList)).thenReturn(movieList);
+        when(mockedGenreService.enrichMoviesByGenres(movieList)).thenReturn(movieList);
+        movieService.setMovieDao(mockedMovieDao);
         // Test
         List<Movie> actualMovieList = movieService.getThreeRandomMovies();
         assertEquals(3, actualMovieList.size());
-        assertNotEquals(0, actualMovieList.get(0).getCountryList().size());
-        assertNotEquals(0, actualMovieList.get(0).getGenreList().size());
-
     }
 
 }
