@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class CountryDaoImpl implements CountryDao{
+public class CountryDaoImpl implements CountryDao {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -52,12 +52,12 @@ public class CountryDaoImpl implements CountryDao{
             movieIds.add(movie.getId());
         }
         sqlParameterSource.addValue("ids", movieIds);
-        List<Map<String, Object>> list = namedParameterJdbcTemplate.queryForList(GET_COUNTRY_WITH_MAPPED_MOVIE_ID_SQL,sqlParameterSource);
+        List<Map<String, Object>> list = namedParameterJdbcTemplate.queryForList(GET_COUNTRY_WITH_MAPPED_MOVIE_ID_SQL, sqlParameterSource);
 
         for (Movie movie : movieList) {
             List<Country> countryList = new ArrayList<>();
             for (Map<String, Object> map : list) {
-                if((Integer)map.get("movie_id") == movie.getId()) {
+                if ((Integer) map.get("movie_id") == movie.getId()) {
                     Country country = new Country();
                     country.setId((Integer) map.get("country_id"));
                     country.setName((String) map.get("name"));

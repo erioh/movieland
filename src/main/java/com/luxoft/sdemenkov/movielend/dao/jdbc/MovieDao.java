@@ -9,8 +9,11 @@ import java.util.List;
  */
 public interface MovieDao {
     List<Movie> getAllMovies();
+
     List<Movie> getThreeRandomMovies();
+
     int getCountOfMovies();
+
     List<Movie> getMovieListByIds(List<Integer> ids);
 
 }
