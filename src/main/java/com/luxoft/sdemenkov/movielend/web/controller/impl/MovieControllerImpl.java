@@ -2,6 +2,7 @@ package com.luxoft.sdemenkov.movielend.web.controller.impl;
 
 import com.luxoft.sdemenkov.movielend.model.Genre;
 import com.luxoft.sdemenkov.movielend.model.Movie;
+import com.luxoft.sdemenkov.movielend.web.controller.MovieController;
 import com.luxoft.sdemenkov.movielend.web.responce.ResponseGetAllGenres;
 import com.luxoft.sdemenkov.movielend.web.responce.ResponseGetAllMovies;
 import com.luxoft.sdemenkov.movielend.web.responce.ResponseGetThreeRandomMovies;
@@ -21,7 +22,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/v1")
-public class MovieControllerImpl implements com.luxoft.sdemenkov.movielend.web.controller.MovieController {
+public class MovieControllerImpl implements MovieController {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired

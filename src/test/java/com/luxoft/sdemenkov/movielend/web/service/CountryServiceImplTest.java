@@ -28,7 +28,7 @@ public class CountryServiceImplTest {
     private CountryServiceImpl countryService;
 
     @Mock
-    private CountryDaoImpl mockedCountryDao;
+    private CountryDao mockedCountryDao;
 
     @Test
     public void enrichMoviesByCountries() throws Exception {

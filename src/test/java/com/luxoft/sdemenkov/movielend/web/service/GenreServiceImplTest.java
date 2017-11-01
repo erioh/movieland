@@ -26,7 +26,7 @@ public class GenreServiceImplTest {
     @InjectMocks
     private GenreServiceImpl genreService;
     @Mock
-    private GenreDaoImpl mockedGenreDao;
+    private GenreDao mockedGenreDao;
 
     @Test
     public void getAllGenres() throws Exception {

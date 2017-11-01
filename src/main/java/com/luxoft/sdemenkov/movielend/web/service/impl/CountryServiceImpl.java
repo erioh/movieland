@@ -2,6 +2,7 @@ package com.luxoft.sdemenkov.movielend.web.service.impl;
 
 import com.luxoft.sdemenkov.movielend.dao.jdbc.CountryDao;
 import com.luxoft.sdemenkov.movielend.model.Movie;
+import com.luxoft.sdemenkov.movielend.web.service.CountryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.List;
  */
 
 @Service
-public class CountryServiceImpl implements com.luxoft.sdemenkov.movielend.web.service.CountryService {
+public class CountryServiceImpl implements CountryService {
     @Autowired
     private CountryDao countryDao;
 

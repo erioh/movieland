@@ -23,11 +23,11 @@ public class MovieServiceImplTest {
     @InjectMocks
     private MovieServiceImpl movieService;
     @Mock
-    private MovieDaoImpl mockedMovieDao;
+    private MovieDao mockedMovieDao;
     @Mock
-    private CountryServiceImpl mockedCountryService;
+    private CountryService mockedCountryService;
     @Mock
-    private GenreServiceImpl mockedGenreService;
+    private GenreService mockedGenreService;
 
     @Test
     public void getAllMovies() throws Exception {

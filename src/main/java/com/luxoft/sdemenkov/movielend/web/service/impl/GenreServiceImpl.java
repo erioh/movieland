@@ -3,6 +3,7 @@ package com.luxoft.sdemenkov.movielend.web.service.impl;
 import com.luxoft.sdemenkov.movielend.dao.jdbc.GenreDao;
 import com.luxoft.sdemenkov.movielend.model.Genre;
 import com.luxoft.sdemenkov.movielend.model.Movie;
+import com.luxoft.sdemenkov.movielend.web.service.GenreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 
 @Service
-public class GenreServiceImpl implements com.luxoft.sdemenkov.movielend.web.service.GenreService {
+public class GenreServiceImpl implements GenreService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
