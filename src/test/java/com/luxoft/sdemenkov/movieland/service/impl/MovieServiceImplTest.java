@@ -1,4 +1,4 @@
-package com.luxoft.sdemenkov.movieland.web.service;
+package com.luxoft.sdemenkov.movieland.service.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
 import com.luxoft.sdemenkov.movieland.model.Movie;
@@ -59,7 +59,7 @@ public class MovieServiceImplTest {
     }
 
     @Test
-    public void getThreeRundomMovies() throws Exception {
+    public void getThreeRandomMovies() throws Exception {
 
         // Creating expected movies, countries and genres
         List<Movie> movieList = new ArrayList<>();
@@ -74,5 +74,23 @@ public class MovieServiceImplTest {
         List<Movie> actualMovieList = movieService.getThreeRandomMovies();
         assertEquals(3, actualMovieList.size());
     }
+
+    @Test
+    public void getMoviesByGenre() throws Exception {
+
+        // Creating expected movies, countries and genres
+        List<Movie> movieList = new ArrayList<>();
+        movieList.add(new Movie());
+        movieList.add(new Movie());
+        movieList.add(new Movie());
+
+        //Mocking objects
+        when(mockedMovieDao.getMoviesByGenre(1)).thenReturn(movieList);
+
+        // Test
+        List<Movie> actualResult = movieService.getMoviesByGenre(1);
+        assertEquals(3, actualResult.size());
+    }
+
 
 }

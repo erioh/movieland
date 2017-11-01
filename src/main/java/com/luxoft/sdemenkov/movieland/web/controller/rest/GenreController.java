@@ -1,4 +1,4 @@
-package com.luxoft.sdemenkov.movieland.web.controller;
+package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.Genre;
 import com.luxoft.sdemenkov.movieland.service.GenreService;
@@ -18,7 +18,7 @@ import java.util.List;
  * Created by dp-ptcstd-43 on 11/1/2017.
  */
 @RestController
-@RequestMapping("v1/genre")
+@RequestMapping("/genre")
 public class GenreController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     @Autowired

@@ -2,6 +2,7 @@ package com.luxoft.sdemenkov.movieland.web.controller;
 
 import com.luxoft.sdemenkov.movieland.model.Genre;
 import com.luxoft.sdemenkov.movieland.service.impl.GenreServiceImpl;
+import com.luxoft.sdemenkov.movieland.web.controller.rest.GenreController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.jayway.jsonassert.impl.matcher.IsCollectionWithSize.hasSize;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -47,7 +47,7 @@ public class GenreControllerTest {
         mockedGenreList.add(getGenreForTest());
         mockedGenreList.add(getGenreForTest());
         when(mockedGenreService.getAllGenres()).thenReturn(mockedGenreList);
-        mockMvc.perform(get("/v1/genre"))
+        mockMvc.perform(get("/genre"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$", hasSize(2)))

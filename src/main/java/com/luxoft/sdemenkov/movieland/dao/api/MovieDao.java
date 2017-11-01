@@ -1,5 +1,6 @@
 package com.luxoft.sdemenkov.movieland.dao.api;
 
+import com.luxoft.sdemenkov.movieland.model.Genre;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 
 import java.util.List;
@@ -15,5 +16,7 @@ public interface MovieDao {
     int getCountOfMovies();
 
     List<Movie> getMovieListByIds(List<Integer> ids);
+
+    List<Movie> getMoviesByGenre(int genreId);
 
 }

@@ -1,6 +1,7 @@
 package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
+import com.luxoft.sdemenkov.movieland.model.Genre;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -79,6 +80,18 @@ public class JdbcMovieDaoTest {
         assertEquals(expectedMovie.getPrice(), actualMovie.getPrice(), 0);
         assertEquals(expectedMovie.getPicturePath(), actualMovie.getPicturePath());
 
+    }
+    @Test
+    public void getThreeRandomMovies() throws Exception {
+        List<Movie> movieList = movieDao.getThreeRandomMovies();
+        assertEquals(3, movieList.size());
+    }
+
+
+    @Test
+    public void getMoviesByGenre() throws Exception {
+        List<Movie> movieList = movieDao.getMoviesByGenre(1);
+        assertEquals(16, movieList.size());
     }
 
 }

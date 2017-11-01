@@ -39,4 +39,10 @@ public class MovieServiceImpl implements MovieService {
         return threeRandomMovies;
     }
 
+    @Override
+    public List<Movie> getMoviesByGenre(int genreId) {
+        List<Movie> movieList = movieDao.getMoviesByGenre(genreId);
+        log.debug("Method getMoviesByGenre is called for genreId = {} with result: {}", genreId, movieList);
+        return movieList;
+    }
 }

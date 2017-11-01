@@ -2,6 +2,7 @@ package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
 import com.luxoft.sdemenkov.movieland.dao.mapper.MovieRowMapper;
+import com.luxoft.sdemenkov.movieland.model.Genre;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import java.util.Random;
 @Repository
 public class JdbcMovieDao implements MovieDao {
 
+
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -28,6 +30,12 @@ public class JdbcMovieDao implements MovieDao {
     private MovieRowMapper movieRowMapper = new MovieRowMapper();
     private final Random randomGenerator = new Random();
 
+    private static final String GET_MOVIES_BY_GENRE_ID_SQL = "select m.movie_id, m.name_russian, m.name_native,  " +
+            "m.year_of_release, m.description, m.rating, m.price, p.picture_path from movie m " +
+            "inner join movie_poster mp on m.movie_id = mp.movie_id " +
+            "inner join poster p on mp.picture_id = p.picture_id " +
+            "inner join movie_genre mg on m.movie_id = mg.movie_id " +
+            "where mg.genre_id = ? ";
     private static final String GET_ALL_MOVIES_SQL = "select m.movie_id, m.name_russian, m.name_native,  " +
             "m.year_of_release, m.description, m.rating, m.price, p.picture_path from movie m " +
             "inner join movie_poster mp on m.movie_id = mp.movie_id " +
@@ -74,4 +82,11 @@ public class JdbcMovieDao implements MovieDao {
         return movie;
     }
 
+    @Override
+    public List<Movie> getMoviesByGenre(int genreId) {
+        List<Movie> movieList = jdbcTemplate.query(GET_MOVIES_BY_GENRE_ID_SQL, new Object[]{genreId}, movieRowMapper);
+        log.debug("Method getMoviesByGenre is called with sql = {} and genre_id = {} ", GET_MOVIES_BY_GENRE_ID_SQL, genreId);
+        log.debug("Method getMoviesByGenre is called. Result is {}", movieList);
+        return movieList;
+    }
 }

@@ -2,7 +2,7 @@ package com.luxoft.sdemenkov.movieland.web.responce;
 
 import com.luxoft.sdemenkov.movieland.model.Movie;
 
-public class ResponseGetAllMovies {
+public class ResponseGetMovieByGenre {
     private int id;
     private String nameRussian;
     private String nameNative;
@@ -11,10 +11,10 @@ public class ResponseGetAllMovies {
     private double price;
     private String picturePath;
 
-    public ResponseGetAllMovies() {
+    public ResponseGetMovieByGenre() {
     }
 
-    public ResponseGetAllMovies(Movie movie) {
+    public ResponseGetMovieByGenre(Movie movie) {
         id = movie.getId();
         nameRussian = movie.getNameRussian();
         nameNative = movie.getNameNative();
@@ -58,7 +58,7 @@ public class ResponseGetAllMovies {
 
     @Override
     public String toString() {
-        return "ResponseGetAllMovies{" +
+        return "ResponseGetMovieByGenre{" +
                 "id=" + id +
                 ", nameRussian='" + nameRussian + '\'' +
                 ", nameNative='" + nameNative + '\'' +

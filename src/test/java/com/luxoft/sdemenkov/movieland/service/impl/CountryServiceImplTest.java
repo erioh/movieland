@@ -1,4 +1,4 @@
-package com.luxoft.sdemenkov.movieland.web.service;
+package com.luxoft.sdemenkov.movieland.service.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.CountryDao;
 import com.luxoft.sdemenkov.movieland.model.Movie;
