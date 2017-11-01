@@ -24,7 +24,7 @@ public class GenreController {
     @Autowired
     private GenreService genreService;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public List<ResponseGetAllGenres> getAllGenres() {
         long startTime = System.currentTimeMillis();
         List<ResponseGetAllGenres> responseGetAllGenresList = new ArrayList<>();

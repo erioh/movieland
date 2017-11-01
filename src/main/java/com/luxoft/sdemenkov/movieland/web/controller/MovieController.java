@@ -27,7 +27,7 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<ResponseGetAllMovies> getAllMovies() {
         long startTime = System.currentTimeMillis();
