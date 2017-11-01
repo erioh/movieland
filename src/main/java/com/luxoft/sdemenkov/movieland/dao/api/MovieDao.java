@@ -1,4 +1,4 @@
-package com.luxoft.sdemenkov.movieland.dao.jdbc;
+package com.luxoft.sdemenkov.movieland.dao.api;
 
 import com.luxoft.sdemenkov.movieland.model.Movie;
 

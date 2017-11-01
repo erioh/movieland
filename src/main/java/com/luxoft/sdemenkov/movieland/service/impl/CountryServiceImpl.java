@@ -1,6 +1,6 @@
 package com.luxoft.sdemenkov.movieland.service.impl;
 
-import com.luxoft.sdemenkov.movieland.dao.jdbc.CountryDao;
+import com.luxoft.sdemenkov.movieland.dao.api.CountryDao;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.CountryService;
 import org.slf4j.Logger;

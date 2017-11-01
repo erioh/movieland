@@ -1,6 +1,6 @@
 package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 
-import com.luxoft.sdemenkov.movieland.dao.jdbc.CountryDao;
+import com.luxoft.sdemenkov.movieland.dao.api.CountryDao;
 import com.luxoft.sdemenkov.movieland.dao.mapper.CountryRowMapper;
 import com.luxoft.sdemenkov.movieland.model.Country;
 import com.luxoft.sdemenkov.movieland.model.Movie;

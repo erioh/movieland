@@ -1,6 +1,6 @@
 package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 
-import com.luxoft.sdemenkov.movieland.dao.jdbc.MovieDao;
+import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
 import com.luxoft.sdemenkov.movieland.dao.mapper.MovieRowMapper;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import org.slf4j.Logger;

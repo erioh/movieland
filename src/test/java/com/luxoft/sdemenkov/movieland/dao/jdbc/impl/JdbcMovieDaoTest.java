@@ -1,6 +1,6 @@
 package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 
-import com.luxoft.sdemenkov.movieland.dao.jdbc.MovieDao;
+import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import org.junit.Test;
 import org.junit.runner.RunWith;
