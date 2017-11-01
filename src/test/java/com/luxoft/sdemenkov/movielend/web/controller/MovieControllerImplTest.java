@@ -53,7 +53,6 @@ public class MovieControllerImplTest {
 
         when(mockedMovieService.getAllMovies()).thenReturn(mockedGetAllMoviesList);
         mockMvc.perform(get("/v1/movie"))
-//                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
