@@ -3,8 +3,11 @@ package com.luxoft.sdemenkov.movielend.web.controller;
 import com.luxoft.sdemenkov.movielend.model.Country;
 import com.luxoft.sdemenkov.movielend.model.Genre;
 import com.luxoft.sdemenkov.movielend.model.Movie;
+import com.luxoft.sdemenkov.movielend.web.controller.impl.MovieControllerImpl;
 import com.luxoft.sdemenkov.movielend.web.service.GenreService;
 import com.luxoft.sdemenkov.movielend.web.service.MovieService;
+import com.luxoft.sdemenkov.movielend.web.service.impl.GenreServiceImpl;
+import com.luxoft.sdemenkov.movielend.web.service.impl.MovieServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,14 +31,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
 @WebAppConfiguration
-public class MovieControllerTest {
+public class MovieControllerImplTest {
     private MockMvc mockMvc;
     @Mock
-    private MovieService mockedMovieService;
+    private MovieServiceImpl mockedMovieService;
     @Mock
-    private GenreService mockedGenreService;
+    private GenreServiceImpl mockedGenreService;
     @InjectMocks
-    private MovieController movieController;
+    private MovieControllerImpl movieController;
 
     @Before
     public void setUp() {
@@ -44,7 +47,7 @@ public class MovieControllerTest {
 
     @Test
     public void getAllMovies() throws Exception {
-        // Mocking MovieService for MovieController
+        // Mocking MovieServiceImpl for MovieControllerImpl
         List<Movie> mockedGetAllMoviesList = new ArrayList<>();
         mockedGetAllMoviesList.add(getMovieForTest());
 

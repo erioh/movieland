@@ -1,4 +1,4 @@
-package com.luxoft.sdemenkov.movielend.web.service;
+package com.luxoft.sdemenkov.movielend.web.service.impl;
 
 import com.luxoft.sdemenkov.movielend.dao.jdbc.CountryDao;
 import com.luxoft.sdemenkov.movielend.model.Movie;
@@ -14,12 +14,13 @@ import java.util.List;
  */
 
 @Service
-public class CountryService {
+public class CountryServiceImpl implements com.luxoft.sdemenkov.movielend.web.service.CountryService {
     @Autowired
     private CountryDao countryDao;
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    @Override
     public List<Movie> ecrichMoviesByCountries(List<Movie> movieList) {
         List<Movie> enrichedMovieList = countryDao.enrichMoviesByCountries(movieList);
         log.debug("ecrichMoviesByCountries is executed");

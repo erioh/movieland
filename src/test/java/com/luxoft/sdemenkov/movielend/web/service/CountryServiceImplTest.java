@@ -1,7 +1,9 @@
 package com.luxoft.sdemenkov.movielend.web.service;
 
 import com.luxoft.sdemenkov.movielend.dao.jdbc.CountryDao;
+import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.CountryDaoImpl;
 import com.luxoft.sdemenkov.movielend.model.Movie;
+import com.luxoft.sdemenkov.movielend.web.service.impl.CountryServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -21,12 +23,12 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
-public class CountryServiceTest {
+public class CountryServiceImplTest {
     @InjectMocks
-    private CountryService countryService;
+    private CountryServiceImpl countryService;
 
     @Mock
-    private CountryDao mockedCountryDao;
+    private CountryDaoImpl mockedCountryDao;
 
     @Test
     public void enrichMoviesByCountries() throws Exception {

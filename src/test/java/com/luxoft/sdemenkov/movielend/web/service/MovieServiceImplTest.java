@@ -1,7 +1,11 @@
 package com.luxoft.sdemenkov.movielend.web.service;
 
 import com.luxoft.sdemenkov.movielend.dao.jdbc.MovieDao;
+import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.MovieDaoImpl;
 import com.luxoft.sdemenkov.movielend.model.Movie;
+import com.luxoft.sdemenkov.movielend.web.service.impl.CountryServiceImpl;
+import com.luxoft.sdemenkov.movielend.web.service.impl.GenreServiceImpl;
+import com.luxoft.sdemenkov.movielend.web.service.impl.MovieServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -15,15 +19,15 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MovieServiceTest {
+public class MovieServiceImplTest {
     @InjectMocks
-    private MovieService movieService;
+    private MovieServiceImpl movieService;
     @Mock
-    private MovieDao mockedMovieDao;
+    private MovieDaoImpl mockedMovieDao;
     @Mock
-    private CountryService mockedCountryService;
+    private CountryServiceImpl mockedCountryService;
     @Mock
-    private GenreService mockedGenreService;
+    private GenreServiceImpl mockedGenreService;
 
     @Test
     public void getAllMovies() throws Exception {

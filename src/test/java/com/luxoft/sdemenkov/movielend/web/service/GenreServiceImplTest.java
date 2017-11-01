@@ -1,8 +1,10 @@
 package com.luxoft.sdemenkov.movielend.web.service;
 
 import com.luxoft.sdemenkov.movielend.dao.jdbc.GenreDao;
+import com.luxoft.sdemenkov.movielend.dao.jdbc.impl.GenreDaoImpl;
 import com.luxoft.sdemenkov.movielend.model.Genre;
 import com.luxoft.sdemenkov.movielend.model.Movie;
+import com.luxoft.sdemenkov.movielend.web.service.impl.GenreServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,11 +22,11 @@ import static org.mockito.Mockito.when;
  * Created by sergeydemenkov on 28.10.17.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class GenreServiceTest {
+public class GenreServiceImplTest {
     @InjectMocks
-    private GenreService genreService;
+    private GenreServiceImpl genreService;
     @Mock
-    private GenreDao mockedGenreDao;
+    private GenreDaoImpl mockedGenreDao;
 
     @Test
     public void getAllGenres() throws Exception {

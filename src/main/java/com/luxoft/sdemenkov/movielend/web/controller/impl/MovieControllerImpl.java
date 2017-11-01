@@ -1,4 +1,4 @@
-package com.luxoft.sdemenkov.movielend.web.controller;
+package com.luxoft.sdemenkov.movielend.web.controller.impl;
 
 import com.luxoft.sdemenkov.movielend.model.Genre;
 import com.luxoft.sdemenkov.movielend.model.Movie;
@@ -21,7 +21,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/v1")
-public class MovieController {
+public class MovieControllerImpl implements com.luxoft.sdemenkov.movielend.web.controller.MovieController {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -30,6 +30,7 @@ public class MovieController {
     @Autowired
     private GenreService genreService;
 
+    @Override
     @RequestMapping(value = "/movie", method = RequestMethod.GET)
     @ResponseBody
     public List<ResponseGetAllMovies> getAllMovies() {
@@ -45,6 +46,7 @@ public class MovieController {
         return responseGetAllMoviesList;
     }
 
+    @Override
     @RequestMapping(value = "/random", method = RequestMethod.GET)
     @ResponseBody
     public List<ResponseGetThreeRandomMovies> getThreeRandomMovies() {
@@ -60,6 +62,7 @@ public class MovieController {
         return responseGetThreeRandomMovies;
     }
 
+    @Override
     @RequestMapping(value = "/genre", method = RequestMethod.GET)
     @ResponseBody
     public List<ResponseGetAllGenres> getAllGenres() {

@@ -1,4 +1,4 @@
-package com.luxoft.sdemenkov.movielend.web.service;
+package com.luxoft.sdemenkov.movielend.web.service.impl;
 
 import com.luxoft.sdemenkov.movielend.dao.jdbc.GenreDao;
 import com.luxoft.sdemenkov.movielend.model.Genre;
@@ -15,13 +15,14 @@ import java.util.List;
  */
 
 @Service
-public class GenreService {
+public class GenreServiceImpl implements com.luxoft.sdemenkov.movielend.web.service.GenreService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private GenreDao genreDao;
 
 
+    @Override
     public List<Genre> getAllGenres() {
         List<Genre> genreList = genreDao.getAllGenres();
         log.debug("Calling method getAllMovies");
@@ -29,6 +30,7 @@ public class GenreService {
 
     }
 
+    @Override
     public List<Movie> enrichMoviesByGenres(List<Movie> movieList) {
         List<Movie> enrichedMovieList = genreDao.enrichMoviesByGenres(movieList);
         log.debug("ecrichMoviesByGenres is executed");
