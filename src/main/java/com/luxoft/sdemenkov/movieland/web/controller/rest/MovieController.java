@@ -24,7 +24,7 @@ public class MovieController {
     private MovieService movieService;
 
     @Autowired
-    private SortService<ResponseGetAllMovies> responseGetAllMoviesSortService;
+    private SortService sortService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<ResponseGetAllMovies> getAllMovies() {
@@ -41,9 +41,9 @@ public class MovieController {
     }
 
     @RequestMapping(params = "rating", method = RequestMethod.GET)
-    public List<ResponseGetAllMovies> getAllMoviesSorted( @RequestParam String rating) throws IllegalArgumentException {
+    public List<ResponseGetAllMovies> getAllMoviesSorted( @RequestParam String rating)   {
         List<ResponseGetAllMovies> responseGetAllMoviesList = getAllMovies();
-        responseGetAllMoviesList = responseGetAllMoviesSortService.sort(responseGetAllMoviesList, rating);
+        responseGetAllMoviesList = sortService.sortByRating(responseGetAllMoviesList, rating);
         return responseGetAllMoviesList;
     }
 
@@ -76,4 +76,9 @@ public class MovieController {
     private void setMovieService(MovieService movieService) {
         this.movieService = movieService;
     }
+
+    public void setSortService(SortService sortService) {
+        this.sortService = sortService;
+    }
+
 }

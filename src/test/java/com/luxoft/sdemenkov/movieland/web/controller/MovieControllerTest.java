@@ -3,8 +3,8 @@ package com.luxoft.sdemenkov.movieland.web.controller;
 import com.luxoft.sdemenkov.movieland.model.Country;
 import com.luxoft.sdemenkov.movieland.model.Genre;
 import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.service.SortService;
 import com.luxoft.sdemenkov.movieland.service.impl.MovieServiceImpl;
-import com.luxoft.sdemenkov.movieland.service.impl.SortResponseGetAllMoviesService;
 import com.luxoft.sdemenkov.movieland.web.controller.rest.MovieController;
 import com.luxoft.sdemenkov.movieland.web.responce.ResponseGetAllMovies;
 import org.junit.Before;
@@ -23,6 +23,8 @@ import java.util.List;
 
 import static com.jayway.jsonassert.impl.matcher.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -38,7 +40,7 @@ public class MovieControllerTest {
     @Mock
     private MovieServiceImpl mockedMovieService;
     @Mock
-    private SortResponseGetAllMoviesService sortResponseGetAllMoviesService;
+    private SortService<ResponseGetAllMovies> mockedSortResponseGetAllMoviesService;
     @InjectMocks
     private MovieController movieController;
 
@@ -114,10 +116,9 @@ public class MovieControllerTest {
         responseGetAllMoviesList.add(new ResponseGetAllMovies(getMovieForTest()));
         responseGetAllMoviesList.add(new ResponseGetAllMovies(getMovieForTest()));
         responseGetAllMoviesList.add(new ResponseGetAllMovies(getMovieForTest()));
-        when(sortResponseGetAllMoviesService.sort(responseGetAllMoviesList, "desc")).thenReturn(responseGetAllMoviesList);
+        when(mockedSortResponseGetAllMoviesService.sortByRating(anyList(), eq("desc"))).thenReturn(responseGetAllMoviesList);
         mockMvc.perform(get("/movie").param("rating","desc"))
                 .andExpect(status().isOk())
-                .andDo(print())
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
