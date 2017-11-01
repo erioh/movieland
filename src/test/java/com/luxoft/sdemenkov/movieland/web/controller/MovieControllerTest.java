@@ -32,8 +32,6 @@ public class MovieControllerTest {
     private MockMvc mockMvc;
     @Mock
     private MovieServiceImpl mockedMovieService;
-    @Mock
-    private GenreServiceImpl mockedGenreService;
     @InjectMocks
     private MovieController movieController;
 
@@ -49,7 +47,7 @@ public class MovieControllerTest {
         mockedGetAllMoviesList.add(getMovieForTest());
 
         when(mockedMovieService.getAllMovies()).thenReturn(mockedGetAllMoviesList);
-        mockMvc.perform(get("/v1/movie"))
+        mockMvc.perform(get("/v1/movie/"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
@@ -70,7 +68,7 @@ public class MovieControllerTest {
         mockedGetAllMoviesList.add(getMovieForTest());
 
         when(mockedMovieService.getThreeRandomMovies()).thenReturn(mockedGetAllMoviesList);
-        mockMvc.perform(get("/v1/random"))
+        mockMvc.perform(get("/v1/movie/random"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
@@ -83,22 +81,6 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
     }
 
-
-    @Test
-    public void getAllGenresTest() throws Exception {
-        List<Genre> mockedGenreList = new ArrayList<>();
-        mockedGenreList.add(getGenreForTest());
-        mockedGenreList.add(getGenreForTest());
-        when(mockedGenreService.getAllGenres()).thenReturn(mockedGenreList);
-        mockMvc.perform(get("/v1/genre"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].name").value("Name"))
-        ;
-
-    }
 
     private Movie getMovieForTest() {
         Movie movie = new Movie();
@@ -118,11 +100,6 @@ public class MovieControllerTest {
         return movie;
     }
 
-    private Genre getGenreForTest() {
-        Genre genre = new Genre();
-        genre.setId(1);
-        genre.setName("Name");
-        return genre;
-    }
+
 
 }
