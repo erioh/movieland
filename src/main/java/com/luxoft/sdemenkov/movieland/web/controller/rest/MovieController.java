@@ -44,13 +44,17 @@ public class MovieController {
     @RequestMapping(params = "rating", method = RequestMethod.GET)
     public List<Sortable> getAllMoviesSortedByRating(@RequestParam String rating)   {
         List<Sortable> responseGetAllMoviesList = getAllMovies();
+        long startTime = System.currentTimeMillis();
         responseGetAllMoviesList =  sortService.sortByRating(responseGetAllMoviesList, rating);
+        log.debug("Method getAllMoviesSortedByRating (Sorting).  It took {} ms", System.currentTimeMillis() - startTime);
         return responseGetAllMoviesList;
     }
     @RequestMapping(params = "price", method = RequestMethod.GET)
     public List<Sortable> getAllMoviesSortedByPrice(@RequestParam String price)   {
         List<Sortable> responseGetAllMoviesList = getAllMovies();
+        long startTime = System.currentTimeMillis();
         responseGetAllMoviesList =  sortService.sortByPrice(responseGetAllMoviesList, price);
+        log.debug("Method getAllMoviesSortedByPrice (Sorting).  It took {} ms", System.currentTimeMillis() - startTime);
         return responseGetAllMoviesList;
     }
 
@@ -70,13 +74,17 @@ public class MovieController {
     @RequestMapping(value = "/random", params = "rating", method = RequestMethod.GET)
     public List<Sortable> getThreeRandomMoviesSortedByRating(@RequestParam String rating)   {
         List<Sortable> responseGetThreeRandomMovies = getThreeRandomMovies();
+        long startTime = System.currentTimeMillis();
         responseGetThreeRandomMovies =  sortService.sortByRating(responseGetThreeRandomMovies, rating);
+        log.debug("Method getThreeRandomMoviesSortedByRating (Sorting part).  It took {} ms", System.currentTimeMillis() - startTime);
         return responseGetThreeRandomMovies;
     }
     @RequestMapping(value = "/random", params = "price", method = RequestMethod.GET)
     public List<Sortable> getThreeRandomMoviesSortedByPrice(@RequestParam String price)   {
         List<Sortable> responseGetThreeRandomMovies = getThreeRandomMovies();
+        long startTime = System.currentTimeMillis();
         responseGetThreeRandomMovies =  sortService.sortByPrice(responseGetThreeRandomMovies, price);
+        log.debug("Method getThreeRandomMovies.  It took {} ms", System.currentTimeMillis() - startTime);
         return responseGetThreeRandomMovies;
     }
 
@@ -88,7 +96,7 @@ public class MovieController {
         for (Movie movie : movieList) {
             responseGetMovieByGenreList.add(new ResponseGetMovieByGenre(movie));
         }
-        log.debug("Method getThreeRandomMovies.  It took {} ms", System.currentTimeMillis() - startTime);
+        log.debug("Method getThreeRandomMoviesSortedByRating (Sorting part).  It took {} ms", System.currentTimeMillis() - startTime);
         return responseGetMovieByGenreList;
     }
 
