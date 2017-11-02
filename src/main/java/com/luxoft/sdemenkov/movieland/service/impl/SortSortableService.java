@@ -16,7 +16,7 @@ public class SortSortableService implements SortService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Override
-    public List<Sortable> sortByRating(List<Sortable> list, String expression) {
+    public List<Sortable > sortByRating(List<Sortable> list, String expression) {
         log.debug("Start to sortByRating.");
         if(!expression.equals("desc")) {
             log.error("IllegalArgumentException exception was thrown by sortByRating. " +
@@ -25,6 +25,23 @@ public class SortSortableService implements SortService {
                     "Used incorrect parameter is '" + expression + "'" );
         }
         Collections.sort(list, Comparator.comparingDouble(Sortable::getRating).reversed());
+        return list;
+    }
+
+    @Override
+    public List<Sortable> sortByPrice(List<Sortable> list, String expression) {
+        log.debug("Start to sortByPrice.");
+        if(expression.equals("desc")) {
+            Collections.sort(list, Comparator.comparingDouble(Sortable::getPrice).reversed());
+        } else  if (expression.equals("asc")) {
+            Collections.sort(list, Comparator.comparingDouble(Sortable::getPrice));
+        } else {
+            log.error("IllegalArgumentException exception was thrown by sortByRating. " +
+                    "Invalid value of parameter 'rating' is {}", expression);
+            throw new IllegalArgumentException("Only sorting descending is supported. " +
+                    "Used incorrect parameter is '" + expression + "'" );
+        }
+
         return list;
     }
 }

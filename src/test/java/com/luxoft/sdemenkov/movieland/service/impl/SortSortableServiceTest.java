@@ -12,6 +12,34 @@ import static org.junit.Assert.*;
 
 public class SortSortableServiceTest {
     @Test
+    public void sortByPriceAsc() throws Exception {
+        List<Sortable> responseGetAllMoviesList = new ArrayList<>();
+        SortSortableService sortSortableService = new SortSortableService();
+        Movie movieMax = new Movie();
+        Movie movieMin = new Movie();
+        movieMax.setPrice(10);
+        movieMin.setPrice(8);
+        responseGetAllMoviesList.add(new ResponseGetAllMovies(movieMin));
+        responseGetAllMoviesList.add(new ResponseGetAllMovies(movieMax));
+        responseGetAllMoviesList = sortSortableService.sortByPrice(responseGetAllMoviesList, "asc");
+        assertEquals(8, responseGetAllMoviesList.get(0).getPrice(), 0);
+    }
+
+    @Test
+    public void sortByPriceDesc() throws Exception {
+        List<Sortable> responseGetAllMoviesList = new ArrayList<>();
+        SortSortableService sortSortableService = new SortSortableService();
+        Movie movieMax = new Movie();
+        Movie movieMin = new Movie();
+        movieMax.setPrice(10);
+        movieMin.setPrice(8);
+        responseGetAllMoviesList.add(new ResponseGetAllMovies(movieMin));
+        responseGetAllMoviesList.add(new ResponseGetAllMovies(movieMax));
+        responseGetAllMoviesList = sortSortableService.sortByPrice(responseGetAllMoviesList, "desc");
+        assertEquals(10, responseGetAllMoviesList.get(0).getPrice(), 0);
+    }
+
+    @Test
     public void sortByRating() throws Exception {
         List<Sortable> responseGetAllMoviesList = new ArrayList<>();
         SortSortableService sortSortableService = new SortSortableService();

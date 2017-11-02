@@ -10,7 +10,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
@@ -68,7 +70,7 @@ public class JdbcMovieDaoTest {
         expectedMovie.setPicturePath("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg");
 
         //Test
-        List<Integer> ids = new ArrayList<>();
+        Set<Integer> ids = new HashSet<>();
         ids.add(15);
         List<Movie> actualMovieList = movieDao.getMovieListByIds(ids);
         Movie actualMovie = actualMovieList.get(0);

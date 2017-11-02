@@ -4,9 +4,11 @@ import com.luxoft.sdemenkov.movieland.model.Country;
 import com.luxoft.sdemenkov.movieland.model.Genre;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.SortService;
+import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 import com.luxoft.sdemenkov.movieland.service.impl.MovieServiceImpl;
 import com.luxoft.sdemenkov.movieland.web.controller.rest.MovieController;
 import com.luxoft.sdemenkov.movieland.web.responce.ResponseGetAllMovies;
+import com.luxoft.sdemenkov.movieland.web.responce.ResponseGetThreeRandomMovies;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,11 +38,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class MovieControllerTest {
 
+
+
     private MockMvc mockMvc;
     @Mock
     private MovieServiceImpl mockedMovieService;
     @Mock
-    private SortService<ResponseGetAllMovies> mockedSortResponseGetAllMoviesService;
+    private SortService mockedSortResponseGetAllMoviesService;
     @InjectMocks
     private MovieController movieController;
 
@@ -111,13 +115,116 @@ public class MovieControllerTest {
     }
 
     @Test
-    public void getAllMoviesSorted() throws Exception {
-        List<ResponseGetAllMovies> responseGetAllMoviesList = new ArrayList<>();
+    public void getAllMoviesSortedByRating() throws Exception {
+        List<Sortable> responseGetAllMoviesList = new ArrayList<>();
         responseGetAllMoviesList.add(new ResponseGetAllMovies(getMovieForTest()));
         responseGetAllMoviesList.add(new ResponseGetAllMovies(getMovieForTest()));
         responseGetAllMoviesList.add(new ResponseGetAllMovies(getMovieForTest()));
         when(mockedSortResponseGetAllMoviesService.sortByRating(anyList(), eq("desc"))).thenReturn(responseGetAllMoviesList);
         mockMvc.perform(get("/movie").param("rating","desc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$[0].id").value(15))
+                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
+                .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
+                .andExpect(jsonPath("$[0].rating").value(8.6))
+                .andExpect(jsonPath("$[0].price").value(175.0))
+                .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
+
+    }
+
+    @Test
+    public void getAllMoviesSortedByPriceDesc() throws Exception {
+        List<Sortable> responseGetAllMoviesList = new ArrayList<>();
+        responseGetAllMoviesList.add(new ResponseGetAllMovies(getMovieForTest()));
+        responseGetAllMoviesList.add(new ResponseGetAllMovies(getMovieForTest()));
+        responseGetAllMoviesList.add(new ResponseGetAllMovies(getMovieForTest()));
+        when(mockedSortResponseGetAllMoviesService.sortByPrice(anyList(), eq("desc"))).thenReturn(responseGetAllMoviesList);
+        mockMvc.perform(get("/movie").param("price","desc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$[0].id").value(15))
+                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
+                .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
+                .andExpect(jsonPath("$[0].rating").value(8.6))
+                .andExpect(jsonPath("$[0].price").value(175.0))
+                .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
+
+    }
+    @Test
+    public void getAllMoviesSortedByPriceAsc() throws Exception {
+        List<Sortable> responseGetAllMoviesList = new ArrayList<>();
+        responseGetAllMoviesList.add(new ResponseGetAllMovies(getMovieForTest()));
+        responseGetAllMoviesList.add(new ResponseGetAllMovies(getMovieForTest()));
+        responseGetAllMoviesList.add(new ResponseGetAllMovies(getMovieForTest()));
+        when(mockedSortResponseGetAllMoviesService.sortByPrice(anyList(), eq("asc"))).thenReturn(responseGetAllMoviesList);
+        mockMvc.perform(get("/movie").param("price","asc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$[0].id").value(15))
+                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
+                .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
+                .andExpect(jsonPath("$[0].rating").value(8.6))
+                .andExpect(jsonPath("$[0].price").value(175.0))
+                .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
+
+    }
+
+    @Test
+    public void getThreeRandomMoviesSortedByRating() throws Exception {
+        List<Sortable> responseGetThreeRandomMoviesList = new ArrayList<>();
+        responseGetThreeRandomMoviesList.add(new ResponseGetThreeRandomMovies(getMovieForTest()));
+        responseGetThreeRandomMoviesList.add(new ResponseGetThreeRandomMovies(getMovieForTest()));
+        responseGetThreeRandomMoviesList.add(new ResponseGetThreeRandomMovies(getMovieForTest()));
+        when(mockedSortResponseGetAllMoviesService.sortByRating(anyList(), eq("desc"))).thenReturn(responseGetThreeRandomMoviesList);
+        mockMvc.perform(get("/movie").param("rating","desc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$[0].id").value(15))
+                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
+                .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
+                .andExpect(jsonPath("$[0].rating").value(8.6))
+                .andExpect(jsonPath("$[0].price").value(175.0))
+                .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
+
+    }
+
+    @Test
+    public void getThreeRandomMoviesSortedByPriceDesc() throws Exception {
+        List<Sortable> responseGetThreeRandomMoviesList = new ArrayList<>();
+        responseGetThreeRandomMoviesList.add(new ResponseGetThreeRandomMovies(getMovieForTest()));
+        responseGetThreeRandomMoviesList.add(new ResponseGetThreeRandomMovies(getMovieForTest()));
+        responseGetThreeRandomMoviesList.add(new ResponseGetThreeRandomMovies(getMovieForTest()));
+        when(mockedSortResponseGetAllMoviesService.sortByPrice(anyList(), eq("desc"))).thenReturn(responseGetThreeRandomMoviesList);
+        mockMvc.perform(get("/movie").param("price","desc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$[0].id").value(15))
+                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
+                .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
+                .andExpect(jsonPath("$[0].rating").value(8.6))
+                .andExpect(jsonPath("$[0].price").value(175.0))
+                .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
+
+    }
+    @Test
+    public void getThreeRandomMoviesSortedByPriceAsc() throws Exception {
+        List<Sortable> responseGetThreeRandomMoviesList = new ArrayList<>();
+        responseGetThreeRandomMoviesList.add(new ResponseGetThreeRandomMovies(getMovieForTest()));
+        responseGetThreeRandomMoviesList.add(new ResponseGetThreeRandomMovies(getMovieForTest()));
+        responseGetThreeRandomMoviesList.add(new ResponseGetThreeRandomMovies(getMovieForTest()));
+        when(mockedSortResponseGetAllMoviesService.sortByPrice(anyList(), eq("asc"))).thenReturn(responseGetThreeRandomMoviesList);
+        mockMvc.perform(get("/movie").param("price","asc"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))

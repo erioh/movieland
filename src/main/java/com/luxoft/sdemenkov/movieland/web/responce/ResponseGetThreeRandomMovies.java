@@ -3,10 +3,11 @@ package com.luxoft.sdemenkov.movieland.web.responce;
 import com.luxoft.sdemenkov.movieland.model.Country;
 import com.luxoft.sdemenkov.movieland.model.Genre;
 import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 
 import java.util.List;
 
-public class ResponseGetThreeRandomMovies {
+public class ResponseGetThreeRandomMovies implements Sortable {
     private int id;
     private String nameRussian;
     private String nameNative;
