@@ -3,7 +3,7 @@ package com.luxoft.sdemenkov.movieland.web.responce;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 
-public class ResponseGetAllMovies implements Sortable{
+public class AllMoviesDTO implements Sortable{
     private int id;
     private String nameRussian;
     private String nameNative;
@@ -12,10 +12,10 @@ public class ResponseGetAllMovies implements Sortable{
     private double price;
     private String picturePath;
 
-    public ResponseGetAllMovies() {
+    public AllMoviesDTO() {
     }
 
-    public ResponseGetAllMovies(Movie movie) {
+    public AllMoviesDTO(Movie movie) {
         id = movie.getId();
         nameRussian = movie.getNameRussian();
         nameNative = movie.getNameNative();
@@ -61,7 +61,7 @@ public class ResponseGetAllMovies implements Sortable{
 
     @Override
     public String toString() {
-        return "ResponseGetAllMovies{" +
+        return "AllMoviesDTO{" +
                 "id=" + id +
                 ", nameRussian='" + nameRussian + '\'' +
                 ", nameNative='" + nameNative + '\'' +

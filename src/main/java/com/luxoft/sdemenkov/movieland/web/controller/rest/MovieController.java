@@ -3,9 +3,9 @@ package com.luxoft.sdemenkov.movieland.web.controller.rest;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.SortService;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
-import com.luxoft.sdemenkov.movieland.web.responce.ResponseGetAllMovies;
-import com.luxoft.sdemenkov.movieland.web.responce.ResponseGetMovieByGenre;
-import com.luxoft.sdemenkov.movieland.web.responce.ResponseGetThreeRandomMovies;
+import com.luxoft.sdemenkov.movieland.web.responce.AllMoviesDTO;
+import com.luxoft.sdemenkov.movieland.web.responce.MovieByGenreDTO;
+import com.luxoft.sdemenkov.movieland.web.responce.ThreeRandomMoviesDTO;
 import com.luxoft.sdemenkov.movieland.service.MovieService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ public class MovieController {
         List<Movie> movieList = movieService.getAllMovies();
         for (Movie movie :
                 movieList) {
-            responseGetAllMoviesList.add(new ResponseGetAllMovies(movie));
+            responseGetAllMoviesList.add(new AllMoviesDTO(movie));
         }
         log.debug("Method getAllMovies.  It took {} ms", System.currentTimeMillis() - startTime);
 
@@ -59,45 +59,16 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/random", method = RequestMethod.GET)
-    public List<ResponseGetThreeRandomMovies> getThreeRandomMovies() {
+    public List<ThreeRandomMoviesDTO> getThreeRandomMovies() {
         long startTime = System.currentTimeMillis();
-        List<ResponseGetThreeRandomMovies> responseGetThreeRandomMovies = new ArrayList<>();
+        List<ThreeRandomMoviesDTO> threeRandomMovieDTOS = new ArrayList<>();
         List<Movie> movieList = movieService.getThreeRandomMovies();
         for (Movie movie : movieList) {
-            responseGetThreeRandomMovies.add(new ResponseGetThreeRandomMovies(movie));
+            threeRandomMovieDTOS.add(new ThreeRandomMoviesDTO(movie));
         }
         log.debug("Method getThreeRandomMovies.  It took {} ms", System.currentTimeMillis() - startTime);
 
-        return responseGetThreeRandomMovies;
-    }
-
-    @RequestMapping(value = "/genre/{genreId}", method = RequestMethod.GET)
-    public List<Sortable> getMoviesByGenre(@PathVariable(name = "genreId") int genreId) {
-        long startTime = System.currentTimeMillis();
-        List<Sortable> responseGetMovieByGenreList = new ArrayList<>();
-        List<Movie> movieList = movieService.getMoviesByGenre(genreId);
-        for (Movie movie : movieList) {
-            responseGetMovieByGenreList.add(new ResponseGetMovieByGenre(movie));
-        }
-        log.debug("Method getThreeRandomMoviesSortedByRating (Sorting part).  It took {} ms", System.currentTimeMillis() - startTime);
-        return responseGetMovieByGenreList;
-    }
-
-    @RequestMapping(value = "/genre/{genreId}", params = {"rating", "price"}, method = RequestMethod.GET)
-    public List<Sortable> getMoviesByGenreSorted(@PathVariable(name = "genreId") int genreId
-            , @RequestParam(required = false) String rating
-            , @RequestParam(required = false) String price) {
-        List<Sortable> responseGetMovieByGenre = getMoviesByGenre(genreId);
-        System.out.println("AAAAAAAAAAAA");
-        long startTime = System.currentTimeMillis();
-        if(rating != null) {
-            responseGetMovieByGenre = sortService.sortByPrice(responseGetMovieByGenre, price);
-        }
-        if(price != null) {
-            responseGetMovieByGenre = sortService.sortByRating(responseGetMovieByGenre, rating);
-        }
-        return responseGetMovieByGenre;
-
+        return threeRandomMovieDTOS;
     }
 
     private void setMovieService(MovieService movieService) {

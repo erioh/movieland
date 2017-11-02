@@ -5,14 +5,14 @@ import com.luxoft.sdemenkov.movieland.model.Genre;
 /**
  * Created by sergeydemenkov on 28.10.17.
  */
-public class ResponseGetAllGenres {
+public class AllGenresDTO {
     private int id;
     private String name;
 
-    public ResponseGetAllGenres() {
+    public AllGenresDTO() {
     }
 
-    public ResponseGetAllGenres(Genre genre) {
+    public AllGenresDTO(Genre genre) {
         id = genre.getId();
         name = genre.getName();
     }
@@ -27,7 +27,7 @@ public class ResponseGetAllGenres {
 
     @Override
     public String toString() {
-        return "ResponseGetAllGenres{" +
+        return "AllGenresDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

@@ -7,7 +7,7 @@ import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 
 import java.util.List;
 
-public class ResponseGetThreeRandomMovies implements Sortable {
+public class ThreeRandomMoviesDTO implements Sortable {
     private int id;
     private String nameRussian;
     private String nameNative;
@@ -19,7 +19,7 @@ public class ResponseGetThreeRandomMovies implements Sortable {
     private List<Country> countryList;
     private List<Genre> genreList;
 
-    public ResponseGetThreeRandomMovies(Movie movie) {
+    public ThreeRandomMoviesDTO(Movie movie) {
         this.id = movie.getId();
         this.nameRussian = movie.getNameRussian();
         this.nameNative = movie.getNameNative();
@@ -32,7 +32,7 @@ public class ResponseGetThreeRandomMovies implements Sortable {
         this.genreList = movie.getGenreList();
     }
 
-    public ResponseGetThreeRandomMovies() {
+    public ThreeRandomMoviesDTO() {
     }
 
     public int getId() {
@@ -77,7 +77,7 @@ public class ResponseGetThreeRandomMovies implements Sortable {
 
     @Override
     public String toString() {
-        return "ResponseGetThreeRandomMovies{" +
+        return "ThreeRandomMoviesDTO{" +
                 "id=" + id +
                 ", nameRussian='" + nameRussian + '\'' +
                 ", nameNative='" + nameNative + '\'' +
