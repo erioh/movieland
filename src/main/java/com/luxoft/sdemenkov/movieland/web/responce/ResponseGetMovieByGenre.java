@@ -1,8 +1,9 @@
 package com.luxoft.sdemenkov.movieland.web.responce;
 
 import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 
-public class ResponseGetMovieByGenre {
+public class ResponseGetMovieByGenre implements Sortable{
     private int id;
     private String nameRussian;
     private String nameNative;
@@ -41,11 +42,11 @@ public class ResponseGetMovieByGenre {
         return yearOfRelease;
     }
 
-
+    @Override
     public double getRating() {
         return rating;
     }
-
+    @Override
     public double getPrice() {
         return price;
     }
