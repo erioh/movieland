@@ -1,15 +1,15 @@
 package com.luxoft.sdemenkov.movieland.web.controller;
 
-import com.luxoft.sdemenkov.movieland.model.Country;
 import com.luxoft.sdemenkov.movieland.model.Genre;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.GenreService;
 import com.luxoft.sdemenkov.movieland.service.MovieService;
 import com.luxoft.sdemenkov.movieland.service.SortService;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
-import com.luxoft.sdemenkov.movieland.service.impl.GenreServiceImpl;
+import com.luxoft.sdemenkov.movieland.web.responce.MoviesByGenreDTO;
+import com.luxoft.sdemenkov.testutils.GenreGenerator;
+import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import com.luxoft.sdemenkov.movieland.web.controller.rest.GenreController;
-import com.luxoft.sdemenkov.movieland.web.responce.MovieByGenreDTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,8 +59,8 @@ public class GenreControllerTest {
     @Test
     public void getAllGenresTest() throws Exception {
         List<Genre> mockedGenreList = new ArrayList<>();
-        mockedGenreList.add(getGenreForTest());
-        mockedGenreList.add(getGenreForTest());
+        mockedGenreList.add(GenreGenerator.getGenreForTest());
+        mockedGenreList.add(GenreGenerator.getGenreForTest());
         when(mockedGenreService.getAllGenres()).thenReturn(mockedGenreList);
         mockMvc.perform(get("/genre"))
                 .andExpect(status().isOk())
@@ -75,9 +75,9 @@ public class GenreControllerTest {
     @Test
     public void getMoviesByGenre() throws Exception {
         List<Movie> movieList = new ArrayList<>();
-        movieList.add(getMovieForTest());
-        movieList.add(getMovieForTest());
-        movieList.add(getMovieForTest());
+        movieList.add(MovieGenerator.getMovieForTest());
+        movieList.add(MovieGenerator.getMovieForTest());
+        movieList.add(MovieGenerator.getMovieForTest());
         when(mockedMovieService.getMoviesByGenre(anyInt())).thenReturn(movieList);
         mockMvc.perform(get("/genre/1"))
                 .andExpect(status().isOk())
@@ -93,13 +93,13 @@ public class GenreControllerTest {
 
     }
 
-//    @Test
+    @Test
     public void getMoviesByGenreSortedByRating() throws Exception {
-        List<Movie> movieList = new ArrayList<>();
-        movieList.add(getMovieForTest().setRating(1));
-        movieList.add(getMovieForTest().setRating(2));
-        movieList.add(getMovieForTest().setRating(3));
-        when(mockedMovieService.getMoviesByGenre(anyInt())).thenReturn(movieList);
+        List<Sortable> movieDtoList = new ArrayList<>();
+        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
+        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
+        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
+        when(mockedSortService.sortByRating(anyList(), eq("desc"))).thenReturn(movieDtoList);
         mockMvc.perform(get("/genre/1").param("rating","desc"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -109,35 +109,34 @@ public class GenreControllerTest {
                 .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
                 .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
                 .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
-                .andExpect(jsonPath("$[0].rating").value(3))
+                .andExpect(jsonPath("$[0].rating").value(8))
                 .andExpect(jsonPath("$[0].price").value(175.0))
                 .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
 
     }
 
-    private Genre getGenreForTest() {
-        Genre genre = new Genre();
-        genre.setId(1);
-        genre.setName("Name");
-        return genre;
+    @Test
+    public void getMoviesByGenreSortedByPrice() throws Exception {
+        List<Sortable> movieDtoList = new ArrayList<>();
+        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
+        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
+        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
+        when(mockedSortService.sortByPrice(anyList(), eq("desc"))).thenReturn(movieDtoList);
+        mockMvc.perform(get("/genre/1").param("price","desc"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$[0].id").value(15))
+                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
+                .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
+                .andExpect(jsonPath("$[0].rating").value(8))
+                .andExpect(jsonPath("$[0].price").value(175.0))
+                .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
+
     }
 
-    private Movie getMovieForTest() {
-        Movie movie = new Movie();
-        movie.setId(15);
-        movie.setNameRussian("Gladiator");
-        movie.setNameNative("Gladiator");
-        movie.setYearOfRelease(2000);
-        movie.setRating(8.6);
-        movie.setPrice(175.0);
-        movie.setPicturePath("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg");
-        List<Genre> genreList = new ArrayList<>();
-        genreList.add(new Genre());
-        movie.setGenreList(genreList);
-        List<Country> countryList = new ArrayList<>();
-        countryList.add(new Country());
-        movie.setCountryList(countryList);
-        return movie;
-    }
+
 
 }

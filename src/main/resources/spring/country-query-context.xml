@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="getCountryWithMappedMovieIdSQL" class="java.lang.String">
+        <constructor-arg value="select mc.movie_id, c.country_id, c.name from country c
+        inner join movie_country mc on mc.country_id = c.country_id
+        where mc.movie_id in (:ids)"/>
+    </bean>
+
+    <bean id="getCountryByMovieIdSQL" class="java.lang.String">
+        <constructor-arg value="select c.country_id, c.name from country c
+        join movie_country mc on c.country_id = mc.country_id
+        where movie_id = ?;"/>
+    </bean>
+</beans>

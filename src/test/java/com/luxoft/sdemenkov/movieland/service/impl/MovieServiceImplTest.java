@@ -5,6 +5,7 @@ import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.CountryService;
 import com.luxoft.sdemenkov.movieland.service.GenreService;
 import com.luxoft.sdemenkov.movieland.service.impl.MovieServiceImpl;
+import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -32,15 +33,7 @@ public class MovieServiceImplTest {
     public void getAllMovies() throws Exception {
 
         // Creating expected Movie
-        Movie expectedMovie = new Movie();
-        expectedMovie.setId(15);
-        expectedMovie.setNameRussian("Гладиатор");
-        expectedMovie.setNameNative("Gladiator");
-        expectedMovie.setYearOfRelease(2000);
-        expectedMovie.setRating(8.6);
-        expectedMovie.setPrice(175.0);
-        expectedMovie.setPicturePath("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg");
-
+        Movie expectedMovie = MovieGenerator.getMovieForTest();
 
         // Mocking objects
         List<Movie> list = new ArrayList<>();
@@ -63,9 +56,9 @@ public class MovieServiceImplTest {
 
         // Creating expected movies, countries and genres
         List<Movie> movieList = new ArrayList<>();
-        movieList.add(new Movie());
-        movieList.add(new Movie());
-        movieList.add(new Movie());
+        movieList.add(MovieGenerator.getMovieForTest());
+        movieList.add(MovieGenerator.getMovieForTest());
+        movieList.add(MovieGenerator.getMovieForTest());
         //Mocking objects
         when(mockedMovieDao.getThreeRandomMovies()).thenReturn(movieList);
         when(mockedCountryService.ecrichMoviesByCountries(movieList)).thenReturn(movieList);
@@ -80,9 +73,9 @@ public class MovieServiceImplTest {
 
         // Creating expected movies, countries and genres
         List<Movie> movieList = new ArrayList<>();
-        movieList.add(new Movie());
-        movieList.add(new Movie());
-        movieList.add(new Movie());
+        movieList.add(MovieGenerator.getMovieForTest());
+        movieList.add(MovieGenerator.getMovieForTest());
+        movieList.add(MovieGenerator.getMovieForTest());
 
         //Mocking objects
         when(mockedMovieDao.getMoviesByGenre(1)).thenReturn(movieList);

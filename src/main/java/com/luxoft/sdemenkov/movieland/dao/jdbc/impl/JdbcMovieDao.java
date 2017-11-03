@@ -27,12 +27,12 @@ public class JdbcMovieDao implements MovieDao {
     private MovieRowMapper movieRowMapper = new MovieRowMapper();
     private final Random randomGenerator = new Random();
 
-    private static final String GET_MOVIES_BY_GENRE_ID_SQL = "select m.movie_id, m.name_russian, m.name_native,  " +
-            "m.year_of_release, m.description, m.rating, m.price, p.picture_path from movie m " +
-            "inner join movie_poster mp on m.movie_id = mp.movie_id " +
-            "inner join poster p on mp.picture_id = p.picture_id " +
-            "inner join movie_genre mg on m.movie_id = mg.movie_id " +
-            "where mg.genre_id = ? ";
+//    private static final String GET_MOVIES_BY_GENRE_ID_SQL = "select m.movie_id, m.name_russian, m.name_native,  " +
+//            "m.year_of_release, m.description, m.rating, m.price, p.picture_path from movie m " +
+//            "inner join movie_poster mp on m.movie_id = mp.movie_id " +
+//            "inner join poster p on mp.picture_id = p.picture_id " +
+//            "inner join movie_genre mg on m.movie_id = mg.movie_id " +
+//            "where mg.genre_id = ? ";
     private static final String GET_ALL_MOVIES_SQL = "select m.movie_id, m.name_russian, m.name_native,  " +
             "m.year_of_release, m.description, m.rating, m.price, p.picture_path from movie m " +
             "inner join movie_poster mp on m.movie_id = mp.movie_id " +

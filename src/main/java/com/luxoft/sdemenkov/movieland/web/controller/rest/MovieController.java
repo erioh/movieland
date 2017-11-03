@@ -4,7 +4,6 @@ import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.SortService;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 import com.luxoft.sdemenkov.movieland.web.responce.AllMoviesDTO;
-import com.luxoft.sdemenkov.movieland.web.responce.MovieByGenreDTO;
 import com.luxoft.sdemenkov.movieland.web.responce.ThreeRandomMoviesDTO;
 import com.luxoft.sdemenkov.movieland.service.MovieService;
 import org.slf4j.Logger;
@@ -30,32 +29,32 @@ public class MovieController {
     @RequestMapping(method = RequestMethod.GET)
     public List<Sortable> getAllMovies() {
         long startTime = System.currentTimeMillis();
-        List<Sortable> responseGetAllMoviesList = new ArrayList<>();
+        List<Sortable> allMoviesDTOList = new ArrayList<>();
         List<Movie> movieList = movieService.getAllMovies();
         for (Movie movie :
                 movieList) {
-            responseGetAllMoviesList.add(new AllMoviesDTO(movie));
+            allMoviesDTOList.add(new AllMoviesDTO(movie));
         }
         log.debug("Method getAllMovies.  It took {} ms", System.currentTimeMillis() - startTime);
 
-        return responseGetAllMoviesList;
+        return allMoviesDTOList;
     }
 
     @RequestMapping(params = "rating", method = RequestMethod.GET)
     public List<Sortable> getAllMoviesSortedByRating(@RequestParam String rating)   {
-        List<Sortable> responseGetAllMoviesList = getAllMovies();
+        List<Sortable> allMoviesDTOList = getAllMovies();
         long startTime = System.currentTimeMillis();
-        responseGetAllMoviesList =  sortService.sortByRating(responseGetAllMoviesList, rating);
+        allMoviesDTOList =  sortService.sortByRating(allMoviesDTOList, rating);
         log.debug("Method getAllMoviesSortedByRating (Sorting).  It took {} ms", System.currentTimeMillis() - startTime);
-        return responseGetAllMoviesList;
+        return allMoviesDTOList;
     }
     @RequestMapping(params = "price", method = RequestMethod.GET)
     public List<Sortable> getAllMoviesSortedByPrice(@RequestParam String price)   {
-        List<Sortable> responseGetAllMoviesList = getAllMovies();
+        List<Sortable> allMoviesDTOList = getAllMovies();
         long startTime = System.currentTimeMillis();
-        responseGetAllMoviesList =  sortService.sortByPrice(responseGetAllMoviesList, price);
+        allMoviesDTOList =  sortService.sortByPrice(allMoviesDTOList, price);
         log.debug("Method getAllMoviesSortedByPrice (Sorting).  It took {} ms", System.currentTimeMillis() - startTime);
-        return responseGetAllMoviesList;
+        return allMoviesDTOList;
     }
 
     @RequestMapping(value = "/random", method = RequestMethod.GET)

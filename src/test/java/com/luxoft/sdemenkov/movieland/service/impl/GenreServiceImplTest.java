@@ -4,6 +4,8 @@ import com.luxoft.sdemenkov.movieland.dao.api.GenreDao;
 import com.luxoft.sdemenkov.movieland.model.Genre;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.impl.GenreServiceImpl;
+import com.luxoft.sdemenkov.testutils.GenreGenerator;
+import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -31,7 +33,7 @@ public class GenreServiceImplTest {
     public void getAllGenres() throws Exception {
         // Mocking expected result
         List<Genre> genreList = new ArrayList<>();
-        genreList.add(new Genre());
+        genreList.add(GenreGenerator.getGenreForTest());
         when(mockedGenreDao.getAllGenres()).thenReturn(genreList);
         assertEquals(1, genreService.getAllGenres().size());
 
@@ -40,7 +42,7 @@ public class GenreServiceImplTest {
     @Test
     public void enrichMoviesByGenres() throws Exception {
         List<Movie> movieList = new ArrayList<>();
-        movieList.add(new Movie());
+        movieList.add(MovieGenerator.getMovieForTest());
         when(mockedGenreDao.enrichMoviesByGenres(anyList())).thenReturn(movieList);
         assertEquals(1, genreService.enrichMoviesByGenres(movieList).size());
     }

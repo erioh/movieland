@@ -1,11 +1,10 @@
 package com.luxoft.sdemenkov.movieland.web.controller;
 
-import com.luxoft.sdemenkov.movieland.model.Country;
-import com.luxoft.sdemenkov.movieland.model.Genre;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.SortService;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 import com.luxoft.sdemenkov.movieland.service.impl.MovieServiceImpl;
+import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import com.luxoft.sdemenkov.movieland.web.controller.rest.MovieController;
 import com.luxoft.sdemenkov.movieland.web.responce.AllMoviesDTO;
 import org.junit.Before;
@@ -56,7 +55,7 @@ public class MovieControllerTest {
     public void getAllMovies() throws Exception {
         // Mocking MovieServiceImpl for MovieControllerImpl
         List<Movie> mockedGetAllMoviesList = new ArrayList<>();
-        mockedGetAllMoviesList.add(getMovieForTest());
+        mockedGetAllMoviesList.add(MovieGenerator.getMovieForTest());
 
         when(mockedMovieService.getAllMovies()).thenReturn(mockedGetAllMoviesList);
         mockMvc.perform(get("/movie/"))
@@ -75,9 +74,9 @@ public class MovieControllerTest {
     @Test
     public void getThreeRandomMovies() throws Exception {
         List<Movie> mockedGetAllMoviesList = new ArrayList<>();
-        mockedGetAllMoviesList.add(getMovieForTest());
-        mockedGetAllMoviesList.add(getMovieForTest());
-        mockedGetAllMoviesList.add(getMovieForTest());
+        mockedGetAllMoviesList.add(MovieGenerator.getMovieForTest());
+        mockedGetAllMoviesList.add(MovieGenerator.getMovieForTest());
+        mockedGetAllMoviesList.add(MovieGenerator.getMovieForTest());
 
         when(mockedMovieService.getThreeRandomMovies()).thenReturn(mockedGetAllMoviesList);
         mockMvc.perform(get("/movie/random"))
@@ -95,9 +94,9 @@ public class MovieControllerTest {
 //    @Test
     public void getMoviesByGenre() throws Exception {
         List<Movie> mockedGetAllMoviesList = new ArrayList<>();
-        mockedGetAllMoviesList.add(getMovieForTest());
-        mockedGetAllMoviesList.add(getMovieForTest());
-        mockedGetAllMoviesList.add(getMovieForTest());
+        mockedGetAllMoviesList.add(MovieGenerator.getMovieForTest());
+        mockedGetAllMoviesList.add(MovieGenerator.getMovieForTest());
+        mockedGetAllMoviesList.add(MovieGenerator.getMovieForTest());
 
         when(mockedMovieService.getMoviesByGenre(anyInt())).thenReturn(mockedGetAllMoviesList);
         mockMvc.perform(get("/movie/genre/1"))
@@ -116,9 +115,9 @@ public class MovieControllerTest {
     @Test
     public void getAllMoviesSortedByRating() throws Exception {
         List<Sortable> responseGetAllMoviesList = new ArrayList<>();
-        responseGetAllMoviesList.add(new AllMoviesDTO(getMovieForTest()));
-        responseGetAllMoviesList.add(new AllMoviesDTO(getMovieForTest()));
-        responseGetAllMoviesList.add(new AllMoviesDTO(getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         when(mockedSortService.sortByRating(anyList(), eq("desc"))).thenReturn(responseGetAllMoviesList);
         mockMvc.perform(get("/movie").param("rating","desc"))
                 .andExpect(status().isOk())
@@ -137,9 +136,9 @@ public class MovieControllerTest {
     @Test
     public void getAllMoviesSortedByPriceDesc() throws Exception {
         List<Sortable> responseGetAllMoviesList = new ArrayList<>();
-        responseGetAllMoviesList.add(new AllMoviesDTO(getMovieForTest()));
-        responseGetAllMoviesList.add(new AllMoviesDTO(getMovieForTest()));
-        responseGetAllMoviesList.add(new AllMoviesDTO(getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         when(mockedSortService.sortByPrice(anyList(), eq("desc"))).thenReturn(responseGetAllMoviesList);
         mockMvc.perform(get("/movie").param("price","desc"))
                 .andExpect(status().isOk())
@@ -157,9 +156,9 @@ public class MovieControllerTest {
     @Test
     public void getAllMoviesSortedByPriceAsc() throws Exception {
         List<Sortable> responseGetAllMoviesList = new ArrayList<>();
-        responseGetAllMoviesList.add(new AllMoviesDTO(getMovieForTest()));
-        responseGetAllMoviesList.add(new AllMoviesDTO(getMovieForTest()));
-        responseGetAllMoviesList.add(new AllMoviesDTO(getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         when(mockedSortService.sortByPrice(anyList(), eq("asc"))).thenReturn(responseGetAllMoviesList);
         mockMvc.perform(get("/movie").param("price","asc"))
                 .andExpect(status().isOk())
@@ -174,26 +173,5 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
 
     }
-
-
-    private Movie getMovieForTest() {
-        Movie movie = new Movie();
-        movie.setId(15);
-        movie.setNameRussian("Gladiator");
-        movie.setNameNative("Gladiator");
-        movie.setYearOfRelease(2000);
-        movie.setRating(8.6);
-        movie.setPrice(175.0);
-        movie.setPicturePath("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg");
-        List<Genre> genreList = new ArrayList<>();
-        genreList.add(new Genre());
-        movie.setGenreList(genreList);
-        List<Country> countryList = new ArrayList<>();
-        countryList.add(new Country());
-        movie.setCountryList(countryList);
-        return movie;
-    }
-
-
 
 }
