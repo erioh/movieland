@@ -19,9 +19,9 @@ public class CountryServiceImpl implements CountryService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Override
-    public List<Movie> ecrichMoviesByCountries(List<Movie> movieList) {
+    public List<Movie> ecrichMoviesWithCountries(List<Movie> movieList) {
         List<Movie> enrichedMovieList = countryDao.enrichMoviesWithCountries(movieList);
-        log.debug("ecrichMoviesByCountries is executed");
+        log.debug("ecrichMoviesWithCountries is executed");
         return enrichedMovieList;
     }
 }

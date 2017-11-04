@@ -13,6 +13,7 @@ public class Movie {
     private String picturePath;
     private List<Country> countryList;
     private List<Genre> genreList;
+    private List<Review> reviewList;
 
 
     public Movie() {
@@ -112,6 +113,15 @@ public class Movie {
                 ", picturePath='" + picturePath + '\'' +
                 ", countryList=" + countryList +
                 ", genreList=" + genreList +
+                ", reviewList=" + reviewList +
                 '}';
+    }
+
+    public List<Review> getReviewList() {
+        return reviewList;
+    }
+
+    public void setReviewList(List<Review> reviewList) {
+        this.reviewList = reviewList;
     }
 }

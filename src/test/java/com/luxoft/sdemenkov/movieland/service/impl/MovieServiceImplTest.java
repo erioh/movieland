@@ -4,7 +4,6 @@ import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.CountryService;
 import com.luxoft.sdemenkov.movieland.service.GenreService;
-import com.luxoft.sdemenkov.movieland.service.impl.MovieServiceImpl;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -61,8 +60,8 @@ public class MovieServiceImplTest {
         movieList.add(MovieGenerator.getMovieForTest());
         //Mocking objects
         when(mockedMovieDao.getThreeRandomMovies()).thenReturn(movieList);
-        when(mockedCountryService.ecrichMoviesByCountries(movieList)).thenReturn(movieList);
-        when(mockedGenreService.enrichMoviesByGenres(movieList)).thenReturn(movieList);
+        when(mockedCountryService.ecrichMoviesWithCountries(movieList)).thenReturn(movieList);
+        when(mockedGenreService.enrichMoviesWithGenres(movieList)).thenReturn(movieList);
         // Test
         List<Movie> actualMovieList = movieService.getThreeRandomMovies();
         assertEquals(3, actualMovieList.size());

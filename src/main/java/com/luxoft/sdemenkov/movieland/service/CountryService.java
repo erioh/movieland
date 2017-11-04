@@ -8,5 +8,5 @@ import java.util.List;
  * Created by dp-ptcstd-43 on 11/1/2017.
  */
 public interface CountryService {
-    public List<Movie> ecrichMoviesByCountries(List<Movie> movieList);
+    public List<Movie> ecrichMoviesWithCountries(List<Movie> movieList);
 }

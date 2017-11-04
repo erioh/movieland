@@ -8,6 +8,7 @@
     <import resource="classpath:/spring/query/country-query-context.xml"/>
     <import resource="classpath:/spring/query/movie-query-context.xml"/>
     <import resource="classpath:/spring/query/genre-query-context.xml"/>
+    <import resource="classpath:/spring/query/review-query-context.xml"/>
 
     <jdbc:embedded-database id="dataSource" type="H2">
         <jdbc:script location="classpath:/db/create-db.sql"/>

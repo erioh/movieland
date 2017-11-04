@@ -6,6 +6,8 @@
     <import resource="query/country-query-context.xml"/>
     <import resource="query/movie-query-context.xml"/>
     <import resource="query/genre-query-context.xml"/>
+    <import resource="query/review-query-context.xml"/>
+
 
     <mvc:annotation-driven/>
 

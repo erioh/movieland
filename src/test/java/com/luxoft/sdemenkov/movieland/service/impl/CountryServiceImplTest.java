@@ -35,7 +35,7 @@ public class CountryServiceImplTest {
         List<Movie> movieList = new ArrayList<>();
         movieList.add(MovieGenerator.getMovieForTest());
         when(mockedCountryDao.enrichMoviesWithCountries(anyList())).thenReturn(movieList);
-        assertEquals(1, countryService.ecrichMoviesByCountries(movieList).size());
+        assertEquals(1, countryService.ecrichMoviesWithCountries(movieList).size());
     }
 
 }

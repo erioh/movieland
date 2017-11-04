@@ -43,7 +43,7 @@ public class GenreServiceImplTest {
         List<Movie> movieList = new ArrayList<>();
         movieList.add(MovieGenerator.getMovieForTest());
         when(mockedGenreDao.enrichMoviesWithGenres(anyList())).thenReturn(movieList);
-        assertEquals(1, genreService.enrichMoviesByGenres(movieList).size());
+        assertEquals(1, genreService.enrichMoviesWithGenres(movieList).size());
     }
 
 }

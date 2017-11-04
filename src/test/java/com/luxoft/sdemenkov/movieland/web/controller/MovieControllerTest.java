@@ -4,6 +4,7 @@ import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.SortService;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 import com.luxoft.sdemenkov.movieland.service.impl.MovieServiceImpl;
+import com.luxoft.sdemenkov.movieland.web.responce.MovieByIdDTO;
 import com.luxoft.sdemenkov.movieland.web.responce.MoviesByGenreDTO;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import com.luxoft.sdemenkov.movieland.web.controller.rest.MovieController;
@@ -23,9 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.jayway.jsonassert.impl.matcher.IsCollectionWithSize.hasSize;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -36,7 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
 @WebAppConfiguration
 public class MovieControllerTest {
-
 
 
     private MockMvc mockMvc;
@@ -215,6 +213,35 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$[0].rating").value(8))
                 .andExpect(jsonPath("$[0].price").value(175.0))
                 .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
+
+    }
+
+    @Test
+    public void getMoviesById() throws Exception {
+        Movie movie = MovieGenerator.getMovieForTest();
+        List<Movie> movieList = new ArrayList<>();
+        movieList.add(movie);
+        when(mockedMovieService.getMovieById(anySet())).thenReturn(movieList);
+        mockMvc.perform(get("/movie/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("id").value(15))
+                .andExpect(jsonPath("nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("nameNative").value("Gladiator"))
+                .andExpect(jsonPath("yearOfRelease").value(2000))
+                .andExpect(jsonPath("rating").value(8))
+                .andExpect(jsonPath("price").value(175.0))
+                .andExpect(jsonPath("picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"))
+                .andExpect(jsonPath("description").value("Description"))
+                .andExpect(jsonPath("countries[0].id").value(1))
+                .andExpect(jsonPath("countries[0].name").value("Country name"))
+                .andExpect(jsonPath("genres[0].id").value(1))
+                .andExpect(jsonPath("genres[0].name").value("Genre name"))
+                .andExpect(jsonPath("reviews[0].id").value(1))
+                .andExpect(jsonPath("reviews[0].text").value("Review text"))
+                .andExpect(jsonPath("reviews[0].user.id").value(1))
+                .andExpect(jsonPath("reviews[0].user.nickname").value("User name"));
+
 
     }
 

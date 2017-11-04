@@ -31,7 +31,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public List<Movie> enrichMoviesByGenres(List<Movie> movieList) {
+    public List<Movie> enrichMoviesWithGenres(List<Movie> movieList) {
         List<Movie> enrichedMovieList = genreDao.enrichMoviesWithGenres(movieList);
         log.debug("ecrichMoviesByGenres is executed");
         return enrichedMovieList;

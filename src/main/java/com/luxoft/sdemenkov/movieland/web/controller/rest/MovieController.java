@@ -4,6 +4,7 @@ import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.SortService;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 import com.luxoft.sdemenkov.movieland.web.responce.AllMoviesDTO;
+import com.luxoft.sdemenkov.movieland.web.responce.MovieByIdDTO;
 import com.luxoft.sdemenkov.movieland.web.responce.MoviesByGenreDTO;
 import com.luxoft.sdemenkov.movieland.web.responce.ThreeRandomMoviesDTO;
 import com.luxoft.sdemenkov.movieland.service.MovieService;
@@ -13,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -53,6 +56,20 @@ public class MovieController {
 
         return allMoviesDTOList;
     }
+
+    @RequestMapping(value = "/{movieId}", method = RequestMethod.GET)
+    public MovieByIdDTO getMovieById(@PathVariable(value = "movieId") int movieId) {
+        log.debug("Method getMoviesById is called");
+        long startTime = System.currentTimeMillis();
+        Set<Integer> movieIdSet = new HashSet<>();
+        movieIdSet.add(movieId);
+        List<Movie> movieList = movieService.getMovieById(movieIdSet);
+        MovieByIdDTO movieByIdDTO = new MovieByIdDTO(movieList.get(0));
+        log.debug("Method getMoviesById. It took {} ms", System.currentTimeMillis()-startTime);
+        return movieByIdDTO;
+
+    }
+
      @RequestMapping(value = "/random", method = RequestMethod.GET)
     public List<ThreeRandomMoviesDTO> getThreeRandomMovies() {
         long startTime = System.currentTimeMillis();
