@@ -10,9 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Created by dp-ptcstd-43 on 10/31/2017.
- */
 
 @Service
 public class CountryServiceImpl implements CountryService {
@@ -23,7 +20,7 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public List<Movie> ecrichMoviesByCountries(List<Movie> movieList) {
-        List<Movie> enrichedMovieList = countryDao.enrichMoviesByCountries(movieList);
+        List<Movie> enrichedMovieList = countryDao.enrichMoviesWithCountries(movieList);
         log.debug("ecrichMoviesByCountries is executed");
         return enrichedMovieList;
     }

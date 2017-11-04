@@ -5,8 +5,9 @@
        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
     <context:component-scan base-package="com.luxoft.sdemenkov.movieland"/>
-    <import resource="classpath:/spring/country-query-context.xml"/>
-    <import resource="classpath:/spring/movie-query-context.xml"/>
+    <import resource="classpath:/spring/query/country-query-context.xml"/>
+    <import resource="classpath:/spring/query/movie-query-context.xml"/>
+    <import resource="classpath:/spring/query/genre-query-context.xml"/>
 
     <jdbc:embedded-database id="dataSource" type="H2">
         <jdbc:script location="classpath:/db/create-db.sql"/>

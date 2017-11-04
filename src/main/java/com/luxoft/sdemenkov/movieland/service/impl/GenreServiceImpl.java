@@ -4,16 +4,15 @@ import com.luxoft.sdemenkov.movieland.dao.api.GenreDao;
 import com.luxoft.sdemenkov.movieland.model.Genre;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.GenreService;
+import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Created by sergeydemenkov on 28.10.17.
- */
 
 @Service
 public class GenreServiceImpl implements GenreService {
@@ -21,7 +20,6 @@ public class GenreServiceImpl implements GenreService {
 
     @Autowired
     private GenreDao genreDao;
-
 
     @Override
     public List<Genre> getAllGenres() {
@@ -33,7 +31,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public List<Movie> enrichMoviesByGenres(List<Movie> movieList) {
-        List<Movie> enrichedMovieList = genreDao.enrichMoviesByGenres(movieList);
+        List<Movie> enrichedMovieList = genreDao.enrichMoviesWithGenres(movieList);
         log.debug("ecrichMoviesByGenres is executed");
         return enrichedMovieList;
     }

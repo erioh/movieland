@@ -72,70 +72,7 @@ public class GenreControllerTest {
 
     }
 
-    @Test
-    public void getMoviesByGenre() throws Exception {
-        List<Movie> movieList = new ArrayList<>();
-        movieList.add(MovieGenerator.getMovieForTest());
-        movieList.add(MovieGenerator.getMovieForTest());
-        movieList.add(MovieGenerator.getMovieForTest());
-        when(mockedMovieService.getMoviesByGenre(anyInt())).thenReturn(movieList);
-        mockMvc.perform(get("/genre/1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(3)))
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
-                .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
-                .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
-                .andExpect(jsonPath("$[0].rating").value(8.6))
-                .andExpect(jsonPath("$[0].price").value(175.0))
-                .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
 
-    }
-
-    @Test
-    public void getMoviesByGenreSortedByRating() throws Exception {
-        List<Sortable> movieDtoList = new ArrayList<>();
-        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
-        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
-        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
-        when(mockedSortService.sortByRating(anyList(), eq("desc"))).thenReturn(movieDtoList);
-        mockMvc.perform(get("/genre/1").param("rating","desc"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(3)))
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
-                .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
-                .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
-                .andExpect(jsonPath("$[0].rating").value(8))
-                .andExpect(jsonPath("$[0].price").value(175.0))
-                .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
-
-    }
-
-    @Test
-    public void getMoviesByGenreSortedByPrice() throws Exception {
-        List<Sortable> movieDtoList = new ArrayList<>();
-        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
-        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
-        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
-        when(mockedSortService.sortByPrice(anyList(), eq("desc"))).thenReturn(movieDtoList);
-        mockMvc.perform(get("/genre/1").param("price","desc"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(3)))
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
-                .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
-                .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
-                .andExpect(jsonPath("$[0].rating").value(8))
-                .andExpect(jsonPath("$[0].price").value(175.0))
-                .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
-
-    }
 
 
 

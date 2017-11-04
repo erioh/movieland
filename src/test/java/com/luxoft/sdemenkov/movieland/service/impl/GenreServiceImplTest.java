@@ -3,7 +3,6 @@ package com.luxoft.sdemenkov.movieland.service.impl;
 import com.luxoft.sdemenkov.movieland.dao.api.GenreDao;
 import com.luxoft.sdemenkov.movieland.model.Genre;
 import com.luxoft.sdemenkov.movieland.model.Movie;
-import com.luxoft.sdemenkov.movieland.service.impl.GenreServiceImpl;
 import com.luxoft.sdemenkov.testutils.GenreGenerator;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
@@ -43,7 +42,7 @@ public class GenreServiceImplTest {
     public void enrichMoviesByGenres() throws Exception {
         List<Movie> movieList = new ArrayList<>();
         movieList.add(MovieGenerator.getMovieForTest());
-        when(mockedGenreDao.enrichMoviesByGenres(anyList())).thenReturn(movieList);
+        when(mockedGenreDao.enrichMoviesWithGenres(anyList())).thenReturn(movieList);
         assertEquals(1, genreService.enrichMoviesByGenres(movieList).size());
     }
 

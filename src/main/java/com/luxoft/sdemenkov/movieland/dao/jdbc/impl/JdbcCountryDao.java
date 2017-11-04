@@ -21,16 +21,6 @@ public class JdbcCountryDao implements CountryDao {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-//    private static final String GET_COUNTRY_WITH_MAPPED_MOVIE_ID_SQL = "select mc.movie_id, c.country_id, c.name from country c " +
-//            "inner join movie_country mc " +
-//            "on mc.country_id = c.country_id " +
-//            "where mc.movie_id in (:ids)";
-//    private static final String GET_CONTRY_BY_MOVIE_SQL = "select c.country_id, " +
-//            "c.name from country c " +
-//            "join movie_country mc " +
-//            "on c.country_id = mc.country_id  " +
-//            "where movie_id = ?;";
-
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -49,7 +39,7 @@ public class JdbcCountryDao implements CountryDao {
 
     }
 
-    public List<Movie> enrichMoviesByCountries(List<Movie> movieList) {
+    public List<Movie> enrichMoviesWithCountries(List<Movie> movieList) {
         MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
         List<Integer> movieIds = new ArrayList<>();
         for (Movie movie : movieList) {

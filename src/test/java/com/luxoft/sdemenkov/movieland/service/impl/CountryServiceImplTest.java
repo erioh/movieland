@@ -2,7 +2,6 @@ package com.luxoft.sdemenkov.movieland.service.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.CountryDao;
 import com.luxoft.sdemenkov.movieland.model.Movie;
-import com.luxoft.sdemenkov.movieland.service.impl.CountryServiceImpl;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +34,7 @@ public class CountryServiceImplTest {
 
         List<Movie> movieList = new ArrayList<>();
         movieList.add(MovieGenerator.getMovieForTest());
-        when(mockedCountryDao.enrichMoviesByCountries(anyList())).thenReturn(movieList);
+        when(mockedCountryDao.enrichMoviesWithCountries(anyList())).thenReturn(movieList);
         assertEquals(1, countryService.ecrichMoviesByCountries(movieList).size());
     }
 

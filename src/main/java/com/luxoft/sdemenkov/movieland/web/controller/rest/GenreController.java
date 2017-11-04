@@ -44,26 +44,6 @@ public class GenreController {
 
     }
 
-    @RequestMapping(value = "/{genreId}", method = RequestMethod.GET)
-    public List<Sortable> getMoviesByGenre(@PathVariable(value = "genreId") int genreId
-            , @RequestParam(value = "rating",  required = false) String rating
-            , @RequestParam(value = "price",   required = false) String price) {
-        long startTime = System.currentTimeMillis();
-        List<Movie> movieList = movieService.getMoviesByGenre(genreId);
-        List<Sortable> movieByGenreDtoList = new ArrayList<>();
-        for (Movie movie : movieList) {
-            movieByGenreDtoList.add(new MoviesByGenreDTO(movie));
-        }
-        if(rating != null) {
-            movieByGenreDtoList = sortService.sortByRating(movieByGenreDtoList, rating);
-        } else
-        if(price != null) {
-            movieByGenreDtoList = sortService.sortByPrice(movieByGenreDtoList, price);
-        }
-        return movieByGenreDtoList;
-
-    }
-
 
     private void setGenreService(GenreService genreService) {
         this.genreService = genreService;

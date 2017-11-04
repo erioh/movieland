@@ -31,7 +31,6 @@ public class ThreeRandomMoviesDTO implements Sortable {
         this.countryList = movie.getCountryList();
         this.genreList = movie.getGenreList();
     }
-
     public ThreeRandomMoviesDTO() {
     }
 

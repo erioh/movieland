@@ -7,6 +7,7 @@ import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -45,7 +46,7 @@ public class JdbcGenreDaoTest {
         Movie movie = MovieGenerator.getMovieForTest();
         List<Movie> movies = new ArrayList<>();
         movies.add(movie);
-        movies = genreDao.enrichMoviesByGenres(movies);
+        movies = genreDao.enrichMoviesWithGenres(movies);
         assertEquals(2, movies.get(0).getGenreList().size());
     }
 
