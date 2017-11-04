@@ -1,6 +1,8 @@
 package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
+import com.luxoft.sdemenkov.movieland.model.Currency;
 import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.service.CurrencyExchangeService;
 import com.luxoft.sdemenkov.movieland.service.SortService;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 import com.luxoft.sdemenkov.movieland.web.responce.AllMoviesDTO;
@@ -29,6 +31,8 @@ public class MovieController {
 
     @Autowired
     private SortService sortService;
+    @Autowired
+    private CurrencyExchangeService currencyExchangeService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Sortable> getAllMovies(
@@ -58,13 +62,24 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/{movieId}", method = RequestMethod.GET)
-    public MovieByIdDTO getMovieById(@PathVariable(value = "movieId") int movieId) {
+    public MovieByIdDTO getMovieById(
+            @PathVariable(value = "movieId") int movieId,
+            @RequestParam(value = "currency", required = false) String currency) {
         log.debug("Method getMoviesById is called");
         long startTime = System.currentTimeMillis();
         Set<Integer> movieIdSet = new HashSet<>();
         movieIdSet.add(movieId);
         List<Movie> movieList = movieService.getMovieById(movieIdSet);
+        if(currency != null) {
+            try {
+                movieList = currencyExchangeService.getMovieWithChangedCurrency(movieList, Currency.valueOf(currency));
+            } catch (IllegalArgumentException e) {
+                log.error("Wrong curency was used! CCY = {}", currency);
+                throw e;
+            }
+        }
         MovieByIdDTO movieByIdDTO = new MovieByIdDTO(movieList.get(0));
+
         log.debug("Method getMoviesById. It took {} ms", System.currentTimeMillis()-startTime);
         return movieByIdDTO;
 
