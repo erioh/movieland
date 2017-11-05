@@ -18,6 +18,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
 public class JdbcReviewDaoTest {
     @Autowired
+    private
     ReviewDao reviewDao;
     @Test
     public void enrichMoviesWithReviews() throws Exception {

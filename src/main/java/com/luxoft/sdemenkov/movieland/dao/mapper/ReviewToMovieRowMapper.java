@@ -24,8 +24,7 @@ public class ReviewToMovieRowMapper implements RowMapper<Pair<Integer, Review>> 
         review.setUser(user);
 
         int movieId = resultSet.getInt("movie_id");
-        Pair<Integer, Review> respose = new Pair(movieId, review);
 
-        return respose;
+        return (Pair<Integer, Review>) new Pair(movieId, review);
     }
 }

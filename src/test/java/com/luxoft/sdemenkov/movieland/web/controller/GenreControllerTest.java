@@ -1,14 +1,10 @@
 package com.luxoft.sdemenkov.movieland.web.controller;
 
 import com.luxoft.sdemenkov.movieland.model.Genre;
-import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.GenreService;
 import com.luxoft.sdemenkov.movieland.service.MovieService;
 import com.luxoft.sdemenkov.movieland.service.SortService;
-import com.luxoft.sdemenkov.movieland.service.api.Sortable;
-import com.luxoft.sdemenkov.movieland.web.responce.MoviesByGenreDTO;
 import com.luxoft.sdemenkov.testutils.GenreGenerator;
-import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import com.luxoft.sdemenkov.movieland.web.controller.rest.GenreController;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,12 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.jayway.jsonassert.impl.matcher.IsCollectionWithSize.hasSize;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

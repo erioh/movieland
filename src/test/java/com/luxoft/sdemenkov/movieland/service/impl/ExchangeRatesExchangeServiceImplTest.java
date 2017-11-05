@@ -5,13 +5,10 @@ import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -21,7 +18,7 @@ import java.util.List;
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
 public class ExchangeRatesExchangeServiceImplTest {
     @Autowired
-    CurrencyExchangeServiceImpl currencyExchangeService;
+    private CurrencyExchangeServiceImpl currencyExchangeService;
     @Test
     public void getMovieWithChangedCurrency() throws Exception {
         List<Movie> movieListExpected = new ArrayList<>();

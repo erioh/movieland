@@ -24,7 +24,6 @@
             <artifactId>spring-jdbc</artifactId>
             <version>4.3.11.RELEASE</version>
         </dependency>
-
         <!--DataBase connection-->
         <dependency>
             <groupId>mysql</groupId>
@@ -101,6 +100,13 @@
             <artifactId>jcl-over-slf4j</artifactId>
             <version>1.7.25</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk16 -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk16</artifactId>
+            <version>1.46</version>
+        </dependency>
+
 
 
     </dependencies>

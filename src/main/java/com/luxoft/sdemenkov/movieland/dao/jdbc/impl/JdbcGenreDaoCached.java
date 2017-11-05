@@ -15,20 +15,17 @@ import java.util.concurrent.*;
 @Repository
 public class JdbcGenreDaoCached implements GenreDao{
     @Autowired
-    GenreDao jdbcGenreDao;
+    private GenreDao jdbcGenreDao;
 
-    Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private List<Genre> inputGenreList = new ArrayList<>();
     private volatile List<Genre> cachedGenreList = new ArrayList<>();
-    private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
-        @Override
-        public Thread newThread(Runnable runnable) {
-            Thread thread = new Thread(runnable);
-            thread.setDaemon(true);
-            return thread;
+    private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(runnable -> {
+        Thread thread = new Thread(runnable);
+        thread.setDaemon(true);
+        return thread;
 
-        }
     });
 
     public JdbcGenreDaoCached() {

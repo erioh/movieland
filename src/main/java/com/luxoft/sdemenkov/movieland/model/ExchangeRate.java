@@ -1,8 +1,5 @@
 package com.luxoft.sdemenkov.movieland.model;
 
-import java.io.Serializable;
-import java.util.Calendar;
-
 /**
  * Created by sergeydemenkov on 04.11.17.
  */

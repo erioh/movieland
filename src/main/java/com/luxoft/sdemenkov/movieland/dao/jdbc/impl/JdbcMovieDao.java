@@ -33,7 +33,7 @@ public class JdbcMovieDao implements MovieDao {
     @Autowired
     private String getCountOfMoviesSQL;
     @Autowired
-    String getMovieByIdSQL;
+    private String getMovieByIdSQL;
 
 
     @Override

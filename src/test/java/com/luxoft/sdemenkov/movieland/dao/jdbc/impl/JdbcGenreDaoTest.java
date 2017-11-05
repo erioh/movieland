@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 public class JdbcGenreDaoTest {
     @Autowired
     @Qualifier("jdbcGenreDaoCached")
+    private
     GenreDao genreDao;
 
     @Test

@@ -8,7 +8,6 @@ import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -29,7 +28,7 @@ public class JdbcReviewDao implements ReviewDao {
     @Autowired
     private String getReviewByMovieIdsSQL;
 
-    ReviewToMovieRowMapper reviewToMovieRowMapper = new ReviewToMovieRowMapper();
+    private ReviewToMovieRowMapper reviewToMovieRowMapper = new ReviewToMovieRowMapper();
     @Override
     public List<Movie> enrichMoviesWithReviews(List<Movie> movieList) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();

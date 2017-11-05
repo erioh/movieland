@@ -13,10 +13,10 @@ import java.util.List;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
-    Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    ReviewDao reviewDao;
+    private ReviewDao reviewDao;
 
     @Override
     public List<Movie> enrichMoviesWithReviews(List<Movie> movieList) {

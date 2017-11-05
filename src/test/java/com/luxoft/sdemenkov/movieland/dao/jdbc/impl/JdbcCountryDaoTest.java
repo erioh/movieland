@@ -21,6 +21,7 @@ import static org.junit.Assert.assertNotEquals;
 public class JdbcCountryDaoTest {
 
     @Autowired
+    private
     CountryDao countryDao;
 
     @Test
