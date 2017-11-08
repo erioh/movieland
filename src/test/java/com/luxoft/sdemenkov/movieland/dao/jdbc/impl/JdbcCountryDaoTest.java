@@ -21,8 +21,7 @@ import static org.junit.Assert.assertNotEquals;
 public class JdbcCountryDaoTest {
 
     @Autowired
-    private
-    CountryDao countryDao;
+    private CountryDao countryDao;
 
     @Test
     public void getCountryListByMovie() throws Exception {
@@ -46,6 +45,12 @@ public class JdbcCountryDaoTest {
         for (Movie movie1 : movies) {
             assertNotEquals(0, movie1.getCountryList().size());
         }
+    }
+
+    @Test
+    public void getAllCountries() throws Exception {
+        List<Country> countryList = countryDao.getAllCountries();
+        assertEquals(7, countryList.size());
     }
 
 

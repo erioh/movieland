@@ -20,10 +20,6 @@ public class GenreController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     @Autowired
     private GenreService genreService;
-    @Autowired
-    private MovieService movieService;
-    @Autowired
-    private SortService sortService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<AllGenresDTO> getAllGenres() {
@@ -36,7 +32,7 @@ public class GenreController {
             allGenresDTOList.add(new AllGenresDTO(genre));
         }
 
-        log.debug("Method getThreeRandomMovies.  It took {} ms", System.currentTimeMillis() - startTime);
+        log.debug("Method getAllGenres.  It took {} ms", System.currentTimeMillis() - startTime);
         return allGenresDTOList;
 
     }

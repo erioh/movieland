@@ -29,6 +29,8 @@ public class JdbcCountryDao implements CountryDao {
     private String getCountryWithMappedMovieIdSQL;
     @Autowired
     private String getCountryByMovieIdSQL;
+    @Autowired
+    private String getAllCountriesSQL;
     private CountryRowMapper countryRowMapper = new CountryRowMapper();
 
     public List<Country> getCountryListByMovie(Movie movie) {
@@ -63,4 +65,9 @@ public class JdbcCountryDao implements CountryDao {
         return movieList;
     }
 
+    @Override
+    public List<Country> getAllCountries() {
+        List<Country> countryList = jdbcTemplate.query(getAllCountriesSQL, countryRowMapper);
+        return countryList;
+    }
 }

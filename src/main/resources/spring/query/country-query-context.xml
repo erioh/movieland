@@ -15,4 +15,7 @@
         join movie_country mc on c.country_id = mc.country_id
         where movie_id = ?;"/>
     </bean>
+    <bean id="getAllCountriesSQL" class="java.lang.String">
+        <constructor-arg value="select country_id, name from country"/>
+    </bean>
 </beans>

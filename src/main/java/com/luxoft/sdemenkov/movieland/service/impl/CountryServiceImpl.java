@@ -1,6 +1,7 @@
 package com.luxoft.sdemenkov.movieland.service.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.CountryDao;
+import com.luxoft.sdemenkov.movieland.model.Country;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.CountryService;
 import org.slf4j.Logger;
@@ -23,5 +24,11 @@ public class CountryServiceImpl implements CountryService {
         List<Movie> enrichedMovieList = countryDao.enrichMoviesWithCountries(movieList);
         log.debug("ecrichMoviesWithCountries is executed");
         return enrichedMovieList;
+    }
+
+    @Override
+    public List<Country> getAllCountries() {
+        List<Country> countryList = countryDao.getAllCountries();
+        return countryList;
     }
 }

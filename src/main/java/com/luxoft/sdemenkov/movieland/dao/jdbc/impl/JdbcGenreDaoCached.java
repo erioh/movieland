@@ -29,9 +29,7 @@ public class JdbcGenreDaoCached implements GenreDao{
     });
 
     public JdbcGenreDaoCached() {
-        scheduledExecutorService.schedule(new Runnable() {
-            @Override
-            public void run() {
+        scheduledExecutorService.schedule(() -> {
                 while (true) {
                     try {
                         inputGenreList = jdbcGenreDao.getAllGenres();
@@ -40,12 +38,11 @@ public class JdbcGenreDaoCached implements GenreDao{
                         logger.debug("Cache for Genre is updated");
                         logger.trace("Cache for Genre is updated");
                     } catch (InterruptedException e) {
-                        logger.error("Something whent wrong with cache for Genre");
+                        logger.error("Something went wrong with cache for Genre");
                         logger.error(e.getMessage());
                         e.printStackTrace();
                     }
                 }
-            }
         }, 4, TimeUnit.HOURS);
     }
 
@@ -56,6 +53,7 @@ public class JdbcGenreDaoCached implements GenreDao{
 
     @Override
     public List<Genre> getAllGenres() {
+
         if(cachedGenreList.size()==0) {
             return jdbcGenreDao.getAllGenres();
         }

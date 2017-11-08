@@ -1,4 +1,4 @@
-package com.luxoft.sdemenkov.movieland.web.controller;
+package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.SortService;

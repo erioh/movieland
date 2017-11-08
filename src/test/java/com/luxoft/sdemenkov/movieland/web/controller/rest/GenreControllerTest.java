@@ -1,11 +1,10 @@
-package com.luxoft.sdemenkov.movieland.web.controller;
+package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.Genre;
 import com.luxoft.sdemenkov.movieland.service.GenreService;
 import com.luxoft.sdemenkov.movieland.service.MovieService;
 import com.luxoft.sdemenkov.movieland.service.SortService;
 import com.luxoft.sdemenkov.testutils.GenreGenerator;
-import com.luxoft.sdemenkov.movieland.web.controller.rest.GenreController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
