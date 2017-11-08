@@ -18,7 +18,7 @@ public class GenreServiceImpl implements GenreService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    @Qualifier("jdbcGenreDaoCached")
+    @Qualifier("cachedGenreDao")
     private GenreDao genreDao;
 
     @Override
@@ -30,10 +30,9 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public List<Movie> enrichMoviesWithGenres(List<Movie> movieList) {
-        List<Movie> enrichedMovieList = genreDao.enrichMoviesWithGenres(movieList);
+    public void enrichMoviesWithGenres(List<Movie> movieList) {
+        genreDao.enrichMoviesWithGenres(movieList);
         log.debug("ecrichMoviesByGenres is executed");
-        return enrichedMovieList;
     }
 
 }

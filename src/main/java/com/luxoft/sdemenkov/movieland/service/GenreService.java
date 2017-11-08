@@ -11,5 +11,5 @@ import java.util.List;
 public interface GenreService {
     List<Genre> getAllGenres();
 
-    List<Movie> enrichMoviesWithGenres(List<Movie> movieList);
+    void enrichMoviesWithGenres(List<Movie> movieList);
 }

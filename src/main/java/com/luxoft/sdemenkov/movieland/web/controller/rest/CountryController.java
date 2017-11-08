@@ -2,10 +2,12 @@ package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.Country;
 import com.luxoft.sdemenkov.movieland.service.CountryService;
-import com.luxoft.sdemenkov.movieland.web.responce.AllCountryDTO;
+import com.luxoft.sdemenkov.movieland.web.response.AllCountryDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +23,7 @@ public class CountryController {
     private CountryService countryService;
 
     @RequestMapping(method = RequestMethod.GET)
-    List<AllCountryDTO> getAllCountries() {
+    ResponseEntity<?> getAllCountries() {
         long startTime = System.currentTimeMillis();
         List<AllCountryDTO> allCountryDTOList = new ArrayList<>();
         List<Country> countryList = countryService.getAllCountries();
@@ -30,6 +32,6 @@ public class CountryController {
             allCountryDTOList.add(new AllCountryDTO(country));
         }
         log.debug("Method getAllCountries.  It took {} ms", System.currentTimeMillis() - startTime);
-        return allCountryDTOList;
+        return new ResponseEntity<List<AllCountryDTO>>(allCountryDTOList, HttpStatus.OK);
     }
 }

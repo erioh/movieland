@@ -1,4 +1,4 @@
-package com.luxoft.sdemenkov.movieland.web.responce;
+package com.luxoft.sdemenkov.movieland.web.response;
 
 import com.luxoft.sdemenkov.movieland.model.Genre;
 

@@ -39,7 +39,7 @@ public class JdbcMovieDaoTest {
         assertEquals(expectedMovie.getNameNative(), actualMovie.getNameNative());
         assertEquals(expectedMovie.getYearOfRelease(), actualMovie.getYearOfRelease());
         assertEquals(expectedMovie.getRating(), actualMovie.getRating(), 0);
-        assertEquals(expectedMovie.getPrice(), actualMovie.getPrice(), 0);
+        assertEquals(expectedMovie.getPrice(), actualMovie.getPrice());
         assertEquals(expectedMovie.getPicturePath(), actualMovie.getPicturePath());
 
     }
@@ -64,7 +64,7 @@ public class JdbcMovieDaoTest {
         assertEquals(expectedMovie.getNameNative(), actualMovie.getNameNative());
         assertEquals(expectedMovie.getYearOfRelease(), actualMovie.getYearOfRelease());
         assertEquals(expectedMovie.getRating(), actualMovie.getRating(), 0);
-        assertEquals(expectedMovie.getPrice(), actualMovie.getPrice(), 0);
+        assertEquals(expectedMovie.getPrice(), actualMovie.getPrice());
         assertEquals(expectedMovie.getPicturePath(), actualMovie.getPicturePath());
 
     }

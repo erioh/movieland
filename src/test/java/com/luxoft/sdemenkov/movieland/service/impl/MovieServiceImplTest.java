@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -46,7 +47,7 @@ public class MovieServiceImplTest {
         assertEquals(expectedMovie.getNameNative(), actualMovie.getNameNative());
         assertEquals(expectedMovie.getYearOfRelease(), actualMovie.getYearOfRelease());
         assertEquals(expectedMovie.getRating(), actualMovie.getRating(), 0);
-        assertEquals(expectedMovie.getPrice(), actualMovie.getPrice(), 0);
+        assertTrue(expectedMovie.getPrice().equals(actualMovie.getPrice()));
         assertEquals(expectedMovie.getPicturePath(), actualMovie.getPicturePath());
     }
 
@@ -60,8 +61,6 @@ public class MovieServiceImplTest {
         movieList.add(MovieGenerator.getMovieForTest());
         //Mocking objects
         when(mockedMovieDao.getThreeRandomMovies()).thenReturn(movieList);
-        when(mockedCountryService.ecrichMoviesWithCountries(movieList)).thenReturn(movieList);
-        when(mockedGenreService.enrichMoviesWithGenres(movieList)).thenReturn(movieList);
         // Test
         List<Movie> actualMovieList = movieService.getThreeRandomMovies();
         assertEquals(3, actualMovieList.size());

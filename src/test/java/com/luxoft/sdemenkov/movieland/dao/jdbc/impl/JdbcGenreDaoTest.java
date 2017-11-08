@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
 public class JdbcGenreDaoTest {
     @Autowired
-    @Qualifier("jdbcGenreDaoCached")
+    @Qualifier("cachedGenreDao")
     private
     GenreDao genreDao;
 
@@ -48,7 +48,7 @@ public class JdbcGenreDaoTest {
         Movie movie = MovieGenerator.getMovieForTest();
         List<Movie> movies = new ArrayList<>();
         movies.add(movie);
-        movies = genreDao.enrichMoviesWithGenres(movies);
+        genreDao.enrichMoviesWithGenres(movies);
         assertEquals(2, movies.get(0).getGenreList().size());
     }
 

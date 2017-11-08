@@ -20,35 +20,32 @@ import java.util.Map;
 public class JdbcGenreDao implements GenreDao {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
+    private final static GenreRowMapper GENRE_ROW_MAPPER = new GenreRowMapper();
     @Autowired
     private String getGenreWithMappedMovieSQL;
     @Autowired
     private String getAllGenresSQL;
     @Autowired
     private String getGenreListByMovieSQL;
-
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-
-    private GenreRowMapper genreRowMapper = new GenreRowMapper();
-
     public List<Genre> getGenreListByMove(Movie movie) {
-        List<Genre> genreList = jdbcTemplate.query(getGenreListByMovieSQL, new Object[]{movie.getId()}, genreRowMapper);
+        List<Genre> genreList = jdbcTemplate.query(getGenreListByMovieSQL, new Object[]{movie.getId()}, GENRE_ROW_MAPPER);
         log.debug("Calling method getGenreListByMove. with query = {}", getGenreListByMovieSQL);
         log.debug("Calling method getGenreListByMove with movie_id = {}, ", movie.getId());
         return genreList;
     }
 
     public List<Genre> getAllGenres() {
-        List<Genre> genreList = jdbcTemplate.query(getAllGenresSQL, genreRowMapper);
+        List<Genre> genreList = jdbcTemplate.query(getAllGenresSQL, GENRE_ROW_MAPPER);
         log.debug("Calling method getAllGenres with query {}", getAllGenresSQL);
         return genreList;
     }
 
-    public List<Movie> enrichMoviesWithGenres(List<Movie> movieList) {
+    public void enrichMoviesWithGenres(List<Movie> movieList) {
         MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
         List<Integer> movieIds = new ArrayList<>();
         for (Movie movie : movieList) {
@@ -69,7 +66,6 @@ public class JdbcGenreDao implements GenreDao {
             }
             movie.setGenreList(genreList);
         }
-        return movieList;
     }
 
 }

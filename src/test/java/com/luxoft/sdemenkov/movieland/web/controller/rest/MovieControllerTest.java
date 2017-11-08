@@ -1,11 +1,14 @@
 package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.service.CurrencyValidationService;
+import com.luxoft.sdemenkov.movieland.service.SortDirectionValidationService;
 import com.luxoft.sdemenkov.movieland.service.SortService;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 import com.luxoft.sdemenkov.movieland.service.impl.MovieServiceImpl;
-import com.luxoft.sdemenkov.movieland.web.responce.AllMoviesDTO;
-import com.luxoft.sdemenkov.movieland.web.responce.MoviesByGenreDTO;
+import com.luxoft.sdemenkov.movieland.service.impl.SortDirectionValidationServiceImpl;
+import com.luxoft.sdemenkov.movieland.web.response.AllMoviesDTO;
+import com.luxoft.sdemenkov.movieland.web.response.MoviesByGenreDTO;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,6 +42,10 @@ public class MovieControllerTest {
     private MovieServiceImpl mockedMovieService;
     @Mock
     private SortService mockedSortService;
+    @Mock
+    private SortDirectionValidationService mockedSortRequestValidationService;
+    @Mock
+    private CurrencyValidationService mockCurrencyValidationService;
     @InjectMocks
     private MovieController movieController;
 

@@ -20,25 +20,23 @@ import java.util.List;
  */
 @Repository
 public class JdbcReviewDao implements ReviewDao {
-
     private final Logger log = LoggerFactory.getLogger(getClass());
+    private final static ReviewToMovieRowMapper REVIEW_TO_MOVIE_ROW_MAPPER = new ReviewToMovieRowMapper();
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     @Autowired
     private String getReviewByMovieIdsSQL;
 
-    private ReviewToMovieRowMapper reviewToMovieRowMapper = new ReviewToMovieRowMapper();
-
     @Override
-    public List<Movie> enrichMoviesWithReviews(List<Movie> movieList) {
+    public void enrichMoviesWithReviews(List<Movie> movieList) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         List<Integer> ids = new ArrayList<>();
         for (Movie movie : movieList) {
             ids.add(movie.getId());
         }
         mapSqlParameterSource.addValue("ids", ids);
-        List<Pair<Integer, Review>> responceList = namedParameterJdbcTemplate.query(getReviewByMovieIdsSQL, mapSqlParameterSource, reviewToMovieRowMapper);
+        List<Pair<Integer, Review>> responceList = namedParameterJdbcTemplate.query(getReviewByMovieIdsSQL, mapSqlParameterSource, REVIEW_TO_MOVIE_ROW_MAPPER);
         for (Movie movie : movieList) {
             List<Review> reviewList = new ArrayList<>();
             for (Pair<Integer, Review> integerReviewPair : responceList) {
@@ -48,6 +46,5 @@ public class JdbcReviewDao implements ReviewDao {
             }
             movie.setReviewList(reviewList);
         }
-        return movieList;
     }
 }

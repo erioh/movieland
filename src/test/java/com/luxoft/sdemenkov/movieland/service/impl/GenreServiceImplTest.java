@@ -42,8 +42,8 @@ public class GenreServiceImplTest {
     public void enrichMoviesByGenres() throws Exception {
         List<Movie> movieList = new ArrayList<>();
         movieList.add(MovieGenerator.getMovieForTest());
-        when(mockedGenreDao.enrichMoviesWithGenres(anyList())).thenReturn(movieList);
-        assertEquals(1, genreService.enrichMoviesWithGenres(movieList).size());
+        genreService.enrichMoviesWithGenres(movieList);
+        assertEquals(1, movieList.size());
     }
 
 }

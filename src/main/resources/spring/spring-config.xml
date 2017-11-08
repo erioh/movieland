@@ -7,8 +7,6 @@
     <import resource="query/movie-query-context.xml"/>
     <import resource="query/genre-query-context.xml"/>
     <import resource="query/review-query-context.xml"/>
-
-
     <mvc:annotation-driven/>
 
     <context:component-scan base-package="com.luxoft.sdemenkov.movieland">
@@ -31,9 +29,6 @@
 
     <bean name="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
         <constructor-arg ref="dataSource"/>
-    </bean>
-    <bean id="bankUrl" class="java.lang.String">
-        <constructor-arg value="https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange"/>
     </bean>
 
 </beans>

@@ -2,6 +2,7 @@ package com.luxoft.sdemenkov.testutils;
 
 import com.luxoft.sdemenkov.movieland.model.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class MovieGenerator {
         movie.setNameNative("Gladiator");
         movie.setYearOfRelease(2000);
         movie.setRating(8.6);
-        movie.setPrice(175.0);
+        movie.setPrice(new BigDecimal("175.0"));
         movie.setPicturePath("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg");
         movie.setDescription("Description");
         List<Genre> genreList = new ArrayList<>();
@@ -38,7 +39,7 @@ public class MovieGenerator {
                 movie.setRating(Double.parseDouble(value));
                 break;
             case "price":
-                movie.setPrice(Double.parseDouble(value));
+                movie.setPrice(new BigDecimal(value));
                 break;
             default:
                 throw new IllegalArgumentException("Please check input property. Actual value = '" + property + "'");

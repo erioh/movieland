@@ -2,7 +2,7 @@ package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.Genre;
 import com.luxoft.sdemenkov.movieland.service.GenreService;
-import com.luxoft.sdemenkov.movieland.web.responce.AllGenresDTO;
+import com.luxoft.sdemenkov.movieland.web.response.AllGenresDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +22,12 @@ public class GenreController {
     private GenreService genreService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<AllGenresDTO> getAllGenres() {
+    public List<?> getAllGenres() {
         long startTime = System.currentTimeMillis();
         List<AllGenresDTO> allGenresDTOList = new ArrayList<>();
         List<Genre> genreList = genreService.getAllGenres();
         log.debug("Method getAllGenres. Filling allGenresDTOList with genres");
-        for (Genre genre :
-                genreList) {
+        for (Genre genre : genreList) {
             allGenresDTOList.add(new AllGenresDTO(genre));
         }
 

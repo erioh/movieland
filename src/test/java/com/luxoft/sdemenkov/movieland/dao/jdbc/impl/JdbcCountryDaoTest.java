@@ -41,7 +41,7 @@ public class JdbcCountryDaoTest {
         Movie movie = MovieGenerator.getMovieForTest();
         List<Movie> movies = new ArrayList<>();
         movies.add(movie);
-        movies = countryDao.enrichMoviesWithCountries(movies);
+        countryDao.enrichMoviesWithCountries(movies);
         for (Movie movie1 : movies) {
             assertNotEquals(0, movie1.getCountryList().size());
         }

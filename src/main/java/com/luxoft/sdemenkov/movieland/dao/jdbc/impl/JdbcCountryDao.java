@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Repository
 public class JdbcCountryDao implements CountryDao {
-
+    private final static CountryRowMapper COUNTRY_ROW_MAPPER = new CountryRowMapper();
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -31,17 +31,17 @@ public class JdbcCountryDao implements CountryDao {
     private String getCountryByMovieIdSQL;
     @Autowired
     private String getAllCountriesSQL;
-    private CountryRowMapper countryRowMapper = new CountryRowMapper();
+
 
     public List<Country> getCountryListByMovie(Movie movie) {
-        List<Country> countryList = jdbcTemplate.query(getCountryByMovieIdSQL, new Object[]{movie.getId()}, countryRowMapper);
+        List<Country> countryList = jdbcTemplate.query(getCountryByMovieIdSQL, new Object[]{movie.getId()}, COUNTRY_ROW_MAPPER);
         log.debug("Calling method getCountryListByMovie. with query = {}", getCountryByMovieIdSQL);
         log.debug("Calling method getCountryListByMovie with movie_id = {}", movie.getId());
         return countryList;
 
     }
 
-    public List<Movie> enrichMoviesWithCountries(List<Movie> movieList) {
+    public void enrichMoviesWithCountries(List<Movie> movieList) {
         MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
         List<Integer> movieIds = new ArrayList<>();
         for (Movie movie : movieList) {
@@ -62,12 +62,11 @@ public class JdbcCountryDao implements CountryDao {
             }
             movie.setCountryList(countryList);
         }
-        return movieList;
     }
 
     @Override
     public List<Country> getAllCountries() {
-        List<Country> countryList = jdbcTemplate.query(getAllCountriesSQL, countryRowMapper);
+        List<Country> countryList = jdbcTemplate.query(getAllCountriesSQL, COUNTRY_ROW_MAPPER);
         return countryList;
     }
 }
