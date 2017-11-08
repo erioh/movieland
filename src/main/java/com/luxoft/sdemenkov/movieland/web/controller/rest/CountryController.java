@@ -18,6 +18,7 @@ import java.util.List;
 public class CountryController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     @Autowired
+    private
     CountryService countryService;
 
     @RequestMapping(method = RequestMethod.GET)

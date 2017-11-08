@@ -11,7 +11,10 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 @Repository
 public class JdbcMovieDao implements MovieDao {
@@ -49,8 +52,8 @@ public class JdbcMovieDao implements MovieDao {
         Set<Integer> ids = new HashSet<>();
         int countOfRows = getCountOfMovies();
         int searchedCount = countOfRows >= 3 ? 3 : countOfRows;
-        while ( ids.size() != searchedCount){
-            ids.add(randomGenerator.nextInt(countOfRows+1));
+        while (ids.size() != searchedCount) {
+            ids.add(randomGenerator.nextInt(countOfRows + 1));
         }
         List<Movie> movieList = getMovieListByIds(ids);
         while (movieList.size() < 3) {

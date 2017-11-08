@@ -23,7 +23,7 @@ import java.util.List;
 public class CurrencyExchangeServiceImpl implements CurrencyExchangeService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    BouncyCastleProvider bouncyCastleProvider = new BouncyCastleProvider();
+    private BouncyCastleProvider bouncyCastleProvider = new BouncyCastleProvider();
 
 
     @Autowired

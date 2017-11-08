@@ -23,7 +23,7 @@ public class MovieGenerator {
         genreList.add(new Genre(1, "Genre name"));
         movie.setGenreList(genreList);
         List<Country> countryList = new ArrayList<>();
-        countryList.add(new Country(1,"Country name"));
+        countryList.add(new Country(1, "Country name"));
         movie.setCountryList(countryList);
         List<Review> reviewList = new ArrayList<>();
         reviewList.add(new Review(1, new User(1, "User name"), "Review text"));
@@ -34,14 +34,14 @@ public class MovieGenerator {
     public static Movie getMovieForTest(String property, String value) {
         Movie movie = getMovieForTest();
         switch (property) {
-            case "rating" :
+            case "rating":
                 movie.setRating(Double.parseDouble(value));
                 break;
-            case "price" :
+            case "price":
                 movie.setPrice(Double.parseDouble(value));
                 break;
-            default :
-                throw new IllegalArgumentException("Please check input property. Actual value = '"+property+"'");
+            default:
+                throw new IllegalArgumentException("Please check input property. Actual value = '" + property + "'");
         }
         return movie;
     }

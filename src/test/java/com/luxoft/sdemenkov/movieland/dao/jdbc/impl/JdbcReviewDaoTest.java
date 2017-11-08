@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
@@ -20,6 +20,7 @@ public class JdbcReviewDaoTest {
     @Autowired
     private
     ReviewDao reviewDao;
+
     @Test
     public void enrichMoviesWithReviews() throws Exception {
         Movie movie = new Movie();

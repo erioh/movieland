@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface SortService {
     List<Sortable> sortByRating(List<Sortable> list, String expression);
+
     List<Sortable> sortByPrice(List<Sortable> list, String expression);
 
 }

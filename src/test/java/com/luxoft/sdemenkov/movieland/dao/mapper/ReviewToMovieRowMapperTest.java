@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.sql.ResultSet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -24,8 +24,8 @@ public class ReviewToMovieRowMapperTest {
         when(resultSet.getString("user_name")).thenReturn("User Name");
 
         ReviewToMovieRowMapper reviewToMovieRowMapper = new ReviewToMovieRowMapper();
-        Pair<Integer, Review> expected = reviewToMovieRowMapper.mapRow(resultSet,0);
-        assertEquals(1, expected.getKey(),0);
+        Pair<Integer, Review> expected = reviewToMovieRowMapper.mapRow(resultSet, 0);
+        assertEquals(1, expected.getKey(), 0);
         assertEquals(3, expected.getValue().getId());
         assertEquals("Text", expected.getValue().getText());
         assertEquals(2, expected.getValue().getUser().getId());

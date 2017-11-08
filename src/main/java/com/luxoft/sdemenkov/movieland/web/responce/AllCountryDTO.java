@@ -5,6 +5,7 @@ import com.luxoft.sdemenkov.movieland.model.Country;
 public class AllCountryDTO {
     private int id;
     private String name;
+
     public AllCountryDTO(Country genre) {
         id = genre.getId();
         name = genre.getName();

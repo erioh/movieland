@@ -3,13 +3,13 @@ package com.luxoft.sdemenkov.movieland.web.controller.rest;
 import com.luxoft.sdemenkov.movieland.model.Currency;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.CurrencyExchangeService;
+import com.luxoft.sdemenkov.movieland.service.MovieService;
 import com.luxoft.sdemenkov.movieland.service.SortService;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 import com.luxoft.sdemenkov.movieland.web.responce.AllMoviesDTO;
 import com.luxoft.sdemenkov.movieland.web.responce.MovieByIdDTO;
 import com.luxoft.sdemenkov.movieland.web.responce.MoviesByGenreDTO;
 import com.luxoft.sdemenkov.movieland.web.responce.ThreeRandomMoviesDTO;
-import com.luxoft.sdemenkov.movieland.service.MovieService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,11 +49,11 @@ public class MovieController {
                 movieList) {
             allMoviesDTOList.add(new AllMoviesDTO(movie));
         }
-        if(rating != null) {
-            allMoviesDTOList =  sortService.sortByRating(allMoviesDTOList, rating);
+        if (rating != null) {
+            allMoviesDTOList = sortService.sortByRating(allMoviesDTOList, rating);
             log.debug("Sorting.  It took {} ms", System.currentTimeMillis() - startTime);
         } else if (price != null) {
-            allMoviesDTOList =  sortService.sortByPrice(allMoviesDTOList, price);
+            allMoviesDTOList = sortService.sortByPrice(allMoviesDTOList, price);
             log.debug("Sorting.  It took {} ms", System.currentTimeMillis() - startTime);
         }
         log.debug("Method getAllMovies.  It took {} ms", System.currentTimeMillis() - startTime);
@@ -70,7 +70,7 @@ public class MovieController {
         Set<Integer> movieIdSet = new HashSet<>();
         movieIdSet.add(movieId);
         List<Movie> movieList = movieService.getMovieById(movieIdSet);
-        if(currency != null) {
+        if (currency != null) {
             try {
                 movieList = currencyExchangeService.getMovieWithChangedCurrency(movieList, Currency.valueOf(currency));
             } catch (IllegalArgumentException e) {
@@ -80,12 +80,12 @@ public class MovieController {
         }
         MovieByIdDTO movieByIdDTO = new MovieByIdDTO(movieList.get(0));
 
-        log.debug("Method getMoviesById. It took {} ms", System.currentTimeMillis()-startTime);
+        log.debug("Method getMoviesById. It took {} ms", System.currentTimeMillis() - startTime);
         return movieByIdDTO;
 
     }
 
-     @RequestMapping(value = "/random", method = RequestMethod.GET)
+    @RequestMapping(value = "/random", method = RequestMethod.GET)
     public List<ThreeRandomMoviesDTO> getThreeRandomMovies() {
         long startTime = System.currentTimeMillis();
         List<ThreeRandomMoviesDTO> threeRandomMovieDTOS = new ArrayList<>();
@@ -100,8 +100,8 @@ public class MovieController {
 
     @RequestMapping(value = "/genre/{genreId}", method = RequestMethod.GET)
     public List<Sortable> getMoviesByGenre(@PathVariable(value = "genreId") int genreId
-            , @RequestParam(value = "rating",  required = false) String rating
-            , @RequestParam(value = "price",   required = false) String price) {
+            , @RequestParam(value = "rating", required = false) String rating
+            , @RequestParam(value = "price", required = false) String price) {
         if (rating != null && price != null) {
 //            how the fuck I can test it out??
             throw new IllegalArgumentException("You can't sort response by rating and price at the same time");
@@ -112,10 +112,9 @@ public class MovieController {
         for (Movie movie : movieList) {
             movieByGenreDtoList.add(new MoviesByGenreDTO(movie));
         }
-        if(rating != null) {
+        if (rating != null) {
             movieByGenreDtoList = sortService.sortByRating(movieByGenreDtoList, rating);
-        } else
-        if(price != null) {
+        } else if (price != null) {
             movieByGenreDtoList = sortService.sortByPrice(movieByGenreDtoList, price);
         }
         return movieByGenreDtoList;

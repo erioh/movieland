@@ -9,16 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
 public class ExchangeRatesExchangeServiceImplTest {
     @Autowired
     private CurrencyExchangeServiceImpl currencyExchangeService;
+
     @Test
     public void getMovieWithChangedCurrency() throws Exception {
         List<Movie> movieListExpected = new ArrayList<>();
@@ -28,7 +29,6 @@ public class ExchangeRatesExchangeServiceImplTest {
 
         movieListActual = currencyExchangeService.getMovieWithChangedCurrency(movieListActual, Currency.EUR);
         assertTrue(movieListActual.get(0).getPrice() < movieListExpected.get(0).getPrice());
-
 
 
     }

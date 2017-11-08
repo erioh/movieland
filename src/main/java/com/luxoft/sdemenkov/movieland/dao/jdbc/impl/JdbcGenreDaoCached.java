@@ -10,10 +10,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Repository
-public class JdbcGenreDaoCached implements GenreDao{
+public class JdbcGenreDaoCached implements GenreDao {
     @Autowired
     private GenreDao jdbcGenreDao;
 
@@ -30,19 +32,19 @@ public class JdbcGenreDaoCached implements GenreDao{
 
     public JdbcGenreDaoCached() {
         scheduledExecutorService.schedule(() -> {
-                while (true) {
-                    try {
-                        inputGenreList = jdbcGenreDao.getAllGenres();
-                        cachedGenreList = inputGenreList;
-                        Thread.sleep(4*3600*1000); // wait for 4 hours before cache reload
-                        logger.debug("Cache for Genre is updated");
-                        logger.trace("Cache for Genre is updated");
-                    } catch (InterruptedException e) {
-                        logger.error("Something went wrong with cache for Genre");
-                        logger.error(e.getMessage());
-                        e.printStackTrace();
-                    }
+            while (true) {
+                try {
+                    inputGenreList = jdbcGenreDao.getAllGenres();
+                    cachedGenreList = inputGenreList;
+                    Thread.sleep(4 * 3600 * 1000); // wait for 4 hours before cache reload
+                    logger.debug("Cache for Genre is updated");
+                    logger.trace("Cache for Genre is updated");
+                } catch (InterruptedException e) {
+                    logger.error("Something went wrong with cache for Genre");
+                    logger.error(e.getMessage());
+                    e.printStackTrace();
                 }
+            }
         }, 4, TimeUnit.HOURS);
     }
 
@@ -54,10 +56,10 @@ public class JdbcGenreDaoCached implements GenreDao{
     @Override
     public List<Genre> getAllGenres() {
 
-        if(cachedGenreList.size()==0) {
+        if (cachedGenreList.size() == 0) {
             return jdbcGenreDao.getAllGenres();
         }
-            return cachedGenreList;
+        return cachedGenreList;
 
     }
 

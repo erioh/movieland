@@ -22,13 +22,14 @@ import java.util.List;
 public class JdbcReviewDao implements ReviewDao {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
-    
+
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     @Autowired
     private String getReviewByMovieIdsSQL;
 
     private ReviewToMovieRowMapper reviewToMovieRowMapper = new ReviewToMovieRowMapper();
+
     @Override
     public List<Movie> enrichMoviesWithReviews(List<Movie> movieList) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
@@ -41,7 +42,7 @@ public class JdbcReviewDao implements ReviewDao {
         for (Movie movie : movieList) {
             List<Review> reviewList = new ArrayList<>();
             for (Pair<Integer, Review> integerReviewPair : responceList) {
-                if(movie.getId() == integerReviewPair.getKey()) {
+                if (movie.getId() == integerReviewPair.getKey()) {
                     reviewList.add(integerReviewPair.getValue());
                 }
             }

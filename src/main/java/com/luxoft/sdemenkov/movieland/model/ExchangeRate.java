@@ -5,9 +5,9 @@ package com.luxoft.sdemenkov.movieland.model;
  */
 public class ExchangeRate {
 
-    private  String text;
+    private String text;
     private double rate;
-    private  String cc;
+    private String cc;
     private String exchangedate;
 
     public String getText() {

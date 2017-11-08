@@ -15,13 +15,13 @@ public class SortSortableService implements SortService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Override
-    public List<Sortable > sortByRating(List<Sortable> list, String expression) {
+    public List<Sortable> sortByRating(List<Sortable> list, String expression) {
         log.debug("Start to sortByRating.");
-        if(!expression.equals("desc")) {
+        if (!expression.equals("desc")) {
             log.error("IllegalArgumentException exception was thrown by sortByRating. " +
                     "Invalid value of parameter 'rating' is {}", expression);
             throw new IllegalArgumentException("Only sorting descending is supported. " +
-                    "Used incorrect parameter is '" + expression + "'" );
+                    "Used incorrect parameter is '" + expression + "'");
         }
         Collections.sort(list, Comparator.comparingDouble(Sortable::getRating).reversed());
         return list;

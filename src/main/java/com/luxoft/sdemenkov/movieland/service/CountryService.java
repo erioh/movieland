@@ -10,5 +10,6 @@ import java.util.List;
  */
 public interface CountryService {
     List<Movie> ecrichMoviesWithCountries(List<Movie> movieList);
+
     List<Country> getAllCountries();
 }

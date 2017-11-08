@@ -4,10 +4,9 @@ import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.SortService;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 import com.luxoft.sdemenkov.movieland.service.impl.MovieServiceImpl;
+import com.luxoft.sdemenkov.movieland.web.responce.AllMoviesDTO;
 import com.luxoft.sdemenkov.movieland.web.responce.MoviesByGenreDTO;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
-import com.luxoft.sdemenkov.movieland.web.controller.rest.MovieController;
-import com.luxoft.sdemenkov.movieland.web.responce.AllMoviesDTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -88,7 +87,8 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$[0].price").value(175.0))
                 .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
     }
-//    @Test
+
+    //    @Test
     public void getMoviesByGenre() throws Exception {
         List<Movie> mockedGetAllMoviesList = new ArrayList<>();
         mockedGetAllMoviesList.add(MovieGenerator.getMovieForTest());
@@ -116,7 +116,7 @@ public class MovieControllerTest {
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         when(mockedSortService.sortByRating(anyList(), eq("desc"))).thenReturn(responseGetAllMoviesList);
-        mockMvc.perform(get("/movie").param("rating","desc"))
+        mockMvc.perform(get("/movie").param("rating", "desc"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
@@ -137,7 +137,7 @@ public class MovieControllerTest {
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         when(mockedSortService.sortByPrice(anyList(), eq("desc"))).thenReturn(responseGetAllMoviesList);
-        mockMvc.perform(get("/movie").param("price","desc"))
+        mockMvc.perform(get("/movie").param("price", "desc"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
@@ -150,6 +150,7 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
 
     }
+
     @Test
     public void getAllMoviesSortedByPriceAsc() throws Exception {
         List<Sortable> responseGetAllMoviesList = new ArrayList<>();
@@ -157,7 +158,7 @@ public class MovieControllerTest {
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         when(mockedSortService.sortByPrice(anyList(), eq("asc"))).thenReturn(responseGetAllMoviesList);
-        mockMvc.perform(get("/movie").param("price","asc"))
+        mockMvc.perform(get("/movie").param("price", "asc"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
@@ -179,7 +180,7 @@ public class MovieControllerTest {
         movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
         movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
         when(mockedSortService.sortByRating(anyList(), eq("desc"))).thenReturn(movieDtoList);
-        mockMvc.perform(get("/movie/genre/1").param("rating","desc"))
+        mockMvc.perform(get("/movie/genre/1").param("rating", "desc"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
@@ -200,7 +201,7 @@ public class MovieControllerTest {
         movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
         movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
         when(mockedSortService.sortByPrice(anyList(), eq("desc"))).thenReturn(movieDtoList);
-        mockMvc.perform(get("/movie/genre/1").param("price","desc"))
+        mockMvc.perform(get("/movie/genre/1").param("price", "desc"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))

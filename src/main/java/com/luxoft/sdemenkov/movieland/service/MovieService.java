@@ -10,7 +10,10 @@ import java.util.Set;
  */
 public interface MovieService {
     List<Movie> getAllMovies();
+
     List<Movie> getThreeRandomMovies();
+
     List<Movie> getMoviesByGenre(int genreId);
+
     List<Movie> getMovieById(Set<Integer> movieIds);
 }

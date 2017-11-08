@@ -68,6 +68,7 @@ public class JdbcMovieDaoTest {
         assertEquals(expectedMovie.getPicturePath(), actualMovie.getPicturePath());
 
     }
+
     @Test
     public void getThreeRandomMovies() throws Exception {
         List<Movie> movieList = movieDao.getThreeRandomMovies();

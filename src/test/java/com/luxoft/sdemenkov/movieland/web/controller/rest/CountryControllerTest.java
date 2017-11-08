@@ -2,14 +2,12 @@ package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.Country;
 import com.luxoft.sdemenkov.movieland.service.CountryService;
-import com.luxoft.sdemenkov.movieland.web.responce.AllCountryDTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -19,12 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
@@ -35,7 +30,7 @@ public class CountryControllerTest {
     CountryController countryController;
 
     @Mock
-    CountryService countryService;
+    private CountryService countryService;
 
     @Before
     public void setUp() {
