@@ -20,9 +20,7 @@ import static org.junit.Assert.assertEquals;
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
 public class JdbcGenreDaoTest {
     @Autowired
-    @Qualifier("jdbcGenreDaoCached")
-    private
-    GenreDao genreDao;
+    private GenreDao genreDao;
 
     @Test
     public void getGenreListByMove() throws Exception {

@@ -18,7 +18,6 @@ public class GenreServiceImpl implements GenreService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    @Qualifier("jdbcGenreDaoCached")
     private GenreDao genreDao;
 
     @Override
