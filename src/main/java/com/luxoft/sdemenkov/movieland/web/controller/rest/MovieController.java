@@ -2,6 +2,7 @@ package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.Currency;
 import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.SortDirection;
 import com.luxoft.sdemenkov.movieland.service.*;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 import com.luxoft.sdemenkov.movieland.web.response.AllMoviesDTO;
@@ -56,11 +57,11 @@ public class MovieController {
             allMoviesDTOList.add(new AllMoviesDTO(movie));
         }
         if (ratingDirection != null) {
-            allMoviesDTOList = sortService.sortByRating(allMoviesDTOList, ratingDirection);
+            allMoviesDTOList = sortService.sortByRating(allMoviesDTOList, SortDirection.getDirection(ratingDirection));
             log.debug("Sorting.  It took {} ms", System.currentTimeMillis() - startTime);
         }
         if (priceDirection != null) {
-            allMoviesDTOList = sortService.sortByPrice(allMoviesDTOList, priceDirection);
+            allMoviesDTOList = sortService.sortByPrice(allMoviesDTOList, SortDirection.getDirection(priceDirection));
             log.debug("Sorting.  It took {} ms", System.currentTimeMillis() - startTime);
         }
         log.debug("Method getAllMovies.  It took {} ms", System.currentTimeMillis() - startTime);
@@ -122,10 +123,10 @@ public class MovieController {
             movieByGenreDtoList.add(new MoviesByGenreDTO(movie));
         }
         if (ratingDirection != null) {
-            movieByGenreDtoList = sortService.sortByRating(movieByGenreDtoList, ratingDirection);
+            movieByGenreDtoList = sortService.sortByRating(movieByGenreDtoList, SortDirection.getDirection(ratingDirection));
         }
         if (priceDirection != null) {
-            movieByGenreDtoList = sortService.sortByPrice(movieByGenreDtoList, priceDirection);
+            movieByGenreDtoList = sortService.sortByPrice(movieByGenreDtoList, SortDirection.getDirection(priceDirection));
         }
         return new ResponseEntity<List<Sortable>>(movieByGenreDtoList, HttpStatus.OK);
 
