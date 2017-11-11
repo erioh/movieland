@@ -1,4 +1,4 @@
-package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
+package com.luxoft.sdemenkov.movieland.dao.cached;
 
 import com.luxoft.sdemenkov.movieland.dao.api.GenreDao;
 import com.luxoft.sdemenkov.movieland.model.Genre;
@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,13 +14,10 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 @Repository
-@EnableScheduling
 @PropertySource("classpath:property/cron.properties")
 public class CachedGenreDao implements GenreDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -46,7 +42,7 @@ public class CachedGenreDao implements GenreDao {
 
     @Override
     public List<Genre> getAllGenres() {
-        return cachedGenreList;
+        return Collections.unmodifiableList(cachedGenreList);
 
     }
 
