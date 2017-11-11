@@ -58,9 +58,7 @@ public class JdbcGenreDao implements GenreDao {
             List<Genre> genreList = new ArrayList<>();
             for (Map<String, Object> map : list) {
                 if ((Integer) map.get("movie_id") == movie.getId()) {
-                    Genre genre = new Genre();
-                    genre.setId((Integer) map.get("genre_id"));
-                    genre.setName((String) map.get("name"));
+                    Genre genre = new Genre((Integer) map.get("genre_id"),(String) map.get("name"));
                     genreList.add(genre);
                 }
             }

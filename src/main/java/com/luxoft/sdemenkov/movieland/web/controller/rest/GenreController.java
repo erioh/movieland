@@ -6,6 +6,7 @@ import com.luxoft.sdemenkov.movieland.web.response.AllGenresDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +22,7 @@ public class GenreController {
     @Autowired
     private GenreService genreService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<?> getAllGenres() {
         long startTime = System.currentTimeMillis();
         List<AllGenresDTO> allGenresDTOList = new ArrayList<>();

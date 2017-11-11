@@ -1,7 +1,11 @@
 package com.luxoft.sdemenkov.movieland.dao.cache.config;
 
-/**
- * Created by sergeydemenkov on 11.11.17.
- */
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+@Configuration
+@EnableScheduling
+@PropertySource("classpath:property/cron.properties")
 public class Config {
 }

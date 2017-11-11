@@ -7,16 +7,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
-@Controller
+@Service
 class CurrencyValidationServiceImpl implements CurrencyValidationService {
     private final Logger log = LoggerFactory.getLogger(getClass());
     @Override
-    public ResponseEntity<String> getValidationErrors(String currency) {
+    public Currency getCurrency(String currency) {
         if(currency != null && Currency.getCurrency(currency) == null) {
             log.error("Invalid currency code is used. Used code is:{}", currency);
-            return new ResponseEntity<String>("Invalid currency code is used. Used code is: " + currency, HttpStatus.BAD_REQUEST);
+            throw new RuntimeException("Invalid currency code is used. Used code is: " + currency);
         }
-        return null;
+        return Currency.getCurrency(currency);
     }
 }

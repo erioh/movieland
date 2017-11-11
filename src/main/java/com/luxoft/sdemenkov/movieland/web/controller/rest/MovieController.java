@@ -2,6 +2,7 @@ package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.Currency;
 import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.Pair;
 import com.luxoft.sdemenkov.movieland.model.SortDirection;
 import com.luxoft.sdemenkov.movieland.service.*;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,16 +42,17 @@ public class MovieController {
     @Autowired
     private CurrencyValidationService currencyValidationService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getAllMovies(
             @RequestParam(value = "rating", required = false) String ratingDirection
             , @RequestParam(value = "price", required = false) String priceDirection) {
 
-        ResponseEntity<String> errors = sortDirectionValidationService.getValidationErrors(ratingDirection, priceDirection);
-        if (null != errors){
-            return errors;
+        Pair<SortDirection, SortDirection> sortParameters;
+        try {
+            sortParameters = sortDirectionValidationService.getValidationErrors(ratingDirection, priceDirection);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
         long startTime = System.currentTimeMillis();
         List<Sortable> allMoviesDTOList = new ArrayList<>();
         List<Movie> movieList = movieService.getAllMovies();
@@ -57,11 +60,11 @@ public class MovieController {
             allMoviesDTOList.add(new AllMoviesDTO(movie));
         }
         if (ratingDirection != null) {
-            allMoviesDTOList = sortService.sortByRating(allMoviesDTOList, SortDirection.getDirection(ratingDirection));
+            allMoviesDTOList = sortService.sortByRating(allMoviesDTOList, sortParameters.getFirstValue());
             log.debug("Sorting.  It took {} ms", System.currentTimeMillis() - startTime);
         }
         if (priceDirection != null) {
-            allMoviesDTOList = sortService.sortByPrice(allMoviesDTOList, SortDirection.getDirection(priceDirection));
+            allMoviesDTOList = sortService.sortByPrice(allMoviesDTOList, sortParameters.getSecondValue());
             log.debug("Sorting.  It took {} ms", System.currentTimeMillis() - startTime);
         }
         log.debug("Method getAllMovies.  It took {} ms", System.currentTimeMillis() - startTime);
@@ -75,9 +78,10 @@ public class MovieController {
             @RequestParam(value = "currency", required = false) String currency) {
         log.debug("Method getMoviesById is called");
         log.debug("Start validation of input paramener");
-        ResponseEntity<String> errors = currencyValidationService.getValidationErrors(currency);
-        if (errors != null) {
-            return errors;
+        try {
+            Currency cur = currencyValidationService.getCurrency(currency);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         log.debug("Validation of input parameter is finished");
 
@@ -112,9 +116,11 @@ public class MovieController {
     public ResponseEntity<?> getMoviesByGenre(@PathVariable(value = "genreId") int genreId
             , @RequestParam(value = "rating", required = false) String ratingDirection
             , @RequestParam(value = "price", required = false) String priceDirection) {
-        ResponseEntity<String> errors = sortDirectionValidationService.getValidationErrors(ratingDirection, priceDirection);
-        if (null != errors){
-            return errors;
+        Pair<SortDirection, SortDirection> sortParameters;
+        try {
+             sortParameters= sortDirectionValidationService.getValidationErrors(ratingDirection, priceDirection);
+        } catch (RuntimeException e ) {
+            return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         long startTime = System.currentTimeMillis();
         List<Movie> movieList = movieService.getMoviesByGenre(genreId);
@@ -123,10 +129,10 @@ public class MovieController {
             movieByGenreDtoList.add(new MoviesByGenreDTO(movie));
         }
         if (ratingDirection != null) {
-            movieByGenreDtoList = sortService.sortByRating(movieByGenreDtoList, SortDirection.getDirection(ratingDirection));
+            movieByGenreDtoList = sortService.sortByRating(movieByGenreDtoList, sortParameters.getFirstValue());
         }
         if (priceDirection != null) {
-            movieByGenreDtoList = sortService.sortByPrice(movieByGenreDtoList, SortDirection.getDirection(priceDirection));
+            movieByGenreDtoList = sortService.sortByPrice(movieByGenreDtoList, sortParameters.getSecondValue());
         }
         return new ResponseEntity<List<Sortable>>(movieByGenreDtoList, HttpStatus.OK);
 

@@ -5,9 +5,7 @@ import com.luxoft.sdemenkov.movieland.model.Genre;
 
 public class GenreGenerator {
     public static Genre getGenreForTest() {
-        Genre genre = new Genre();
-        genre.setId(1);
-        genre.setName("Name");
+        Genre genre = new Genre(1, "Name");
         return genre;
     }
 }
