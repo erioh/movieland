@@ -32,4 +32,7 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
+    <!--Use Cached Genre DAO bean-->
+    <bean name="genreDao" class="com.luxoft.sdemenkov.movieland.dao.cache.CachedGenreDao"/>
+
 </beans>
