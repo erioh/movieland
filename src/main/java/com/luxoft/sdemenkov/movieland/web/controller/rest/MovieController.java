@@ -6,10 +6,7 @@ import com.luxoft.sdemenkov.movieland.model.Pair;
 import com.luxoft.sdemenkov.movieland.model.SortDirection;
 import com.luxoft.sdemenkov.movieland.service.*;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
-import com.luxoft.sdemenkov.movieland.web.response.AllMoviesDTO;
-import com.luxoft.sdemenkov.movieland.web.response.MovieByIdDTO;
-import com.luxoft.sdemenkov.movieland.web.response.MoviesByGenreDTO;
-import com.luxoft.sdemenkov.movieland.web.response.ThreeRandomMoviesDTO;
+import com.luxoft.sdemenkov.movieland.web.response.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +48,7 @@ public class MovieController {
         try {
             sortParameters = sortDirectionValidationService.getValidationErrors(ratingDirection, priceDirection);
         } catch (RuntimeException e) {
-            return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<StringDto>(new StringDto(e.getMessage()),HttpStatus.BAD_REQUEST);
         }
         long startTime = System.currentTimeMillis();
         List<Sortable> allMoviesDTOList = new ArrayList<>();
@@ -81,7 +78,7 @@ public class MovieController {
         try {
             Currency cur = currencyValidationService.getCurrency(currency);
         } catch (RuntimeException e) {
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<StringDto>(new StringDto(e.getMessage()),HttpStatus.BAD_REQUEST);
         }
         log.debug("Validation of input parameter is finished");
 
@@ -120,7 +117,7 @@ public class MovieController {
         try {
              sortParameters= sortDirectionValidationService.getValidationErrors(ratingDirection, priceDirection);
         } catch (RuntimeException e ) {
-            return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<StringDto>(new StringDto(e.getMessage()),HttpStatus.BAD_REQUEST);
         }
         long startTime = System.currentTimeMillis();
         List<Movie> movieList = movieService.getMoviesByGenre(genreId);

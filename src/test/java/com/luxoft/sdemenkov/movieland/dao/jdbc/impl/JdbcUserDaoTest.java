@@ -16,7 +16,7 @@ public class JdbcUserDaoTest {
     @Autowired
     UserDao userDao;
     @Test
-    public void isUserValid() throws Exception {
+    public void getUser() throws Exception {
         User user = userDao.getUser("ronald.reynolds66@example.com", "paco");
         assertNotNull(user);
         assertEquals("Ronald Reynolds", user.getNickname());

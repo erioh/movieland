@@ -25,7 +25,6 @@ import java.util.List;
 
 
 @Service
-@PropertySource("classpath:property/bank.properties")
 public class CurrencyExchangeServiceImpl implements CurrencyExchangeService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
