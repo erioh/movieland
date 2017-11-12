@@ -5,13 +5,12 @@ import com.luxoft.sdemenkov.movieland.model.SortDirection;
 import com.luxoft.sdemenkov.movieland.service.SortDirectionValidationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SortDirectionValidationServiceImpl implements SortDirectionValidationService {
     private final Logger log = LoggerFactory.getLogger(getClass());
+
     @Override
     public Pair<SortDirection, SortDirection> getValidationErrors(String ratingDirection, String priceDirection) {
         log.debug("Validation of sort direction request is stated");

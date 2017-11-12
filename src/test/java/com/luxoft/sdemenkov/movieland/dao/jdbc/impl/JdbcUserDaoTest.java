@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 public class JdbcUserDaoTest {
     @Autowired
     UserDao userDao;
+
     @Test
     public void getUser() throws Exception {
         User user = userDao.getUser("ronald.reynolds66@example.com", "paco");

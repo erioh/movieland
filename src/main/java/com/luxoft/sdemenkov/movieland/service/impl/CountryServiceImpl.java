@@ -14,10 +14,9 @@ import java.util.List;
 
 @Service
 public class CountryServiceImpl implements CountryService {
+    private final Logger log = LoggerFactory.getLogger(getClass());
     @Autowired
     private CountryDao countryDao;
-
-    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Override
     public void ecrichMoviesWithCountries(List<Movie> movieList) {

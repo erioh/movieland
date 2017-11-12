@@ -7,10 +7,7 @@ import com.luxoft.sdemenkov.movieland.service.CurrencyExchangeService;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -19,7 +16,6 @@ import java.math.BigDecimal;
 import java.security.Security;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -28,11 +24,8 @@ import java.util.List;
 public class CurrencyExchangeServiceImpl implements CurrencyExchangeService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private BouncyCastleProvider bouncyCastleProvider = new BouncyCastleProvider();
     private final DateFormat dateFormat = new SimpleDateFormat("YYYYMMdd");
-
-
-
+    private BouncyCastleProvider bouncyCastleProvider = new BouncyCastleProvider();
     @Value("${bank.url}")
     private String bankUrl;
 

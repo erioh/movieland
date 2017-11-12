@@ -4,8 +4,8 @@ import java.util.UUID;
 
 
 public class Token {
-    private UUID uuid;
     String nickname;
+    private UUID uuid;
 
     public Token(UUID uuid, String nickname) {
         this.uuid = uuid;

@@ -15,11 +15,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.UUID;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -28,28 +26,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
 @WebAppConfiguration
 public class UserControllerTest {
-    private MockMvc mockMvc;
-
-    @InjectMocks
-    private UserController userController;
     @Mock
     UserService mockedUserService;
+    private MockMvc mockMvc;
+    @InjectMocks
+    private UserController userController;
+
     @Before
     public void setUp() {
         this.mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
     }
+
     @Test
     public void loginOk() throws Exception {
         when(mockedUserService.login(anyString(), anyString())).thenReturn(new Token(UUID.randomUUID(), "Token"));
-        mockMvc.perform(post("/login").param("email","email").param("password","password"))
+        mockMvc.perform(post("/login").param("email", "email").param("password", "password"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("nickname").value("Token"));
 
     }
+
     @Test
     public void loginFail() throws Exception {
         when(mockedUserService.login(anyString(), anyString())).thenThrow(new RuntimeException("Login or password are invalid"));
-        mockMvc.perform(post("/login").param("email","email").param("password","password"))
+        mockMvc.perform(post("/login").param("email", "email").param("password", "password"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("response").value("Login or password are invalid"));
 

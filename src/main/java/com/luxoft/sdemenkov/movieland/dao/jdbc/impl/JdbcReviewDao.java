@@ -20,9 +20,8 @@ import java.util.List;
  */
 @Repository
 public class JdbcReviewDao implements ReviewDao {
-    private final Logger log = LoggerFactory.getLogger(getClass());
     private final static ReviewToMovieRowMapper REVIEW_TO_MOVIE_ROW_MAPPER = new ReviewToMovieRowMapper();
-
+    private final Logger log = LoggerFactory.getLogger(getClass());
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     @Autowired

@@ -18,10 +18,9 @@ import java.util.Set;
 
 @Repository
 public class JdbcMovieDao implements MovieDao {
-    private final Logger log = LoggerFactory.getLogger(getClass());
     private final static MovieRowMapper MOVIE_ROW_MAPPER = new MovieRowMapper();
     private final static Random RANDOM_GENERATOR = new Random();
-
+    private final Logger log = LoggerFactory.getLogger(getClass());
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired

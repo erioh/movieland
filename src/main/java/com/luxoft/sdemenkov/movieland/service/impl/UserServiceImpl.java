@@ -19,10 +19,10 @@ public class UserServiceImpl implements UserService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private volatile Map<UUID, Long> birthTimeOfUuid = new HashMap<>();
     private volatile Map<UUID, User> userToUuidMap = new HashMap<>();
-    
+
     @Value("${service.auto.logout}")
     private Long milliSecondsToLogout;
-    
+
     @Autowired
     private UserDao userDao;
 
@@ -36,13 +36,13 @@ public class UserServiceImpl implements UserService {
         Token token = new Token(uuid, user.getNickname());
         logger.debug("User {} with password {} is logged in. UUID = {}", email, password, uuid);
         birthTimeOfUuid.put(uuid, System.currentTimeMillis());
-        userToUuidMap.put(uuid,user);
+        userToUuidMap.put(uuid, user);
         return token;
     }
 
     @Override
     public void logout(UUID uuid) {
-         birthTimeOfUuid.remove(uuid);
+        birthTimeOfUuid.remove(uuid);
         userToUuidMap.remove(uuid);
     }
 

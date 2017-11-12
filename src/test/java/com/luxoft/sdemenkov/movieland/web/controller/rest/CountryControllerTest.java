@@ -25,10 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
 @WebAppConfiguration
 public class CountryControllerTest {
-    private MockMvc mockMvc;
     @InjectMocks
     CountryController countryController;
-
+    private MockMvc mockMvc;
     @Mock
     private CountryService countryService;
 

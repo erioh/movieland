@@ -1,7 +1,5 @@
 package com.luxoft.sdemenkov.movieland.model;
 
-import java.security.InvalidParameterException;
-
 /**
  * Created by sergeydemenkov on 08.11.17.
  */
@@ -15,7 +13,7 @@ public enum SortDirection {
 
     public static SortDirection getDirection(String direction) {
         for (SortDirection sortDirection : values()) {
-            if(sortDirection.direction.equalsIgnoreCase(direction)) {
+            if (sortDirection.direction.equalsIgnoreCase(direction)) {
                 return sortDirection;
             }
         }

@@ -3,15 +3,15 @@ package com.luxoft.sdemenkov.movieland.service.impl;
 import com.luxoft.sdemenkov.movieland.model.Currency;
 import com.luxoft.sdemenkov.movieland.service.CurrencyValidationService;
 import org.junit.Test;
-import org.springframework.http.ResponseEntity;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by sergeydemenkov on 08.11.17.
  */
 public class CurrencyValidationServiceImplTest {
     CurrencyValidationService currencyValidationService = new CurrencyValidationServiceImpl();
+
     @Test
     public void getValidationErrors() throws Exception {
 
@@ -19,7 +19,7 @@ public class CurrencyValidationServiceImplTest {
         assertEquals(Currency.USD, currency);
         currency = currencyValidationService.getCurrency("EUR");
         assertEquals(Currency.EUR, currency);
-        String errorMessage="";
+        String errorMessage = "";
 
         try {
             currency = currencyValidationService.getCurrency("SSS");

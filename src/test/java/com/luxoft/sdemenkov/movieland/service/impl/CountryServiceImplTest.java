@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by dp-ptcstd-43 on 10/31/2017.

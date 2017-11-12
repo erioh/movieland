@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
@@ -28,9 +27,9 @@ public class CachedGenreDao implements GenreDao {
     @PostConstruct
     @Scheduled(fixedRateString = "${cron.cache.genre.schedule}", initialDelayString = "${cron.cache.genre.schedule}")
     public void invalidate() {
-            cachedGenreList = genreDao.getAllGenres();
-            logger.debug("Cache for Genre is updated");
-            logger.trace("Cache for Genre is updated. Cahce value is {}", cachedGenreList);
+        cachedGenreList = genreDao.getAllGenres();
+        logger.debug("Cache for Genre is updated");
+        logger.trace("Cache for Genre is updated. Cahce value is {}", cachedGenreList);
     }
 
     @Override

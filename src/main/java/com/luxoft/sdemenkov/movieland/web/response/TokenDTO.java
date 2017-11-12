@@ -5,10 +5,9 @@ import com.luxoft.sdemenkov.movieland.model.Token;
 import java.util.UUID;
 
 
-
 public class TokenDTO {
-    private UUID uuid;
     String nickname;
+    private UUID uuid;
 
     public TokenDTO(Token token) {
         this.uuid = token.getUuid();

@@ -12,12 +12,11 @@ import java.util.List;
 
 @Repository
 public class JdbcUserDao implements UserDao {
+    private final static UserRowMapper USER_ROW_MAPPER = new UserRowMapper();
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     @Autowired
     private String getUserSQL;
-
-    private final static UserRowMapper USER_ROW_MAPPER = new UserRowMapper();
 
     @Override
     public User getUser(String email, String password) {
@@ -25,7 +24,7 @@ public class JdbcUserDao implements UserDao {
         mapSqlParameterSource.addValue("email", email);
         mapSqlParameterSource.addValue("password", password);
         List<User> userList = namedParameterJdbcTemplate.query(getUserSQL, mapSqlParameterSource, USER_ROW_MAPPER);
-        if(userList.isEmpty()) {
+        if (userList.isEmpty()) {
             return null;
         }
         return userList.get(0);

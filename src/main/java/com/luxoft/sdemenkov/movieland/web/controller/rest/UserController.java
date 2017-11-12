@@ -1,8 +1,6 @@
-
 package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.Token;
-import com.luxoft.sdemenkov.movieland.model.User;
 import com.luxoft.sdemenkov.movieland.service.UserService;
 import com.luxoft.sdemenkov.movieland.web.response.StringDto;
 import com.luxoft.sdemenkov.movieland.web.response.TokenDTO;
@@ -28,7 +26,7 @@ public class UserController {
         try {
             token = userService.login(email, password);
         } catch (RuntimeException e) {
-            return new ResponseEntity<StringDto>(new StringDto(e.getMessage()),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<StringDto>(new StringDto(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
         TokenDTO tokenDTO = new TokenDTO(token);
         logger.debug("Getting of user with email {} and password {} returns {}", email, password, token);

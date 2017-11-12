@@ -123,7 +123,7 @@ public class MovieControllerTest {
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
-        Pair<SortDirection,SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
+        Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
         when(mockedSortDirectionValidationService.getValidationErrors(anyString(), eq(null))).thenReturn(pair);
 
         when(mockedSortService.sortByRating(anyList(), eq(SortDirection.DESC))).thenReturn(responseGetAllMoviesList);
@@ -147,7 +147,7 @@ public class MovieControllerTest {
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
-        Pair<SortDirection,SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
+        Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
         when(mockedSortDirectionValidationService.getValidationErrors(eq(null), anyString())).thenReturn(pair);
 
         when(mockedSortService.sortByPrice(anyList(), eq(SortDirection.DESC))).thenReturn(responseGetAllMoviesList);
@@ -171,7 +171,7 @@ public class MovieControllerTest {
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
-        Pair<SortDirection,SortDirection> pair = new Pair<>(SortDirection.ASC, SortDirection.ASC);
+        Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.ASC, SortDirection.ASC);
         when(mockedSortDirectionValidationService.getValidationErrors(eq(null), anyString())).thenReturn(pair);
         when(mockedSortService.sortByPrice(anyList(), eq(SortDirection.ASC))).thenReturn(responseGetAllMoviesList);
         mockMvc.perform(get("/movie").param("price", "asc"))
@@ -195,7 +195,7 @@ public class MovieControllerTest {
         movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
         movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
         movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
-        Pair<SortDirection,SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
+        Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
         when(mockedSortDirectionValidationService.getValidationErrors(anyString(), eq(null))).thenReturn(pair);
         when(mockedSortService.sortByRating(anyList(), eq(SortDirection.DESC))).thenReturn(movieDtoList);
         mockMvc.perform(get("/movie/genre/1").param("rating", "desc"))
@@ -218,7 +218,7 @@ public class MovieControllerTest {
         movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
         movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
         movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
-        Pair<SortDirection,SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
+        Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
         when(mockedSortDirectionValidationService.getValidationErrors(eq(null), anyString())).thenReturn(pair);
         when(mockedSortService.sortByPrice(anyList(), eq(SortDirection.DESC))).thenReturn(movieDtoList);
         mockMvc.perform(get("/movie/genre/1").param("price", "desc"))
