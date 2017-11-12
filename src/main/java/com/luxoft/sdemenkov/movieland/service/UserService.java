@@ -10,4 +10,6 @@ public interface UserService {
     void logout(UUID uuid);
 
     boolean isAlive(UUID uuid);
+
+    void removeInactiveUsers();
 }

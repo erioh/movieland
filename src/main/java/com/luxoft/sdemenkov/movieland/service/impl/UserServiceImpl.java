@@ -8,17 +8,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private volatile Map<UUID, Long> birthTimeOfUuid = new HashMap<>();
-    private volatile Map<UUID, User> userToUuidMap = new HashMap<>();
+    private Map<UUID, Long> birthTimeOfUuid = new ConcurrentHashMap<>();
+    private Map<UUID, User> userToUuidMap = new ConcurrentHashMap<>();
 
     @Value("${service.auto.logout}")
     private Long milliSecondsToLogout;
@@ -57,6 +59,14 @@ public class UserServiceImpl implements UserService {
             return isAlive;
         }
         return false;
+    }
+
+    @Override
+    @Scheduled(fixedRateString = "${cron.service.users.autologout.time}")
+    public void removeInactiveUsers() {
+        for(Map.Entry<UUID, Long> entryMap: birthTimeOfUuid.entrySet()){
+            isAlive(entryMap.getKey());
+        };
     }
 
 }
