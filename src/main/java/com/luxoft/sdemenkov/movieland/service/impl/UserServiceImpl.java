@@ -17,7 +17,8 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private volatile Map<UUID, Long> loggedUsers = new HashMap<>();
+    private volatile Map<UUID, Long> birthTimeOfUuid = new HashMap<>();
+    private volatile Map<UUID, User> userToUuidMap = new HashMap<>();
     
     @Value("${service.auto.logout}")
     private Long milliSecondsToLogout;
@@ -34,21 +35,24 @@ public class UserServiceImpl implements UserService {
         UUID uuid = UUID.randomUUID();
         Token token = new Token(uuid, user.getNickname());
         logger.debug("User {} with password {} is logged in. UUID = {}", email, password, uuid);
-        loggedUsers.put(uuid, System.currentTimeMillis());
+        birthTimeOfUuid.put(uuid, System.currentTimeMillis());
+        userToUuidMap.put(uuid,user);
         return token;
     }
 
     @Override
     public void logout(UUID uuid) {
-         loggedUsers.remove(uuid);
+         birthTimeOfUuid.remove(uuid);
+        userToUuidMap.remove(uuid);
     }
 
     @Override
     public boolean isAlive(UUID uuid) {
-        if (loggedUsers.containsKey(uuid)) {
-            boolean isAlive = System.currentTimeMillis() - loggedUsers.get(uuid) < milliSecondsToLogout;
+        if (birthTimeOfUuid.containsKey(uuid)) {
+            boolean isAlive = System.currentTimeMillis() - birthTimeOfUuid.get(uuid) < milliSecondsToLogout;
             if (!isAlive) {
-                loggedUsers.remove(uuid);
+                birthTimeOfUuid.remove(uuid);
+                userToUuidMap.remove(uuid);
             }
             return isAlive;
         }

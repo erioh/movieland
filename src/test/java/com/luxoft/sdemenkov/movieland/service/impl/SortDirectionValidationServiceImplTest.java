@@ -4,9 +4,9 @@ import com.luxoft.sdemenkov.movieland.model.Pair;
 import com.luxoft.sdemenkov.movieland.model.SortDirection;
 import com.luxoft.sdemenkov.movieland.service.SortDirectionValidationService;
 import org.junit.Test;
-import org.springframework.http.ResponseEntity;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by sergeydemenkov on 08.11.17.
@@ -36,18 +36,21 @@ public class SortDirectionValidationServiceImplTest {
         Pair<SortDirection, SortDirection> pair = sortDirectionValidationService.getValidationErrors("asc", null);
 
     }
+
     @Test(expected = RuntimeException.class)
     public void wrongNameDirectionOne() throws Exception {
         SortDirectionValidationService sortDirectionValidationService = new SortDirectionValidationServiceImpl();
         Pair<SortDirection, SortDirection> pair = sortDirectionValidationService.getValidationErrors("desc1", null);
 
     }
+
     @Test(expected = RuntimeException.class)
     public void wrongNameDirectionTwo() throws Exception {
         SortDirectionValidationService sortDirectionValidationService = new SortDirectionValidationServiceImpl();
         Pair<SortDirection, SortDirection> pair = sortDirectionValidationService.getValidationErrors(null, "desc1");
 
     }
+
     @Test(expected = RuntimeException.class)
     public void wrongNumberOfSoring() throws Exception {
         SortDirectionValidationService sortDirectionValidationService = new SortDirectionValidationServiceImpl();
