@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.lang.reflect.Field;
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -56,11 +57,15 @@ public class UserServiceImplTest {
     public void isAlive() throws Exception {
         Field milliSecondsToLogout = userService.getClass().getDeclaredField("milliSecondsToLogout");
         milliSecondsToLogout.setAccessible(true);
-        milliSecondsToLogout.set(userService, Long.valueOf(1000000));
+        milliSecondsToLogout.set(userService, Long.valueOf(1000));
         milliSecondsToLogout.setAccessible(false);
         when(userDao.getUser(anyString(), anyString())).thenReturn(new User(1, "userName"));
         Token token = userService.login("login", "password");
         assertTrue(userService.isAlive(token.getUuid()));
+        assertTrue(userService.isAlive(token.getUuid()));
+        Thread.sleep(1000);
+        assertFalse(userService.isAlive(token.getUuid()));
+        assertFalse(userService.isAlive(UUID.randomUUID()));
     }
 
 }

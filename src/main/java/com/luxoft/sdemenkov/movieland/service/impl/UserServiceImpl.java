@@ -45,7 +45,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isAlive(UUID uuid) {
-        return System.currentTimeMillis()-loggedUsers.get(uuid) < milliSecondsToLogout;
+        if (loggedUsers.containsKey(uuid)) {
+            boolean isAlive = System.currentTimeMillis() - loggedUsers.get(uuid) < milliSecondsToLogout;
+            if (!isAlive) {
+                loggedUsers.remove(uuid);
+            }
+            return isAlive;
+        }
+        return false;
     }
 
 }

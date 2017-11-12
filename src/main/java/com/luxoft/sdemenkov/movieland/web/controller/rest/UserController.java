@@ -11,10 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -39,11 +36,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.DELETE)
-    public ResponseEntity<?> logout(@RequestParam String uuid) {
-        if(!userService.isAlive(UUID.fromString(uuid))) {
-            logger.error("User with uuid = {} is not logged in", uuid);
-            return new ResponseEntity<StringDto>(new StringDto("User is not logged in!"),HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> logout(@RequestHeader("x-auth-token") String uuid) {
         userService.logout(UUID.fromString(uuid));
         return new ResponseEntity<StringDto>(new StringDto("User is logged out"), HttpStatus.OK);
     }
