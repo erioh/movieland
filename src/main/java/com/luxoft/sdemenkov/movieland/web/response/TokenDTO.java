@@ -6,19 +6,19 @@ import java.util.UUID;
 
 
 public class TokenDTO {
-    String nickname;
-    private UUID uuid;
+    private String nickname;
+    private String uuid;
 
     public TokenDTO(Token token) {
-        this.uuid = token.getUuid();
+        this.uuid = token.getUuid().toString();
         this.nickname = token.getNickname();
     }
 
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
