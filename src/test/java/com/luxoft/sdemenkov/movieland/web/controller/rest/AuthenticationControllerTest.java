@@ -51,7 +51,7 @@ public class AuthenticationControllerTest {
         when(mockedAuthenticationService.login(anyString(), anyString())).thenThrow(new RuntimeException("Login or password are invalid"));
         mockMvc.perform(post("/login").param("email", "email").param("password", "password"))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("response").value("Login or password are invalid"));
+                .andExpect(jsonPath("exceptionMessage").value("Login or password are invalid"));
 
     }
 
@@ -59,7 +59,7 @@ public class AuthenticationControllerTest {
     public void logout() throws Exception {
         mockMvc.perform(delete("/logout").header("x-auth-token", UUID.randomUUID().toString()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("response").value("User is logged out"));
+                .andExpect(jsonPath("exceptionMessage").value("User is logged out"));
 
     }
 

@@ -48,7 +48,7 @@ public class MovieController {
         try {
             sortParameters = sortDirectionValidationService.getValidationErrors(ratingDirection, priceDirection);
         } catch (RuntimeException e) {
-            return new ResponseEntity<StringDto>(new StringDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<ExceptionMessageDto>(new ExceptionMessageDto(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
         long startTime = System.currentTimeMillis();
         List<Sortable> allMoviesDTOList = new ArrayList<>();
@@ -78,7 +78,7 @@ public class MovieController {
         try {
             Currency cur = currencyValidationService.getCurrency(currency);
         } catch (RuntimeException e) {
-            return new ResponseEntity<StringDto>(new StringDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<ExceptionMessageDto>(new ExceptionMessageDto(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
         log.debug("Validation of input parameter is finished");
 
@@ -117,7 +117,7 @@ public class MovieController {
         try {
             sortParameters = sortDirectionValidationService.getValidationErrors(ratingDirection, priceDirection);
         } catch (RuntimeException e) {
-            return new ResponseEntity<StringDto>(new StringDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<ExceptionMessageDto>(new ExceptionMessageDto(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
         long startTime = System.currentTimeMillis();
         List<Movie> movieList = movieService.getMoviesByGenre(genreId);
