@@ -3,7 +3,7 @@ package com.luxoft.sdemenkov.movieland.service.impl;
 import com.luxoft.sdemenkov.movieland.dao.api.UserDao;
 import com.luxoft.sdemenkov.movieland.model.Token;
 import com.luxoft.sdemenkov.movieland.model.User;
-import com.luxoft.sdemenkov.movieland.service.UserService;
+import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +11,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class AuthenticationServiceImpl implements AuthenticationService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private Map<UUID, Long> birthTimeOfUuid = new ConcurrentHashMap<>();
     private Map<UUID, User> userToUuidMap = new ConcurrentHashMap<>();

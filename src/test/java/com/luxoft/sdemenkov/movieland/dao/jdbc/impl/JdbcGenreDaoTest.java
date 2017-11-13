@@ -55,8 +55,6 @@ public class JdbcGenreDaoTest {
         List<Genre> genreListCached1 = genreDao.getAllGenres();
         genreListCached1.set(0, new Genre(0, "Test"));
         List<Genre> genreListCached2 = genreDao.getAllGenres();
-        System.out.println(genreListCached1.get(0));
-        System.out.println(genreListCached2.get(0));
 
     }
 

@@ -4,7 +4,7 @@ import com.luxoft.sdemenkov.movieland.model.Token;
 
 import java.util.UUID;
 
-public interface UserService {
+public interface AuthenticationService {
     Token login(String email, String password);
 
     void logout(UUID uuid);

@@ -1,7 +1,7 @@
 package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.Token;
-import com.luxoft.sdemenkov.movieland.service.UserService;
+import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
 import com.luxoft.sdemenkov.movieland.web.response.StringDto;
 import com.luxoft.sdemenkov.movieland.web.response.TokenDTO;
 import org.slf4j.Logger;
@@ -15,16 +15,16 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/")
-public class UserController {
+public class AuthenticationController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
-    private UserService userService;
+    private AuthenticationService authenticationService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
         Token token;
         try {
-            token = userService.login(email, password);
+            token = authenticationService.login(email, password);
         } catch (RuntimeException e) {
             return new ResponseEntity<StringDto>(new StringDto(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
@@ -35,7 +35,7 @@ public class UserController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.DELETE)
     public ResponseEntity<?> logout(@RequestHeader("x-auth-token") String uuid) {
-        userService.logout(UUID.fromString(uuid));
+        authenticationService.logout(UUID.fromString(uuid));
         return new ResponseEntity<StringDto>(new StringDto("User is logged out"), HttpStatus.OK);
     }
 

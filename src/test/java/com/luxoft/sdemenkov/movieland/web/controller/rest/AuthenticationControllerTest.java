@@ -1,7 +1,7 @@
 package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.Token;
-import com.luxoft.sdemenkov.movieland.service.UserService;
+import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,21 +25,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
 @WebAppConfiguration
-public class UserControllerTest {
+public class AuthenticationControllerTest {
     @Mock
-    UserService mockedUserService;
+    AuthenticationService mockedAuthenticationService;
     private MockMvc mockMvc;
     @InjectMocks
-    private UserController userController;
+    private AuthenticationController authenticationController;
 
     @Before
     public void setUp() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(authenticationController).build();
     }
 
     @Test
     public void loginOk() throws Exception {
-        when(mockedUserService.login(anyString(), anyString())).thenReturn(new Token(UUID.randomUUID(), "Token"));
+        when(mockedAuthenticationService.login(anyString(), anyString())).thenReturn(new Token(UUID.randomUUID(), "Token"));
         mockMvc.perform(post("/login").param("email", "email").param("password", "password"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("nickname").value("Token"));
@@ -48,7 +48,7 @@ public class UserControllerTest {
 
     @Test
     public void loginFail() throws Exception {
-        when(mockedUserService.login(anyString(), anyString())).thenThrow(new RuntimeException("Login or password are invalid"));
+        when(mockedAuthenticationService.login(anyString(), anyString())).thenThrow(new RuntimeException("Login or password are invalid"));
         mockMvc.perform(post("/login").param("email", "email").param("password", "password"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("response").value("Login or password are invalid"));
