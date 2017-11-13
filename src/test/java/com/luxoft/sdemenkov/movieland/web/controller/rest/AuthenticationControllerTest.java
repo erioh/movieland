@@ -1,6 +1,7 @@
 package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.Token;
+import com.luxoft.sdemenkov.movieland.model.User;
 import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +40,7 @@ public class AuthenticationControllerTest {
 
     @Test
     public void loginOk() throws Exception {
-        when(mockedAuthenticationService.login(anyString(), anyString())).thenReturn(new Token(UUID.randomUUID(), "Token"));
+        when(mockedAuthenticationService.login(anyString(), anyString())).thenReturn(new Token( new User(1, "Token"), UUID.randomUUID(), System.currentTimeMillis()));
         mockMvc.perform(post("/login").param("email", "email").param("password", "password"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("nickname").value("Token"));

@@ -4,12 +4,14 @@ import java.util.UUID;
 
 
 public class Token {
-    String nickname;
+    private String nickname;
     private UUID uuid;
+    private long birthTime;
 
-    public Token(UUID uuid, String nickname) {
+    public Token(User user, UUID uuid, long birthTime) {
+        this.nickname = user.getNickname();
         this.uuid = uuid;
-        this.nickname = nickname;
+        this.birthTime = birthTime;
     }
 
     public UUID getUuid() {
@@ -28,11 +30,22 @@ public class Token {
         this.nickname = nickname;
     }
 
+    public long getBirthTime() {
+        return birthTime;
+    }
+
+
+    public void setBirthTime(long birthTime) {
+        this.birthTime = birthTime;
+    }
+
     @Override
     public String toString() {
         return "Token{" +
-                "uuid=" + uuid +
-                ", nickname='" + nickname + '\'' +
+                "nickname='" + nickname + '\'' +
+                ", uuid=" + uuid +
+                ", birthTime=" + birthTime +
                 '}';
     }
+
 }

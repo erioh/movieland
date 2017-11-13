@@ -18,8 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private Map<UUID, Long> birthTimeOfUuid = new ConcurrentHashMap<>();
-    private Map<UUID, User> userToUuidMap = new ConcurrentHashMap<>();
+    private Map<UUID, Token> tokenMap = new ConcurrentHashMap<>();
 
     @Value("${cron.service.users.autologout.time}")
     private Long milliSecondsToLogout;
@@ -34,26 +33,23 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new RuntimeException("Login or password are invalid");
         }
         UUID uuid = UUID.randomUUID();
-        Token token = new Token(uuid, user.getNickname());
+        Token token = new Token( user, uuid, System.currentTimeMillis() );
         logger.debug("User {} with password {} is logged in. UUID = {}", email, password, uuid);
-        birthTimeOfUuid.put(uuid, System.currentTimeMillis());
-        userToUuidMap.put(uuid, user);
+        tokenMap.put(uuid, token);
         return token;
     }
 
     @Override
     public void logout(UUID uuid) {
-        birthTimeOfUuid.remove(uuid);
-        userToUuidMap.remove(uuid);
+        tokenMap.remove(uuid);
     }
 
     @Override
     public boolean isAlive(UUID uuid) {
-        if (birthTimeOfUuid.containsKey(uuid)) {
-            boolean isAlive = System.currentTimeMillis() - birthTimeOfUuid.get(uuid) < milliSecondsToLogout;
+        if (tokenMap.containsKey(uuid)) {
+            boolean isAlive = System.currentTimeMillis() - tokenMap.get(uuid).getBirthTime() < milliSecondsToLogout;
             if (!isAlive) {
-                birthTimeOfUuid.remove(uuid);
-                userToUuidMap.remove(uuid);
+                tokenMap.remove(uuid);
             }
             return isAlive;
         }
@@ -63,7 +59,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     @Scheduled(fixedRateString = "${cron.service.users.autologout.time}")
     public void removeInactiveUsers() {
-        for(Map.Entry<UUID, Long> entryMap: birthTimeOfUuid.entrySet()){
+        for(Map.Entry<UUID, Token> entryMap: tokenMap.entrySet()){
             isAlive(entryMap.getKey());
         };
     }
