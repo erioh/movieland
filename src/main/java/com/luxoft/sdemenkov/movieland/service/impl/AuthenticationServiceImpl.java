@@ -21,7 +21,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private Map<UUID, Long> birthTimeOfUuid = new ConcurrentHashMap<>();
     private Map<UUID, User> userToUuidMap = new ConcurrentHashMap<>();
 
-    @Value("${service.auto.logout}")
+    @Value("${cron.service.users.autologout.time}")
     private Long milliSecondsToLogout;
 
     @Autowired
