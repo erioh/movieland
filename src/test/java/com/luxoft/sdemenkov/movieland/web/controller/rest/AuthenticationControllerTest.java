@@ -14,6 +14,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.anyString;
@@ -40,7 +41,7 @@ public class AuthenticationControllerTest {
 
     @Test
     public void loginOk() throws Exception {
-        when(mockedAuthenticationService.login(anyString(), anyString())).thenReturn(new Token( new User(1, "Token"), UUID.randomUUID(), System.currentTimeMillis()));
+        when(mockedAuthenticationService.login(anyString(), anyString())).thenReturn(new Token( new User(1, "Token"), UUID.randomUUID(), LocalDateTime.now()));
         mockMvc.perform(post("/login").param("email", "email").param("password", "password"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("nickname").value("Token"));

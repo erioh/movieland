@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalAmount;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,6 +25,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Value("${cron.service.users.autologout.time}")
     private Long milliSecondsToLogout;
 
+    @Value("${cron.service.users.session.before.logout.hours}")
+    private Integer hoursBeforeLogout;
+
     @Autowired
     private UserDao userDao;
 
@@ -33,7 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new RuntimeException("Login or password are invalid");
         }
         UUID uuid = UUID.randomUUID();
-        Token token = new Token( user, uuid, System.currentTimeMillis() );
+        Token token = new Token( user, uuid, LocalDateTime.now().plusHours(hoursBeforeLogout) );
         logger.debug("User {} with password {} is logged in. UUID = {}", email, password, uuid);
         tokenMap.put(uuid, token);
         return token;
@@ -47,7 +52,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public boolean isAlive(UUID uuid) {
         if (tokenMap.containsKey(uuid)) {
-            boolean isAlive = System.currentTimeMillis() - tokenMap.get(uuid).getBirthTime() < milliSecondsToLogout;
+            boolean isAlive = tokenMap.get(uuid).getDieTime().isAfter(LocalDateTime.now());
             if (!isAlive) {
                 tokenMap.remove(uuid);
             }

@@ -1,17 +1,18 @@
 package com.luxoft.sdemenkov.movieland.model;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 
 public class Token {
     private String nickname;
     private UUID uuid;
-    private long birthTime;
+    private LocalDateTime dieTime;
 
-    public Token(User user, UUID uuid, long birthTime) {
+    public Token(User user, UUID uuid, LocalDateTime dieTime) {
         this.nickname = user.getNickname();
         this.uuid = uuid;
-        this.birthTime = birthTime;
+        this.dieTime = dieTime;
     }
 
     public UUID getUuid() {
@@ -30,13 +31,13 @@ public class Token {
         this.nickname = nickname;
     }
 
-    public long getBirthTime() {
-        return birthTime;
+    public LocalDateTime getDieTime() {
+        return dieTime;
     }
 
 
-    public void setBirthTime(long birthTime) {
-        this.birthTime = birthTime;
+    public void setDieTime(LocalDateTime dieTime) {
+        this.dieTime = dieTime;
     }
 
     @Override
@@ -44,7 +45,7 @@ public class Token {
         return "Token{" +
                 "nickname='" + nickname + '\'' +
                 ", uuid=" + uuid +
-                ", birthTime=" + birthTime +
+                ", dieTime=" + dieTime +
                 '}';
     }
 

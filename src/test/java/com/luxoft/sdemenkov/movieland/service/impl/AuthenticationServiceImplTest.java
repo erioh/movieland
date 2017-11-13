@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.lang.reflect.Field;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -28,6 +29,14 @@ public class AuthenticationServiceImplTest {
     @Test
     public void login() throws Exception {
         when(userDao.getUser(anyString(), anyString())).thenReturn(new User(1, "userName"));
+        Field milliSecondsToLogout = userService.getClass().getDeclaredField("milliSecondsToLogout");
+        Field hoursBeforeLogout = userService.getClass().getDeclaredField("hoursBeforeLogout");
+        hoursBeforeLogout.setAccessible(true);
+        milliSecondsToLogout.setAccessible(true);
+        milliSecondsToLogout.set(userService, Long.valueOf(100000));
+        hoursBeforeLogout.set(userService, Integer.valueOf(1));
+        milliSecondsToLogout.setAccessible(false);
+        hoursBeforeLogout.setAccessible(false);
         Token token = userService.login("login", "password");
         assertNotNull(token.getUuid());
         assertEquals("userName", token.getNickname());
@@ -44,9 +53,13 @@ public class AuthenticationServiceImplTest {
     @Test
     public void logout() throws Exception {
         Field milliSecondsToLogout = userService.getClass().getDeclaredField("milliSecondsToLogout");
+        Field hoursBeforeLogout = userService.getClass().getDeclaredField("hoursBeforeLogout");
+        hoursBeforeLogout.setAccessible(true);
         milliSecondsToLogout.setAccessible(true);
         milliSecondsToLogout.set(userService, Long.valueOf(100000));
+        hoursBeforeLogout.set(userService, Integer.valueOf(1));
         milliSecondsToLogout.setAccessible(false);
+        hoursBeforeLogout.setAccessible(false);
         when(userDao.getUser(anyString(), anyString())).thenReturn(new User(1, "userName"));
         Token token = userService.login("login", "password");
         userService.logout(token.getUuid());
@@ -55,14 +68,23 @@ public class AuthenticationServiceImplTest {
     @Test
     public void isAlive() throws Exception {
         Field milliSecondsToLogout = userService.getClass().getDeclaredField("milliSecondsToLogout");
+        Field hoursBeforeLogout = userService.getClass().getDeclaredField("hoursBeforeLogout");
+        hoursBeforeLogout.setAccessible(true);
         milliSecondsToLogout.setAccessible(true);
-        milliSecondsToLogout.set(userService, Long.valueOf(1000));
+        milliSecondsToLogout.set(userService, Long.valueOf(100000));
+        hoursBeforeLogout.set(userService, Integer.valueOf(1));
         milliSecondsToLogout.setAccessible(false);
+        hoursBeforeLogout.setAccessible(false);
         when(userDao.getUser(anyString(), anyString())).thenReturn(new User(1, "userName"));
         Token token = userService.login("login", "password");
         assertTrue(userService.isAlive(token.getUuid()));
         assertTrue(userService.isAlive(token.getUuid()));
-        Thread.sleep(1000);
+
+        Field timeToDie = token.getClass().getDeclaredField("dieTime");
+        timeToDie.setAccessible(true);
+        timeToDie.set(token, LocalDateTime.now().minusHours(1).minusHours(1));
+        timeToDie.setAccessible(false);
+
         assertFalse(userService.isAlive(token.getUuid()));
         assertFalse(userService.isAlive(UUID.randomUUID()));
     }
