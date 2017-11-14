@@ -33,8 +33,8 @@ public class AuthenticationServiceImplTest {
         Field hoursBeforeLogout = userService.getClass().getDeclaredField("hoursBeforeLogout");
         hoursBeforeLogout.setAccessible(true);
         milliSecondsToLogout.setAccessible(true);
-        milliSecondsToLogout.set(userService, Long.valueOf(100000));
-        hoursBeforeLogout.set(userService, Integer.valueOf(1));
+        milliSecondsToLogout.set(userService, 100000L);
+        hoursBeforeLogout.set(userService, 1);
         milliSecondsToLogout.setAccessible(false);
         hoursBeforeLogout.setAccessible(false);
         Token token = userService.login("login", "password");
@@ -56,8 +56,8 @@ public class AuthenticationServiceImplTest {
         Field hoursBeforeLogout = userService.getClass().getDeclaredField("hoursBeforeLogout");
         hoursBeforeLogout.setAccessible(true);
         milliSecondsToLogout.setAccessible(true);
-        milliSecondsToLogout.set(userService, Long.valueOf(100000));
-        hoursBeforeLogout.set(userService, Integer.valueOf(1));
+        milliSecondsToLogout.set(userService, 100000L);
+        hoursBeforeLogout.set(userService, 1);
         milliSecondsToLogout.setAccessible(false);
         hoursBeforeLogout.setAccessible(false);
         when(userDao.getUser(anyString(), anyString())).thenReturn(new User(1, "userName"));
@@ -71,8 +71,8 @@ public class AuthenticationServiceImplTest {
         Field hoursBeforeLogout = userService.getClass().getDeclaredField("hoursBeforeLogout");
         hoursBeforeLogout.setAccessible(true);
         milliSecondsToLogout.setAccessible(true);
-        milliSecondsToLogout.set(userService, Long.valueOf(100000));
-        hoursBeforeLogout.set(userService, Integer.valueOf(1));
+        milliSecondsToLogout.set(userService, 100000L);
+        hoursBeforeLogout.set(userService, 1);
         milliSecondsToLogout.setAccessible(false);
         hoursBeforeLogout.setAccessible(false);
         when(userDao.getUser(anyString(), anyString())).thenReturn(new User(1, "userName"));

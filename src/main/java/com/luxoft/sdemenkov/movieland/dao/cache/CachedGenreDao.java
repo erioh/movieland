@@ -29,7 +29,7 @@ public class CachedGenreDao implements GenreDao {
     public void invalidate() {
         cachedGenreList = genreDao.getAllGenres();
         logger.debug("Cache for Genre is updated");
-        logger.trace("Cache for Genre is updated. Cahce value is {}", cachedGenreList);
+        logger.trace("Cache for Genre is updated. Cache value is {}", cachedGenreList);
     }
 
     @Override

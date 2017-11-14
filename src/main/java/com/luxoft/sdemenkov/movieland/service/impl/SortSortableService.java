@@ -18,7 +18,7 @@ public class SortSortableService implements SortService {
     @Override
     public List<Sortable> sortByRating(List<Sortable> list, SortDirection direction) {
         log.debug("Start to sortByRating.");
-        Collections.sort(list, Comparator.comparingDouble(Sortable::getRating).reversed());
+        list.sort(Comparator.comparingDouble(Sortable::getRating).reversed());
         return list;
     }
 
@@ -27,10 +27,10 @@ public class SortSortableService implements SortService {
         log.debug("Start to sortByPrice.");
         switch (direction) {
             case DESC:
-                Collections.sort(list, Comparator.comparing(Sortable::getPrice).reversed());
+                list.sort(Comparator.comparing(Sortable::getPrice).reversed());
                 break;
             case ASC:
-                Collections.sort(list, Comparator.comparing(Sortable::getPrice));
+                list.sort(Comparator.comparing(Sortable::getPrice));
                 break;
         }
 

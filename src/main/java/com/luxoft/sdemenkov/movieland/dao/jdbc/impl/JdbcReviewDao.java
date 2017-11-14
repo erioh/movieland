@@ -3,8 +3,8 @@ package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 import com.luxoft.sdemenkov.movieland.dao.api.ReviewDao;
 import com.luxoft.sdemenkov.movieland.dao.mapper.ReviewToMovieRowMapper;
 import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.Pair;
 import com.luxoft.sdemenkov.movieland.model.Review;
-import javafx.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,6 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by sergeydemenkov on 04.11.17.
- */
 @Repository
 public class JdbcReviewDao implements ReviewDao {
     private final static ReviewToMovieRowMapper REVIEW_TO_MOVIE_ROW_MAPPER = new ReviewToMovieRowMapper();
@@ -35,12 +32,12 @@ public class JdbcReviewDao implements ReviewDao {
             ids.add(movie.getId());
         }
         mapSqlParameterSource.addValue("ids", ids);
-        List<Pair<Integer, Review>> responceList = namedParameterJdbcTemplate.query(getReviewByMovieIdsSQL, mapSqlParameterSource, REVIEW_TO_MOVIE_ROW_MAPPER);
+        List<Pair<Integer, Review>> responseList = namedParameterJdbcTemplate.query(getReviewByMovieIdsSQL, mapSqlParameterSource, REVIEW_TO_MOVIE_ROW_MAPPER);
         for (Movie movie : movieList) {
             List<Review> reviewList = new ArrayList<>();
-            for (Pair<Integer, Review> integerReviewPair : responceList) {
-                if (movie.getId() == integerReviewPair.getKey()) {
-                    reviewList.add(integerReviewPair.getValue());
+            for (Pair<Integer, Review> integerReviewPair : responseList) {
+                if (movie.getId() == integerReviewPair.getFirstValue()) {
+                    reviewList.add(integerReviewPair.getSecondValue());
                 }
             }
             movie.setReviewList(reviewList);

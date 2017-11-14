@@ -6,9 +6,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dp-ptcstd-43 on 11/3/2017.
- */
+
 public class MovieGenerator {
     public static Movie getMovieForTest() {
         Movie movie = new Movie();

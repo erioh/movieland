@@ -19,9 +19,9 @@ public class CountryServiceImpl implements CountryService {
     private CountryDao countryDao;
 
     @Override
-    public void ecrichMoviesWithCountries(List<Movie> movieList) {
+    public void enrichMoviesWithCountries(List<Movie> movieList) {
         countryDao.enrichMoviesWithCountries(movieList);
-        log.debug("ecrichMoviesWithCountries is executed");
+        log.debug("enrichMoviesWithCountries is executed");
     }
 
     @Override

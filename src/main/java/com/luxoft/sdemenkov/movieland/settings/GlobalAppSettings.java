@@ -1,4 +1,4 @@
-package com.luxoft.sdemenkov.movieland.settings.config;
+package com.luxoft.sdemenkov.movieland.settings;
 
 
 import org.springframework.context.annotation.Configuration;

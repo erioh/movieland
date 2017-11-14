@@ -1,8 +1,6 @@
 package com.luxoft.sdemenkov.movieland.model;
 
-/**
- * Created by sergeydemenkov on 08.11.17.
- */
+
 public enum SortDirection {
     ASC("ASC"), DESC("DESC");
     private final String direction;

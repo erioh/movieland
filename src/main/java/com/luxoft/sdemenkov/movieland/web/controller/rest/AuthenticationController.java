@@ -26,17 +26,17 @@ public class AuthenticationController {
         try {
             token = authenticationService.login(email, password);
         } catch (RuntimeException e) {
-            return new ResponseEntity<ExceptionMessageDto>(new ExceptionMessageDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ExceptionMessageDto(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
         TokenDTO tokenDTO = new TokenDTO(token);
         logger.debug("Getting of user with email {} and password {} returns {}", email, password, token);
-        return new ResponseEntity<TokenDTO>(tokenDTO, HttpStatus.OK);
+        return new ResponseEntity<>(tokenDTO, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.DELETE)
     public ResponseEntity<?> logout(@RequestHeader("x-auth-token") String uuid) {
         authenticationService.logout(UUID.fromString(uuid));
-        return new ResponseEntity<ExceptionMessageDto>(new ExceptionMessageDto("User is logged out"), HttpStatus.OK);
+        return new ResponseEntity<>(new ExceptionMessageDto("User is logged out"), HttpStatus.OK);
     }
 
 

@@ -15,9 +15,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by dp-ptcstd-43 on 10/31/2017.
- */
+
 @RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
 public class CountryServiceImplTest {
@@ -33,7 +31,7 @@ public class CountryServiceImplTest {
         List<Movie> movieList = new ArrayList<>();
         movieList.add(MovieGenerator.getMovieForTest());
 //        when(mockedCountryDao.enrichMoviesWithCountries(anyList())).;
-        countryService.ecrichMoviesWithCountries(movieList);
+        countryService.enrichMoviesWithCountries(movieList);
         assertEquals(1, movieList.size());
     }
 

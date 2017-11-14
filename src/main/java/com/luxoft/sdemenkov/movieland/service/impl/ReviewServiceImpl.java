@@ -21,6 +21,6 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void enrichMoviesWithReviews(List<Movie> movieList) {
         reviewDao.enrichMoviesWithReviews(movieList);
-        logger.debug("ecrichMoviesWithReviews is executed");
+        logger.debug("enrichMoviesWithReviews is executed");
     }
 }

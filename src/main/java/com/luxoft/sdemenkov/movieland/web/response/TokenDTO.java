@@ -2,8 +2,6 @@ package com.luxoft.sdemenkov.movieland.web.response;
 
 import com.luxoft.sdemenkov.movieland.model.Token;
 
-import java.util.UUID;
-
 
 public class TokenDTO {
     private String nickname;

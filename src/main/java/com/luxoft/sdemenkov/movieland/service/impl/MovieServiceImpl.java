@@ -38,7 +38,7 @@ public class MovieServiceImpl implements MovieService {
     public List<Movie> getThreeRandomMovies() {
         List<Movie> threeRandomMovies = movieDao.getThreeRandomMovies();
         genreService.enrichMoviesWithGenres(threeRandomMovies);
-        countryService.ecrichMoviesWithCountries(threeRandomMovies);
+        countryService.enrichMoviesWithCountries(threeRandomMovies);
         log.debug("Calling method getThreeRandomMovies");
         return threeRandomMovies;
     }
@@ -54,7 +54,7 @@ public class MovieServiceImpl implements MovieService {
     public List<Movie> getMovieById(Set<Integer> movieIds) {
         List<Movie> movieList = movieDao.getMovieListByIds(movieIds);
         genreService.enrichMoviesWithGenres(movieList);
-        countryService.ecrichMoviesWithCountries(movieList);
+        countryService.enrichMoviesWithCountries(movieList);
         reviewService.enrichMoviesWithReviews(movieList);
         log.debug("Method getMovieById is called for iss = {} with result = {}", movieIds, movieList);
         return movieList;

@@ -28,11 +28,11 @@ public class CountryController {
         long startTime = System.currentTimeMillis();
         List<AllCountryDTO> allCountryDTOList = new ArrayList<>();
         List<Country> countryList = countryService.getAllCountries();
-        log.debug("Method getAllCountries. Filling countryList with coutries");
+        log.debug("Method getAllCountries. Filling countryList with countries");
         for (Country country : countryList) {
             allCountryDTOList.add(new AllCountryDTO(country));
         }
         log.debug("Method getAllCountries.  It took {} ms", System.currentTimeMillis() - startTime);
-        return new ResponseEntity<List<AllCountryDTO>>(allCountryDTOList, HttpStatus.OK);
+        return new ResponseEntity<>(allCountryDTOList, HttpStatus.OK);
     }
 }

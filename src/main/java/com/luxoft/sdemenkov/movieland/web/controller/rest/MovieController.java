@@ -48,7 +48,7 @@ public class MovieController {
         try {
             sortParameters = sortDirectionValidationService.getValidationErrors(ratingDirection, priceDirection);
         } catch (RuntimeException e) {
-            return new ResponseEntity<ExceptionMessageDto>(new ExceptionMessageDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ExceptionMessageDto(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
         long startTime = System.currentTimeMillis();
         List<Sortable> allMoviesDTOList = new ArrayList<>();
@@ -66,7 +66,7 @@ public class MovieController {
         }
         log.debug("Method getAllMovies.  It took {} ms", System.currentTimeMillis() - startTime);
 
-        return new ResponseEntity<List<Sortable>>(allMoviesDTOList, HttpStatus.OK);
+        return new ResponseEntity<>(allMoviesDTOList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{movieId}", method = RequestMethod.GET)
@@ -74,11 +74,11 @@ public class MovieController {
             @PathVariable(value = "movieId") int movieId,
             @RequestParam(value = "currency", required = false) String currency) {
         log.debug("Method getMoviesById is called");
-        log.debug("Start validation of input paramener");
+        log.debug("Start validation of input parameter");
         try {
             Currency cur = currencyValidationService.getCurrency(currency);
         } catch (RuntimeException e) {
-            return new ResponseEntity<ExceptionMessageDto>(new ExceptionMessageDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ExceptionMessageDto(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
         log.debug("Validation of input parameter is finished");
 
@@ -92,7 +92,7 @@ public class MovieController {
         MovieByIdDTO movieByIdDTO = new MovieByIdDTO(movieList.get(0));
 
         log.debug("Method getMoviesById. It took {} ms", System.currentTimeMillis() - startTime);
-        return new ResponseEntity<MovieByIdDTO>(movieByIdDTO, HttpStatus.OK);
+        return new ResponseEntity<>(movieByIdDTO, HttpStatus.OK);
 
     }
 
@@ -106,7 +106,7 @@ public class MovieController {
         }
         log.debug("Method getThreeRandomMovies.  It took {} ms", System.currentTimeMillis() - startTime);
 
-        return new ResponseEntity<List<ThreeRandomMoviesDTO>>(threeRandomMovieDTOS, HttpStatus.OK);
+        return new ResponseEntity<>(threeRandomMovieDTOS, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/genre/{genreId}", method = RequestMethod.GET)
@@ -117,7 +117,7 @@ public class MovieController {
         try {
             sortParameters = sortDirectionValidationService.getValidationErrors(ratingDirection, priceDirection);
         } catch (RuntimeException e) {
-            return new ResponseEntity<ExceptionMessageDto>(new ExceptionMessageDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ExceptionMessageDto(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
         long startTime = System.currentTimeMillis();
         List<Movie> movieList = movieService.getMoviesByGenre(genreId);
@@ -131,7 +131,7 @@ public class MovieController {
         if (priceDirection != null) {
             movieByGenreDtoList = sortService.sortByPrice(movieByGenreDtoList, sortParameters.getSecondValue());
         }
-        return new ResponseEntity<List<Sortable>>(movieByGenreDtoList, HttpStatus.OK);
+        return new ResponseEntity<>(movieByGenreDtoList, HttpStatus.OK);
 
     }
 

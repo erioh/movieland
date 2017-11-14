@@ -12,7 +12,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAmount;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,7 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new RuntimeException("Login or password are invalid");
         }
         UUID uuid = UUID.randomUUID();
-        Token token = new Token( user, uuid, LocalDateTime.now().plusHours(hoursBeforeLogout) );
+        Token token = new Token(user, uuid, LocalDateTime.now().plusHours(hoursBeforeLogout));
         logger.debug("User {} with password {} is logged in. UUID = {}", email, password, uuid);
         tokenMap.put(uuid, token);
         return token;
@@ -64,9 +63,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     @Scheduled(fixedRateString = "${cron.service.users.autologout.time}")
     public void removeInactiveUsers() {
-        for(Map.Entry<UUID, Token> entryMap: tokenMap.entrySet()){
+        for (Map.Entry<UUID, Token> entryMap : tokenMap.entrySet()) {
             isAlive(entryMap.getKey());
-        };
+        }
     }
 
 }

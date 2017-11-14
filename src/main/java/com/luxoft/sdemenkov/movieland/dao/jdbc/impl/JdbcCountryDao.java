@@ -67,6 +67,7 @@ public class JdbcCountryDao implements CountryDao {
     @Override
     public List<Country> getAllCountries() {
         List<Country> countryList = jdbcTemplate.query(getAllCountriesSQL, COUNTRY_ROW_MAPPER);
+        log.debug("Result of getAllCountriesSQL is {}", countryList);
         return countryList;
     }
 }

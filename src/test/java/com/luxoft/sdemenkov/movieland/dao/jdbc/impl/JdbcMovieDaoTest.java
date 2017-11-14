@@ -34,6 +34,7 @@ public class JdbcMovieDaoTest {
                 actualMovie = movie;
             }
         }
+        assert actualMovie != null;
         assertEquals(expectedMovie.getId(), actualMovie.getId());
         assertEquals(expectedMovie.getNameRussian(), actualMovie.getNameRussian());
         assertEquals(expectedMovie.getNameNative(), actualMovie.getNameNative());

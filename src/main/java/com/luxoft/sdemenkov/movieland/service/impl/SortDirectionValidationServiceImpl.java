@@ -27,6 +27,6 @@ public class SortDirectionValidationServiceImpl implements SortDirectionValidati
             throw new RuntimeException("Invalid Sort Direction is used. Used code is: " + priceDirection);
         }
         log.debug("Validation of sort direction request is finished");
-        return new Pair<SortDirection, SortDirection>(SortDirection.getDirection(ratingDirection), SortDirection.getDirection(priceDirection));
+        return new Pair<>(SortDirection.getDirection(ratingDirection), SortDirection.getDirection(priceDirection));
     }
 }

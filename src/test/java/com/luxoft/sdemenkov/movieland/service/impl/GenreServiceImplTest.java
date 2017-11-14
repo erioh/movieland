@@ -17,9 +17,6 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by sergeydemenkov on 28.10.17.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class GenreServiceImplTest {
     @InjectMocks

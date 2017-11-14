@@ -30,7 +30,7 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public void enrichMoviesWithGenres(List<Movie> movieList) {
         genreDao.enrichMoviesWithGenres(movieList);
-        log.debug("ecrichMoviesByGenres is executed");
+        log.debug("enrichMoviesByGenres is executed");
     }
 
 }

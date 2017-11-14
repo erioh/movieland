@@ -1,8 +1,6 @@
 package com.luxoft.sdemenkov.movieland.web.response;
 
-/**
- * Created by sergeydemenkov on 11.11.17.
- */
+
 public class ExceptionMessageDto {
     private String exceptionMessage;
 

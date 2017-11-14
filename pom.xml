@@ -81,7 +81,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Embeded DB for testing -->
+        <!-- Embedded DB for testing -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>

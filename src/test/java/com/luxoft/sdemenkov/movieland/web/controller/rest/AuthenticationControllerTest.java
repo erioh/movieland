@@ -41,7 +41,7 @@ public class AuthenticationControllerTest {
 
     @Test
     public void loginOk() throws Exception {
-        when(mockedAuthenticationService.login(anyString(), anyString())).thenReturn(new Token( new User(1, "Token"), UUID.randomUUID(), LocalDateTime.now()));
+        when(mockedAuthenticationService.login(anyString(), anyString())).thenReturn(new Token(new User(1, "Token"), UUID.randomUUID(), LocalDateTime.now()));
         mockMvc.perform(post("/login").param("email", "email").param("password", "password"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("nickname").value("Token"));

@@ -8,9 +8,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-/**
- * Created by sergeydemenkov on 08.11.17.
- */
+
 public class SortDirectionValidationServiceImplTest {
     @Test
     public void getValidationErrors() throws Exception {

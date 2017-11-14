@@ -39,16 +39,16 @@ public class CountryControllerTest {
     @Test
     public void getAllCountries() throws Exception {
         List<Country> countryList = new ArrayList<>();
-        countryList.add(new Country(1, "cuntry Name"));
-        countryList.add(new Country(1, "cuntry Name"));
-        countryList.add(new Country(1, "cuntry Name"));
+        countryList.add(new Country(1, "country Name"));
+        countryList.add(new Country(1, "country Name"));
+        countryList.add(new Country(1, "country Name"));
         when(countryService.getAllCountries()).thenReturn(countryList);
         mockMvc.perform(get("/country"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].name").value("cuntry Name"));
+                .andExpect(jsonPath("$[0].name").value("country Name"));
     }
 
 }

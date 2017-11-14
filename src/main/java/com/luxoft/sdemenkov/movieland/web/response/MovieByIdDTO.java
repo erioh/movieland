@@ -8,9 +8,7 @@ import com.luxoft.sdemenkov.movieland.model.Review;
 import java.math.BigDecimal;
 import java.util.List;
 
-/**
- * Created by sergeydemenkov on 04.11.17.
- */
+
 public class MovieByIdDTO {
     private int id;
     private String nameRussian;
