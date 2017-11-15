@@ -8,6 +8,5 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @EnableScheduling
 @PropertySource({"classpath:property/cron.properties"})
-@ComponentScan(basePackages = "com.luxoft.sdemenkov.movieland")
 public class CacheSettings {
 }

@@ -69,7 +69,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public Token getUserByUuid(UUID uuid) {
+    public Token getTokenByUuid(UUID uuid) {
         if (isAlive(uuid)) {
             return tokenMap.get(uuid);
         } else {

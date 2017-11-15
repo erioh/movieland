@@ -13,5 +13,5 @@ public interface AuthenticationService {
 
     void removeInactiveUsers();
 
-    Token getUserByUuid(UUID uuid);
+    Token getTokenByUuid(UUID uuid);
 }
