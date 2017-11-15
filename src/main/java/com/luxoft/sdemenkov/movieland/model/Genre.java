@@ -1,11 +1,8 @@
 package com.luxoft.sdemenkov.movieland.model;
 
-public class Genre {
-    private int id;
-    private String name;
-
-    public Genre() {
-    }
+public final class Genre {
+    private final int id;
+    private final String name;
 
     public Genre(int id, String name) {
         this.id = id;
@@ -16,16 +13,8 @@ public class Genre {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

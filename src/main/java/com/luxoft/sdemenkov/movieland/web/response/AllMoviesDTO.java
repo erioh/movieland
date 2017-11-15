@@ -1,21 +1,23 @@
-package com.luxoft.sdemenkov.movieland.web.responce;
+package com.luxoft.sdemenkov.movieland.web.response;
 
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 
-public class MoviesByGenreDTO implements Sortable {
+import java.math.BigDecimal;
+
+public class AllMoviesDTO implements Sortable {
     private int id;
     private String nameRussian;
     private String nameNative;
     private int yearOfRelease;
     private double rating;
-    private double price;
+    private BigDecimal price;
     private String picturePath;
 
-    public MoviesByGenreDTO() {
+    public AllMoviesDTO() {
     }
 
-    public MoviesByGenreDTO(Movie movie) {
+    public AllMoviesDTO(Movie movie) {
         id = movie.getId();
         nameRussian = movie.getNameRussian();
         nameNative = movie.getNameNative();
@@ -24,6 +26,7 @@ public class MoviesByGenreDTO implements Sortable {
         price = movie.getPrice();
         picturePath = movie.getPicturePath();
     }
+
 
     public int getId() {
         return id;
@@ -48,7 +51,7 @@ public class MoviesByGenreDTO implements Sortable {
     }
 
     @Override
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
@@ -60,7 +63,7 @@ public class MoviesByGenreDTO implements Sortable {
 
     @Override
     public String toString() {
-        return "MoviesByGenreDTO{" +
+        return "AllMoviesDTO{" +
                 "id=" + id +
                 ", nameRussian='" + nameRussian + '\'' +
                 ", nameNative='" + nameNative + '\'' +

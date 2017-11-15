@@ -9,7 +9,7 @@ import java.util.List;
 public interface CountryDao {
     List<Country> getCountryListByMovie(Movie movie);
 
-    List<Movie> enrichMoviesWithCountries(List<Movie> movieList);
+    void enrichMoviesWithCountries(List<Movie> movieList);
 
     List<Country> getAllCountries();
 }

@@ -18,17 +18,13 @@ import java.util.Set;
 
 @Repository
 public class JdbcMovieDao implements MovieDao {
-
-
+    private final static MovieRowMapper MOVIE_ROW_MAPPER = new MovieRowMapper();
+    private final static Random RANDOM_GENERATOR = new Random();
     private final Logger log = LoggerFactory.getLogger(getClass());
-
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
-    private MovieRowMapper movieRowMapper = new MovieRowMapper();
-    private final Random randomGenerator = new Random();
     @Autowired
     private String getMoviesByGenreIdSQL;
     @Autowired
@@ -38,10 +34,9 @@ public class JdbcMovieDao implements MovieDao {
     @Autowired
     private String getMovieByIdSQL;
 
-
     @Override
     public List<Movie> getAllMovies() {
-        List<Movie> movieList = jdbcTemplate.query(getAllMoviesSQL, movieRowMapper);
+        List<Movie> movieList = jdbcTemplate.query(getAllMoviesSQL, MOVIE_ROW_MAPPER);
         log.debug("Calling method getAllMovies. with query = {}", getAllMoviesSQL);
         log.debug("Calling method getAllMovies. Result = {}", movieList);
         return movieList;
@@ -53,7 +48,7 @@ public class JdbcMovieDao implements MovieDao {
         int countOfRows = getCountOfMovies();
         int searchedCount = countOfRows >= 3 ? 3 : countOfRows;
         while (ids.size() != searchedCount) {
-            ids.add(randomGenerator.nextInt(countOfRows + 1));
+            ids.add(RANDOM_GENERATOR.nextInt(countOfRows + 1));
         }
         List<Movie> movieList = getMovieListByIds(ids);
         while (movieList.size() < 3) {
@@ -73,14 +68,14 @@ public class JdbcMovieDao implements MovieDao {
     public List<Movie> getMovieListByIds(Set<Integer> ids) {
         MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
         sqlParameterSource.addValue("ids", ids);
-        List<Movie> movie = namedParameterJdbcTemplate.query(getMovieByIdSQL, sqlParameterSource, movieRowMapper);
+        List<Movie> movie = namedParameterJdbcTemplate.query(getMovieByIdSQL, sqlParameterSource, MOVIE_ROW_MAPPER);
         log.debug("Movie with id = {} was selected. Movie = {}", ids, movie.get(0));
         return movie;
     }
 
     @Override
     public List<Movie> getMoviesByGenre(int genreId) {
-        List<Movie> movieList = jdbcTemplate.query(getMoviesByGenreIdSQL, new Object[]{genreId}, movieRowMapper);
+        List<Movie> movieList = jdbcTemplate.query(getMoviesByGenreIdSQL, new Object[]{genreId}, MOVIE_ROW_MAPPER);
         log.debug("Method getMoviesByGenre is called with sql = {} and genre_id = {} ", getMoviesByGenreIdSQL, genreId);
         log.debug("Method getMoviesByGenre is called. Result is {}", movieList);
         return movieList;

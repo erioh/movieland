@@ -15,12 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by sergeydemenkov on 28.10.17.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class GenreServiceImplTest {
     @InjectMocks
@@ -42,8 +38,8 @@ public class GenreServiceImplTest {
     public void enrichMoviesByGenres() throws Exception {
         List<Movie> movieList = new ArrayList<>();
         movieList.add(MovieGenerator.getMovieForTest());
-        when(mockedGenreDao.enrichMoviesWithGenres(anyList())).thenReturn(movieList);
-        assertEquals(1, genreService.enrichMoviesWithGenres(movieList).size());
+        genreService.enrichMoviesWithGenres(movieList);
+        assertEquals(1, movieList.size());
     }
 
 }

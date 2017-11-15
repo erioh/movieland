@@ -19,6 +19,7 @@ import java.util.Map;
 @Repository
 public class JdbcGenreDao implements GenreDao {
 
+    private final static GenreRowMapper GENRE_ROW_MAPPER = new GenreRowMapper();
     private final Logger log = LoggerFactory.getLogger(getClass());
     @Autowired
     private String getGenreWithMappedMovieSQL;
@@ -26,29 +27,25 @@ public class JdbcGenreDao implements GenreDao {
     private String getAllGenresSQL;
     @Autowired
     private String getGenreListByMovieSQL;
-
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-
-    private GenreRowMapper genreRowMapper = new GenreRowMapper();
-
     public List<Genre> getGenreListByMove(Movie movie) {
-        List<Genre> genreList = jdbcTemplate.query(getGenreListByMovieSQL, new Object[]{movie.getId()}, genreRowMapper);
+        List<Genre> genreList = jdbcTemplate.query(getGenreListByMovieSQL, new Object[]{movie.getId()}, GENRE_ROW_MAPPER);
         log.debug("Calling method getGenreListByMove. with query = {}", getGenreListByMovieSQL);
         log.debug("Calling method getGenreListByMove with movie_id = {}, ", movie.getId());
         return genreList;
     }
 
     public List<Genre> getAllGenres() {
-        List<Genre> genreList = jdbcTemplate.query(getAllGenresSQL, genreRowMapper);
+        List<Genre> genreList = jdbcTemplate.query(getAllGenresSQL, GENRE_ROW_MAPPER);
         log.debug("Calling method getAllGenres with query {}", getAllGenresSQL);
         return genreList;
     }
 
-    public List<Movie> enrichMoviesWithGenres(List<Movie> movieList) {
+    public void enrichMoviesWithGenres(List<Movie> movieList) {
         MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
         List<Integer> movieIds = new ArrayList<>();
         for (Movie movie : movieList) {
@@ -61,15 +58,12 @@ public class JdbcGenreDao implements GenreDao {
             List<Genre> genreList = new ArrayList<>();
             for (Map<String, Object> map : list) {
                 if ((Integer) map.get("movie_id") == movie.getId()) {
-                    Genre genre = new Genre();
-                    genre.setId((Integer) map.get("genre_id"));
-                    genre.setName((String) map.get("name"));
+                    Genre genre = new Genre((Integer) map.get("genre_id"), (String) map.get("name"));
                     genreList.add(genre);
                 }
             }
             movie.setGenreList(genreList);
         }
-        return movieList;
     }
 
 }

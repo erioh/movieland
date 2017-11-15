@@ -28,7 +28,7 @@ public class ExchangeRatesExchangeServiceImplTest {
         movieListActual.add(MovieGenerator.getMovieForTest());
 
         movieListActual = currencyExchangeService.getMovieWithChangedCurrency(movieListActual, Currency.EUR);
-        assertTrue(movieListActual.get(0).getPrice() < movieListExpected.get(0).getPrice());
+        assertTrue(movieListActual.get(0).getPrice().compareTo(movieListExpected.get(0).getPrice()) < 0);
 
 
     }

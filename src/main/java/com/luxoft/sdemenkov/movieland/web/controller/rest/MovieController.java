@@ -2,17 +2,17 @@ package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.Currency;
 import com.luxoft.sdemenkov.movieland.model.Movie;
-import com.luxoft.sdemenkov.movieland.service.CurrencyExchangeService;
-import com.luxoft.sdemenkov.movieland.service.MovieService;
-import com.luxoft.sdemenkov.movieland.service.SortService;
+import com.luxoft.sdemenkov.movieland.model.Pair;
+import com.luxoft.sdemenkov.movieland.model.SortDirection;
+import com.luxoft.sdemenkov.movieland.service.*;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
-import com.luxoft.sdemenkov.movieland.web.responce.AllMoviesDTO;
-import com.luxoft.sdemenkov.movieland.web.responce.MovieByIdDTO;
-import com.luxoft.sdemenkov.movieland.web.responce.MoviesByGenreDTO;
-import com.luxoft.sdemenkov.movieland.web.responce.ThreeRandomMoviesDTO;
+import com.luxoft.sdemenkov.movieland.web.response.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -34,59 +34,70 @@ public class MovieController {
     @Autowired
     private CurrencyExchangeService currencyExchangeService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Sortable> getAllMovies(
-            @RequestParam(value = "rating", required = false) String rating
-            , @RequestParam(value = "price", required = false) String price) {
-        if (rating != null && price != null) {
-            //            how the fuck I can test it out??
-            throw new IllegalArgumentException("You can't sort response by rating and price at the same time");
+    @Autowired
+    private SortDirectionValidationService sortDirectionValidationService;
+    @Autowired
+    private CurrencyValidationService currencyValidationService;
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> getAllMovies(
+            @RequestParam(value = "rating", required = false) String ratingDirection
+            , @RequestParam(value = "price", required = false) String priceDirection) {
+
+        Pair<SortDirection, SortDirection> sortParameters;
+        try {
+            sortParameters = sortDirectionValidationService.getValidationErrors(ratingDirection, priceDirection);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(new ExceptionMessageDto(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
         long startTime = System.currentTimeMillis();
         List<Sortable> allMoviesDTOList = new ArrayList<>();
         List<Movie> movieList = movieService.getAllMovies();
-        for (Movie movie :
-                movieList) {
+        for (Movie movie : movieList) {
             allMoviesDTOList.add(new AllMoviesDTO(movie));
         }
-        if (rating != null) {
-            allMoviesDTOList = sortService.sortByRating(allMoviesDTOList, rating);
+        if (ratingDirection != null) {
+            allMoviesDTOList = sortService.sortByRating(allMoviesDTOList, sortParameters.getFirstValue());
             log.debug("Sorting.  It took {} ms", System.currentTimeMillis() - startTime);
-        } else if (price != null) {
-            allMoviesDTOList = sortService.sortByPrice(allMoviesDTOList, price);
+        }
+        if (priceDirection != null) {
+            allMoviesDTOList = sortService.sortByPrice(allMoviesDTOList, sortParameters.getSecondValue());
             log.debug("Sorting.  It took {} ms", System.currentTimeMillis() - startTime);
         }
         log.debug("Method getAllMovies.  It took {} ms", System.currentTimeMillis() - startTime);
 
-        return allMoviesDTOList;
+        return new ResponseEntity<>(allMoviesDTOList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{movieId}", method = RequestMethod.GET)
-    public MovieByIdDTO getMovieById(
+    public ResponseEntity<?> getMovieById(
             @PathVariable(value = "movieId") int movieId,
             @RequestParam(value = "currency", required = false) String currency) {
         log.debug("Method getMoviesById is called");
+        log.debug("Start validation of input parameter");
+        try {
+            Currency cur = currencyValidationService.getCurrency(currency);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(new ExceptionMessageDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+        log.debug("Validation of input parameter is finished");
+
         long startTime = System.currentTimeMillis();
         Set<Integer> movieIdSet = new HashSet<>();
         movieIdSet.add(movieId);
         List<Movie> movieList = movieService.getMovieById(movieIdSet);
         if (currency != null) {
-            try {
-                movieList = currencyExchangeService.getMovieWithChangedCurrency(movieList, Currency.valueOf(currency));
-            } catch (IllegalArgumentException e) {
-                log.error("Wrong curency was used! CCY = {}", currency);
-                throw e;
-            }
+            movieList = currencyExchangeService.getMovieWithChangedCurrency(movieList, Currency.getCurrency(currency));
         }
         MovieByIdDTO movieByIdDTO = new MovieByIdDTO(movieList.get(0));
 
         log.debug("Method getMoviesById. It took {} ms", System.currentTimeMillis() - startTime);
-        return movieByIdDTO;
+        return new ResponseEntity<>(movieByIdDTO, HttpStatus.OK);
 
     }
 
     @RequestMapping(value = "/random", method = RequestMethod.GET)
-    public List<ThreeRandomMoviesDTO> getThreeRandomMovies() {
+    public ResponseEntity<?> getThreeRandomMovies() {
         long startTime = System.currentTimeMillis();
         List<ThreeRandomMoviesDTO> threeRandomMovieDTOS = new ArrayList<>();
         List<Movie> movieList = movieService.getThreeRandomMovies();
@@ -95,16 +106,18 @@ public class MovieController {
         }
         log.debug("Method getThreeRandomMovies.  It took {} ms", System.currentTimeMillis() - startTime);
 
-        return threeRandomMovieDTOS;
+        return new ResponseEntity<>(threeRandomMovieDTOS, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/genre/{genreId}", method = RequestMethod.GET)
-    public List<Sortable> getMoviesByGenre(@PathVariable(value = "genreId") int genreId
-            , @RequestParam(value = "rating", required = false) String rating
-            , @RequestParam(value = "price", required = false) String price) {
-        if (rating != null && price != null) {
-//            how the fuck I can test it out??
-            throw new IllegalArgumentException("You can't sort response by rating and price at the same time");
+    public ResponseEntity<?> getMoviesByGenre(@PathVariable(value = "genreId") int genreId
+            , @RequestParam(value = "rating", required = false) String ratingDirection
+            , @RequestParam(value = "price", required = false) String priceDirection) {
+        Pair<SortDirection, SortDirection> sortParameters;
+        try {
+            sortParameters = sortDirectionValidationService.getValidationErrors(ratingDirection, priceDirection);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(new ExceptionMessageDto(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
         long startTime = System.currentTimeMillis();
         List<Movie> movieList = movieService.getMoviesByGenre(genreId);
@@ -112,12 +125,13 @@ public class MovieController {
         for (Movie movie : movieList) {
             movieByGenreDtoList.add(new MoviesByGenreDTO(movie));
         }
-        if (rating != null) {
-            movieByGenreDtoList = sortService.sortByRating(movieByGenreDtoList, rating);
-        } else if (price != null) {
-            movieByGenreDtoList = sortService.sortByPrice(movieByGenreDtoList, price);
+        if (ratingDirection != null) {
+            movieByGenreDtoList = sortService.sortByRating(movieByGenreDtoList, sortParameters.getFirstValue());
         }
-        return movieByGenreDtoList;
+        if (priceDirection != null) {
+            movieByGenreDtoList = sortService.sortByPrice(movieByGenreDtoList, sortParameters.getSecondValue());
+        }
+        return new ResponseEntity<>(movieByGenreDtoList, HttpStatus.OK);
 
     }
 

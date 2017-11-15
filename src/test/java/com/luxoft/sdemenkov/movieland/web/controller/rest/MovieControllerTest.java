@@ -1,11 +1,15 @@
 package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.Pair;
+import com.luxoft.sdemenkov.movieland.model.SortDirection;
+import com.luxoft.sdemenkov.movieland.service.CurrencyValidationService;
+import com.luxoft.sdemenkov.movieland.service.SortDirectionValidationService;
 import com.luxoft.sdemenkov.movieland.service.SortService;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 import com.luxoft.sdemenkov.movieland.service.impl.MovieServiceImpl;
-import com.luxoft.sdemenkov.movieland.web.responce.AllMoviesDTO;
-import com.luxoft.sdemenkov.movieland.web.responce.MoviesByGenreDTO;
+import com.luxoft.sdemenkov.movieland.web.response.AllMoviesDTO;
+import com.luxoft.sdemenkov.movieland.web.response.MoviesByGenreDTO;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,6 +43,10 @@ public class MovieControllerTest {
     private MovieServiceImpl mockedMovieService;
     @Mock
     private SortService mockedSortService;
+    @Mock
+    private SortDirectionValidationService mockedSortDirectionValidationService;
+    @Mock
+    private CurrencyValidationService mockCurrencyValidationService;
     @InjectMocks
     private MovieController movieController;
 
@@ -115,7 +123,10 @@ public class MovieControllerTest {
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
-        when(mockedSortService.sortByRating(anyList(), eq("desc"))).thenReturn(responseGetAllMoviesList);
+        Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
+        when(mockedSortDirectionValidationService.getValidationErrors(anyString(), eq(null))).thenReturn(pair);
+
+        when(mockedSortService.sortByRating(anyList(), eq(SortDirection.DESC))).thenReturn(responseGetAllMoviesList);
         mockMvc.perform(get("/movie").param("rating", "desc"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
@@ -136,7 +147,10 @@ public class MovieControllerTest {
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
-        when(mockedSortService.sortByPrice(anyList(), eq("desc"))).thenReturn(responseGetAllMoviesList);
+        Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
+        when(mockedSortDirectionValidationService.getValidationErrors(eq(null), anyString())).thenReturn(pair);
+
+        when(mockedSortService.sortByPrice(anyList(), eq(SortDirection.DESC))).thenReturn(responseGetAllMoviesList);
         mockMvc.perform(get("/movie").param("price", "desc"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
@@ -157,7 +171,9 @@ public class MovieControllerTest {
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
         responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
-        when(mockedSortService.sortByPrice(anyList(), eq("asc"))).thenReturn(responseGetAllMoviesList);
+        Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.ASC, SortDirection.ASC);
+        when(mockedSortDirectionValidationService.getValidationErrors(eq(null), anyString())).thenReturn(pair);
+        when(mockedSortService.sortByPrice(anyList(), eq(SortDirection.ASC))).thenReturn(responseGetAllMoviesList);
         mockMvc.perform(get("/movie").param("price", "asc"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
@@ -179,7 +195,9 @@ public class MovieControllerTest {
         movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
         movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
         movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
-        when(mockedSortService.sortByRating(anyList(), eq("desc"))).thenReturn(movieDtoList);
+        Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
+        when(mockedSortDirectionValidationService.getValidationErrors(anyString(), eq(null))).thenReturn(pair);
+        when(mockedSortService.sortByRating(anyList(), eq(SortDirection.DESC))).thenReturn(movieDtoList);
         mockMvc.perform(get("/movie/genre/1").param("rating", "desc"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
@@ -200,7 +218,9 @@ public class MovieControllerTest {
         movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
         movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
         movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
-        when(mockedSortService.sortByPrice(anyList(), eq("desc"))).thenReturn(movieDtoList);
+        Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
+        when(mockedSortDirectionValidationService.getValidationErrors(eq(null), anyString())).thenReturn(pair);
+        when(mockedSortService.sortByPrice(anyList(), eq(SortDirection.DESC))).thenReturn(movieDtoList);
         mockMvc.perform(get("/movie/genre/1").param("price", "desc"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))

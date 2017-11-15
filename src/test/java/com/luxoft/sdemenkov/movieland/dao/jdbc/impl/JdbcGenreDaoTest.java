@@ -7,7 +7,6 @@ import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -46,8 +45,16 @@ public class JdbcGenreDaoTest {
         Movie movie = MovieGenerator.getMovieForTest();
         List<Movie> movies = new ArrayList<>();
         movies.add(movie);
-        movies = genreDao.enrichMoviesWithGenres(movies);
+        genreDao.enrichMoviesWithGenres(movies);
         assertEquals(2, movies.get(0).getGenreList().size());
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void test() throws Exception {
+        List<Genre> genreListCached1 = genreDao.getAllGenres();
+        genreListCached1.set(0, new Genre(0, "Test"));
+        List<Genre> genreListCached2 = genreDao.getAllGenres();
+
     }
 
 

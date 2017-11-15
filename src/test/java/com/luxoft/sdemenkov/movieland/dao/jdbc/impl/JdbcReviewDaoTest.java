@@ -27,7 +27,7 @@ public class JdbcReviewDaoTest {
         movie.setId(1);
         List<Movie> movieList = new ArrayList<>();
         movieList.add(movie);
-        movieList = reviewDao.enrichMoviesWithReviews(movieList);
+        reviewDao.enrichMoviesWithReviews(movieList);
         Review review = movieList.get(0).getReviewList().get(0);
         assertEquals(1, review.getId());
         assertEquals(2, review.getUser().getId());

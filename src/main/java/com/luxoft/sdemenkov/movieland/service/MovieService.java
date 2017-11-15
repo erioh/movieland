@@ -5,9 +5,7 @@ import com.luxoft.sdemenkov.movieland.model.Movie;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by dp-ptcstd-43 on 11/1/2017.
- */
+
 public interface MovieService {
     List<Movie> getAllMovies();
 

@@ -1,7 +1,7 @@
 package com.luxoft.sdemenkov.movieland.dao.mapper;
 
+import com.luxoft.sdemenkov.movieland.model.Pair;
 import com.luxoft.sdemenkov.movieland.model.Review;
-import javafx.util.Pair;
 import org.junit.Test;
 
 import java.sql.ResultSet;
@@ -10,9 +10,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by sergeydemenkov on 04.11.17.
- */
+
 public class ReviewToMovieRowMapperTest {
     @Test
     public void mapRow() throws Exception {
@@ -25,11 +23,11 @@ public class ReviewToMovieRowMapperTest {
 
         ReviewToMovieRowMapper reviewToMovieRowMapper = new ReviewToMovieRowMapper();
         Pair<Integer, Review> expected = reviewToMovieRowMapper.mapRow(resultSet, 0);
-        assertEquals(1, expected.getKey(), 0);
-        assertEquals(3, expected.getValue().getId());
-        assertEquals("Text", expected.getValue().getText());
-        assertEquals(2, expected.getValue().getUser().getId());
-        assertEquals("User Name", expected.getValue().getUser().getNickname());
+        assertEquals(1, expected.getFirstValue(), 0);
+        assertEquals(3, expected.getSecondValue().getId());
+        assertEquals("Text", expected.getSecondValue().getText());
+        assertEquals(2, expected.getSecondValue().getUser().getId());
+        assertEquals("User Name", expected.getSecondValue().getUser().getNickname());
 
     }
 

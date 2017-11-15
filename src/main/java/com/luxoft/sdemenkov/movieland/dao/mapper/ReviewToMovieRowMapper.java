@@ -1,16 +1,13 @@
 package com.luxoft.sdemenkov.movieland.dao.mapper;
 
+import com.luxoft.sdemenkov.movieland.model.Pair;
 import com.luxoft.sdemenkov.movieland.model.Review;
 import com.luxoft.sdemenkov.movieland.model.User;
-import javafx.util.Pair;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * Created by sergeydemenkov on 04.11.17.
- */
 public class ReviewToMovieRowMapper implements RowMapper<Pair<Integer, Review>> {
     @Override
     public Pair<Integer, Review> mapRow(ResultSet resultSet, int i) throws SQLException {

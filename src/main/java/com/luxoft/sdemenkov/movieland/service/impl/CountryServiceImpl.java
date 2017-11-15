@@ -14,16 +14,14 @@ import java.util.List;
 
 @Service
 public class CountryServiceImpl implements CountryService {
+    private final Logger log = LoggerFactory.getLogger(getClass());
     @Autowired
     private CountryDao countryDao;
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
     @Override
-    public List<Movie> ecrichMoviesWithCountries(List<Movie> movieList) {
-        List<Movie> enrichedMovieList = countryDao.enrichMoviesWithCountries(movieList);
-        log.debug("ecrichMoviesWithCountries is executed");
-        return enrichedMovieList;
+    public void enrichMoviesWithCountries(List<Movie> movieList) {
+        countryDao.enrichMoviesWithCountries(movieList);
+        log.debug("enrichMoviesWithCountries is executed");
     }
 
     @Override
