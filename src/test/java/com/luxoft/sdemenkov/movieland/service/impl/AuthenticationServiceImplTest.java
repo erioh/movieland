@@ -21,10 +21,10 @@ import static org.mockito.Mockito.when;
 public class AuthenticationServiceImplTest {
 
     @InjectMocks
-    AuthenticationServiceImpl userService;
+    private AuthenticationServiceImpl userService;
 
     @Mock
-    UserDao userDao;
+    private UserDao userDao;
 
     @Test
     public void login() throws Exception {

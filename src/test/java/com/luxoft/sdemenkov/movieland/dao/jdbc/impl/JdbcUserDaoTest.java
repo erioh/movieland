@@ -14,13 +14,14 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
 public class JdbcUserDaoTest {
     @Autowired
-    UserDao userDao;
+    private UserDao userDao;
 
     @Test
     public void getUser() throws Exception {
         User user = userDao.getUser("ronald.reynolds66@example.com", "paco");
         assertNotNull(user);
         assertEquals("Ronald Reynolds", user.getNickname());
+        assertEquals("ronald.reynolds66@example.com", user.getEmail());
         user = userDao.getUser("ronald.reynolds66@example.com", "xyz");
         assertNull(user);
 

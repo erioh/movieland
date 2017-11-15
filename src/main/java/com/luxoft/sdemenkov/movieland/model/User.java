@@ -4,6 +4,7 @@ package com.luxoft.sdemenkov.movieland.model;
 public class User {
     private int id;
     private String nickname;
+    private String email;
 
     public User() {
     }
@@ -12,6 +13,7 @@ public class User {
         this.id = id;
         this.nickname = nickname;
     }
+
 
     public int getId() {
         return id;
@@ -35,5 +37,13 @@ public class User {
                 "id=" + id +
                 ", nickname='" + nickname + '\'' +
                 '}';
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

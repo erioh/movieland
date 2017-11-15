@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class AuthenticationControllerTest {
     @Mock
-    AuthenticationService mockedAuthenticationService;
+    private AuthenticationService mockedAuthenticationService;
     private MockMvc mockMvc;
     @InjectMocks
     private AuthenticationController authenticationController;

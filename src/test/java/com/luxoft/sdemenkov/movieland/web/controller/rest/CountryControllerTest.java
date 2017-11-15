@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class CountryControllerTest {
     @InjectMocks
-    CountryController countryController;
+    private CountryController countryController;
     private MockMvc mockMvc;
     @Mock
     private CountryService countryService;

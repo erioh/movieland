@@ -8,11 +8,13 @@ public class Token {
     private String nickname;
     private UUID uuid;
     private LocalDateTime dieTime;
+    private String email;
 
     public Token(User user, UUID uuid, LocalDateTime dieTime) {
         this.nickname = user.getNickname();
         this.uuid = uuid;
         this.dieTime = dieTime;
+        this.email = user.getEmail();
     }
 
     public UUID getUuid() {
@@ -38,6 +40,14 @@ public class Token {
 
     public void setDieTime(LocalDateTime dieTime) {
         this.dieTime = dieTime;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

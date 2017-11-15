@@ -31,6 +31,21 @@
             <artifactId>spring-jdbc</artifactId>
             <version>4.3.11.RELEASE</version>
         </dependency>
+
+        <!--Used as a source of javax.servlet.http.*-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!--DataBase connection-->
         <dependency>
             <groupId>mysql</groupId>
@@ -62,14 +77,6 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>2.10.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!--Needed for servlet creation-->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.0.1</version>
             <scope>test</scope>
         </dependency>
 
@@ -107,7 +114,6 @@
             <artifactId>jcl-over-slf4j</artifactId>
             <version>1.7.25</version>
         </dependency>
-
     </dependencies>
 
     <build>

@@ -68,4 +68,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
     }
 
+    @Override
+    public Token getUserByUuid(UUID uuid) {
+        if (isAlive(uuid)) {
+            return tokenMap.get(uuid);
+        } else {
+            return null;
+        }
+    }
+
 }
