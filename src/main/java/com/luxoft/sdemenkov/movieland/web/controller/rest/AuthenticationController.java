@@ -3,6 +3,7 @@ package com.luxoft.sdemenkov.movieland.web.controller.rest;
 import com.luxoft.sdemenkov.movieland.model.Token;
 import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
 import com.luxoft.sdemenkov.movieland.web.response.ExceptionMessageDto;
+import com.luxoft.sdemenkov.movieland.web.response.LogoutMessageDto;
 import com.luxoft.sdemenkov.movieland.web.response.TokenDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,7 @@ public class AuthenticationController {
     @RequestMapping(value = "/logout", method = RequestMethod.DELETE)
     public ResponseEntity<?> logout(@RequestHeader("x-auth-token") String uuid) {
         authenticationService.logout(UUID.fromString(uuid));
-        return new ResponseEntity<>(new ExceptionMessageDto("User is logged out"), HttpStatus.OK);
+        return new ResponseEntity<>(new LogoutMessageDto("User is logged out"), HttpStatus.OK);
     }
 
 

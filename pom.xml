@@ -114,7 +114,7 @@
             <artifactId>logback-classic</artifactId>
             <version>1.2.3</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
