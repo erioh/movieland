@@ -17,6 +17,11 @@ public class Token {
         this.email = user.getEmail();
     }
 
+    public Token(User user) {
+        this.nickname = user.getNickname();
+        this.email = user.getEmail();
+    }
+
     public UUID getUuid() {
         return uuid;
     }

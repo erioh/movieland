@@ -96,7 +96,7 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
     }
 
-    //    @Test
+    //    @Main
     public void getMoviesByGenre() throws Exception {
         List<Movie> mockedGetAllMoviesList = new ArrayList<>();
         mockedGetAllMoviesList.add(MovieGenerator.getMovieForTest());

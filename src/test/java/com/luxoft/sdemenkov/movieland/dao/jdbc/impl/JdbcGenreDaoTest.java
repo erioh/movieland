@@ -52,7 +52,7 @@ public class JdbcGenreDaoTest {
     @Test(expected = UnsupportedOperationException.class)
     public void test() throws Exception {
         List<Genre> genreListCached1 = genreDao.getAllGenres();
-        genreListCached1.set(0, new Genre(0, "Test"));
+        genreListCached1.set(0, new Genre(0, "Main"));
         List<Genre> genreListCached2 = genreDao.getAllGenres();
 
     }

@@ -19,7 +19,7 @@ public class GenreRowMapperTest {
         when(resultSet.getInt(anyString())).thenReturn(12);
         when(resultSet.getString(anyString())).thenReturn("name");
 
-        // Test
+        // Main
         GenreRowMapper genreRowMapper = new GenreRowMapper();
         Genre actualGenre = genreRowMapper.mapRow(resultSet, 0);
         assertEquals(12, actualGenre.getId());
