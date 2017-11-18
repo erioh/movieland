@@ -3,6 +3,7 @@ package com.luxoft.sdemenkov.movieland.web.controller.rest;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.model.Review;
 import com.luxoft.sdemenkov.movieland.model.Token;
+import com.luxoft.sdemenkov.movieland.security.TokenPrincipal;
 import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
 import com.luxoft.sdemenkov.movieland.service.impl.ReviewServiceImpl;
 import com.luxoft.sdemenkov.movieland.web.request.SaveReviewDTO;
@@ -14,11 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.UUID;
 
-@RestController()
+@RestController
 @RequestMapping("/review")
 public class ReviewController {
     Logger logger = LoggerFactory.getLogger(getClass());
@@ -28,16 +33,18 @@ public class ReviewController {
     @Autowired
     AuthenticationService authenticationService;
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> saveReview(@RequestBody SaveReviewDTO saveReviewDTO, @RequestHeader("x-auth-token") String uuidStr) {
-        UUID uuid = UUID.fromString(uuidStr);
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> saveReview(Principal principal, @RequestBody String text) {
+        SaveReviewDTO saveReviewDTO = new SaveReviewDTO();
+        TokenPrincipal tokenPrincipal = (TokenPrincipal) principal;
+        Token token = tokenPrincipal.getToken();
+        UUID uuid = token.getUuid();
         if (authenticationService.isAlive(uuid)) {
             logger.debug("saveReview. is started");
-            Token token = authenticationService.getTokenByUuid(uuid);
             Review review = new Review()
                     .setText(saveReviewDTO.getText())
                     .setUser(token.getUser());
-            logger.debug("saveReview. Review {}is ready", review);
+            logger.debug("saveReview. Review {} is ready", review);
             Movie movie = new Movie()
                     .setId(saveReviewDTO.getMovieId());
             reviewService.saveReview(review, movie);
@@ -45,12 +52,7 @@ public class ReviewController {
         } else {
             return new ResponseEntity<>(new ExceptionMessageDto("user is not logged in"), HttpStatus.OK);
         }
-
-
-
-
-
-
     }
+
 
 }

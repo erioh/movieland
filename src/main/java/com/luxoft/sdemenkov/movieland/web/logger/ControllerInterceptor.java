@@ -1,7 +1,8 @@
 package com.luxoft.sdemenkov.movieland.web.logger;
 
 import com.luxoft.sdemenkov.movieland.model.Token;
-import com.luxoft.sdemenkov.movieland.model.User;
+import com.luxoft.sdemenkov.movieland.security.SecurityHttpRequestWrapper;
+import com.luxoft.sdemenkov.movieland.security.TokenPrincipal;
 import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 import java.util.UUID;
 
-public class MdcInterceptor extends HandlerInterceptorAdapter {
+public class ControllerInterceptor extends HandlerInterceptorAdapter {
 
     @Autowired
     private AuthenticationService authenticationService;
@@ -23,11 +24,11 @@ public class MdcInterceptor extends HandlerInterceptorAdapter {
         Token token;
         if ("NAN".equals(uuidStr)) {
             token = authenticationService.getTokenForGuest();
-        }
-        else {
+        } else {
             token = authenticationService.getTokenByUuid(UUID.fromString(uuidStr));
         }
-
+        SecurityHttpRequestWrapper wrapper = new SecurityHttpRequestWrapper(request);
+        wrapper.setPrincipal(new TokenPrincipal(token));
         MDC.put("requestId", UUID.randomUUID().toString());
         MDC.put("email", token.getUser().getEmail());
 

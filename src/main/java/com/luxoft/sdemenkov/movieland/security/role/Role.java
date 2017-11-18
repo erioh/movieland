@@ -12,10 +12,10 @@ public enum Role {
 
     public static Role getRolebyText(String text) {
         for (Role role : values()) {
-            if(role.roleDescr.equals(text)) {
+            if (role.roleDescr.equals(text)) {
                 return role;
             }
         }
-        throw new RuntimeException("Role "+ text +" does not exist");
+        throw new RuntimeException("Role " + text + " does not exist");
     }
 }
