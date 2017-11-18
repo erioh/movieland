@@ -26,4 +26,10 @@ public class TokenPrincipal implements Principal {
         return token.getUuid().toString();
     }
 
+    @Override
+    public String toString() {
+        return "TokenPrincipal{" +
+                "token=" + token +
+                '}';
+    }
 }

@@ -34,9 +34,13 @@ public class ReviewController {
     AuthenticationService authenticationService;
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> saveReview(Principal principal, @RequestBody String text) {
-        SaveReviewDTO saveReviewDTO = new SaveReviewDTO();
+    public ResponseEntity<?> saveReview(Principal principal, @RequestBody SaveReviewDTO saveReviewDTO) {
+//        SaveReviewDTO saveReviewDTO = new SaveReviewDTO();
+        logger.debug("saveReview. Object {} is receved", saveReviewDTO);
+        System.out.println(saveReviewDTO);
         TokenPrincipal tokenPrincipal = (TokenPrincipal) principal;
+        logger.debug("saveReview. Object {} is receved", tokenPrincipal);
+        System.out.println(tokenPrincipal);
         Token token = tokenPrincipal.getToken();
         UUID uuid = token.getUuid();
         if (authenticationService.isAlive(uuid)) {

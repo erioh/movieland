@@ -25,4 +25,12 @@ public class SaveReviewDTO {
         this.text = text;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "SaveReviewDTO{" +
+                "movieId=" + movieId +
+                ", text='" + text + '\'' +
+                '}';
+    }
 }

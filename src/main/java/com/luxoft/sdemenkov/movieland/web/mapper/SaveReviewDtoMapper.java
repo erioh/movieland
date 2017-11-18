@@ -20,6 +20,6 @@ public class SaveReviewDtoMapper extends JsonDeserializer<SaveReviewDTO> {
 
         return new SaveReviewDTO()
                 .setMovieId(jsonNode.get("movieId").asInt())
-                .setText(jsonNode.get("movieId").asText());
+                .setText(jsonNode.get("text").asText());
     }
 }

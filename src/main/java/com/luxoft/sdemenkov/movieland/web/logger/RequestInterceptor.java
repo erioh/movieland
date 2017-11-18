@@ -1,19 +1,25 @@
 package com.luxoft.sdemenkov.movieland.web.logger;
 
 import com.luxoft.sdemenkov.movieland.model.Token;
+import com.luxoft.sdemenkov.movieland.model.User;
 import com.luxoft.sdemenkov.movieland.security.SecurityHttpRequestWrapper;
 import com.luxoft.sdemenkov.movieland.security.TokenPrincipal;
 import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 import java.util.Optional;
 import java.util.UUID;
 
-public class ControllerInterceptor extends HandlerInterceptorAdapter {
+public class RequestInterceptor extends HandlerInterceptorAdapter {
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private AuthenticationService authenticationService;
@@ -24,11 +30,13 @@ public class ControllerInterceptor extends HandlerInterceptorAdapter {
         Token token;
         if ("NAN".equals(uuidStr)) {
             token = authenticationService.getTokenForGuest();
-        } else {
+        }
+        else {
             token = authenticationService.getTokenByUuid(UUID.fromString(uuidStr));
         }
-        SecurityHttpRequestWrapper wrapper = new SecurityHttpRequestWrapper(request);
-        wrapper.setPrincipal(new TokenPrincipal(token));
+        TokenPrincipal principal = new TokenPrincipal(token);
+        logger.debug("Principal {} is received", principal);
+        ((SecurityHttpRequestWrapper) request).setPrincipal(principal);
         MDC.put("requestId", UUID.randomUUID().toString());
         MDC.put("email", token.getUser().getEmail());
 

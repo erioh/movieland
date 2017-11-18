@@ -6,6 +6,5 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
 @EnableScheduling
-@PropertySource({"classpath:property/cron.properties"})
-public class CacheSettings {
-}
+@PropertySource("classpath:property/cron.properties")
+public class CacheSettings {}
