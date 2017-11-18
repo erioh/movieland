@@ -20,7 +20,7 @@ public class JdbcUserDaoTest {
     public void getUser() throws Exception {
         User user = userDao.getUser("ronald.reynolds66@example.com", "paco");
         assertNotNull(user);
-        assertEquals("Ronald Reynolds", user.getNickname());
+        assertEquals("Рональд Рейнольдс", user.getNickname());
         assertEquals("ronald.reynolds66@example.com", user.getEmail());
         user = userDao.getUser("ronald.reynolds66@example.com", "xyz");
         assertNull(user);

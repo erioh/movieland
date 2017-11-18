@@ -30,8 +30,8 @@ public class JdbcGenreDaoTest {
         assertEquals(2, actualGenreList.size());
         assertEquals(1, actualGenreList.get(0).getId());
         assertEquals(2, actualGenreList.get(1).getId());
-        assertEquals("drama", actualGenreList.get(0).getName());
-        assertEquals("crime", actualGenreList.get(1).getName());
+        assertEquals("драма", actualGenreList.get(0).getName());
+        assertEquals("криминал", actualGenreList.get(1).getName());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class JdbcGenreDaoTest {
     @Test(expected = UnsupportedOperationException.class)
     public void test() throws Exception {
         List<Genre> genreListCached1 = genreDao.getAllGenres();
-        genreListCached1.set(0, new Genre(0, "Test"));
+        genreListCached1.set(0, new Genre(0, "Main"));
         List<Genre> genreListCached2 = genreDao.getAllGenres();
 
     }

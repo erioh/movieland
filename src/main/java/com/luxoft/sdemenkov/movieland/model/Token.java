@@ -5,58 +5,38 @@ import java.util.UUID;
 
 
 public class Token {
-    private String nickname;
     private UUID uuid;
     private LocalDateTime dieTime;
-    private String email;
+    private User user;
 
     public Token(User user, UUID uuid, LocalDateTime dieTime) {
-        this.nickname = user.getNickname();
+        this.user = user;
         this.uuid = uuid;
         this.dieTime = dieTime;
-        this.email = user.getEmail();
+    }
+
+    public Token(User user) {
+        this.user = user;
     }
 
     public UUID getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     public LocalDateTime getDieTime() {
         return dieTime;
     }
 
-
-    public void setDieTime(LocalDateTime dieTime) {
-        this.dieTime = dieTime;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public User getUser() {
+        return user;
     }
 
     @Override
     public String toString() {
         return "Token{" +
-                "nickname='" + nickname + '\'' +
-                ", uuid=" + uuid +
+                "uuid=" + uuid +
                 ", dieTime=" + dieTime +
+                ", user=" + user +
                 '}';
     }
-
 }

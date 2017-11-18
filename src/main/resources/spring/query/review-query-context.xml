@@ -6,10 +6,12 @@
 
     <bean id="getReviewByMovieIdsSQL" class="java.lang.String">
         <constructor-arg value="
-        select mr.movie_id, r.review_id, r.text, u.user_id, u.user_name from movie_reviews mr
-join  reviews r on mr.review_id = r.review_id
-join users u on r.user_id = u.user_id
-where mr.movie_id in (:ids);"
+        select r.movie_id, r.review_id, r.text, u.user_id, u.user_name from reviews r
+        join users u on r.user_id = u.user_id
+        where r.movie_id in (:ids);"
         />
+    </bean>
+    <bean id="saveReviewSQL" class="java.lang.String">
+        <constructor-arg value="insert into reviews(text, user_id, movie_id) values (:text, :user_id, :movie_id);"/>
     </bean>
 </beans>

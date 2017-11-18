@@ -66,7 +66,7 @@ public class MovieControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameRussian").value("Гладиатор"))
                 .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
                 .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
                 .andExpect(jsonPath("$[0].rating").value(8.6))
@@ -88,7 +88,7 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameRussian").value("Гладиатор"))
                 .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
                 .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
                 .andExpect(jsonPath("$[0].rating").value(8.6))
@@ -96,7 +96,7 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
     }
 
-    //    @Test
+    //    @Main
     public void getMoviesByGenre() throws Exception {
         List<Movie> mockedGetAllMoviesList = new ArrayList<>();
         mockedGetAllMoviesList.add(MovieGenerator.getMovieForTest());
@@ -132,7 +132,7 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameRussian").value("Гладиатор"))
                 .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
                 .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
                 .andExpect(jsonPath("$[0].rating").value(8.6))
@@ -156,7 +156,7 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameRussian").value("Гладиатор"))
                 .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
                 .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
                 .andExpect(jsonPath("$[0].rating").value(8.6))
@@ -179,7 +179,7 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameRussian").value("Гладиатор"))
                 .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
                 .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
                 .andExpect(jsonPath("$[0].rating").value(8.6))
@@ -203,7 +203,7 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameRussian").value("Гладиатор"))
                 .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
                 .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
                 .andExpect(jsonPath("$[0].rating").value(8))
@@ -226,7 +226,7 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameRussian").value("Гладиатор"))
                 .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
                 .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
                 .andExpect(jsonPath("$[0].rating").value(8))
@@ -245,7 +245,7 @@ public class MovieControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("id").value(15))
-                .andExpect(jsonPath("nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("nameRussian").value("Гладиатор"))
                 .andExpect(jsonPath("nameNative").value("Gladiator"))
                 .andExpect(jsonPath("yearOfRelease").value(2000))
                 .andExpect(jsonPath("rating").value(8))

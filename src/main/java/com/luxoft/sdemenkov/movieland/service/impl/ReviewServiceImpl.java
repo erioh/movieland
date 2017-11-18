@@ -2,6 +2,9 @@ package com.luxoft.sdemenkov.movieland.service.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.ReviewDao;
 import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.Review;
+import com.luxoft.sdemenkov.movieland.model.Token;
+import com.luxoft.sdemenkov.movieland.model.User;
 import com.luxoft.sdemenkov.movieland.service.ReviewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,4 +26,12 @@ public class ReviewServiceImpl implements ReviewService {
         reviewDao.enrichMoviesWithReviews(movieList);
         logger.debug("enrichMoviesWithReviews is executed");
     }
+
+    @Override
+    public void saveReview(Review review, Movie movie) {
+        reviewDao.saveReview(review, movie);
+        logger.debug("Review with text {} is added by User {} to movie with id = {}", review.getText(), review.getUser(), movie.getId());
+    }
+
+
 }

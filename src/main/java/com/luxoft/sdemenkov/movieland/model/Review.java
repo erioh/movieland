@@ -19,24 +19,27 @@ public class Review {
         return id;
     }
 
-    public void setId(int id) {
+    public Review setId(int id) {
         this.id = id;
+        return this;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public Review setUser(User user) {
         this.user = user;
+        return this;
     }
 
     public String getText() {
         return text;
     }
 
-    public void setText(String text) {
+    public Review setText(String text) {
         this.text = text;
+        return this;
     }
 
     @Override

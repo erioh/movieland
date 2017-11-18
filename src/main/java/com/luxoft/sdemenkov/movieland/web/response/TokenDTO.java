@@ -9,7 +9,7 @@ public class TokenDTO {
 
     public TokenDTO(Token token) {
         this.uuid = token.getUuid().toString();
-        this.nickname = token.getNickname();
+        this.nickname = token.getUser().getNickname();
     }
 
     public String getUuid() {

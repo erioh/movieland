@@ -11,7 +11,7 @@ public class MovieGenerator {
     public static Movie getMovieForTest() {
         Movie movie = new Movie();
         movie.setId(15);
-        movie.setNameRussian("Gladiator");
+        movie.setNameRussian("Гладиатор");
         movie.setNameNative("Gladiator");
         movie.setYearOfRelease(2000);
         movie.setRating(8.6);

@@ -39,7 +39,7 @@ public class MovieServiceImplTest {
         List<Movie> list = new ArrayList<>();
         list.add(expectedMovie);
         when(mockedMovieDao.getAllMovies()).thenReturn(list);
-        // Test
+        // Main
         List<Movie> movieList = movieService.getAllMovies();
         Movie actualMovie = movieList.get(0);
         assertEquals(expectedMovie.getId(), actualMovie.getId());
@@ -61,7 +61,7 @@ public class MovieServiceImplTest {
         movieList.add(MovieGenerator.getMovieForTest());
         //Mocking objects
         when(mockedMovieDao.getThreeRandomMovies()).thenReturn(movieList);
-        // Test
+        // Main
         List<Movie> actualMovieList = movieService.getThreeRandomMovies();
         assertEquals(3, actualMovieList.size());
     }
@@ -78,7 +78,7 @@ public class MovieServiceImplTest {
         //Mocking objects
         when(mockedMovieDao.getMoviesByGenre(1)).thenReturn(movieList);
 
-        // Test
+        // Main
         List<Movie> actualResult = movieService.getMoviesByGenre(1);
         assertEquals(3, actualResult.size());
     }

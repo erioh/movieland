@@ -39,7 +39,7 @@ public class AuthenticationServiceImplTest {
         hoursBeforeLogout.setAccessible(false);
         Token token = userService.login("login", "password");
         assertNotNull(token.getUuid());
-        assertEquals("userName", token.getNickname());
+        assertEquals("userName", token.getUser().getNickname());
 
     }
 

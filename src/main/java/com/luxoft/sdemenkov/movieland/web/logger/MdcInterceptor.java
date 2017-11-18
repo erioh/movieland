@@ -9,6 +9,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 import java.util.UUID;
 
 public class MdcInterceptor extends HandlerInterceptorAdapter {
@@ -18,18 +19,17 @@ public class MdcInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String uuidStr = request.getHeader("x-auth-token");
-        Token token = null;
-        if (uuidStr != null) {
+        String uuidStr = Optional.ofNullable(request.getHeader("x-auth-token")).orElse("NAN");
+        Token token;
+        if ("NAN".equals(uuidStr)) {
+            token = authenticationService.getTokenForGuest();
+        }
+        else {
             token = authenticationService.getTokenByUuid(UUID.fromString(uuidStr));
         }
-        if (token == null) {
-            User guest = new User();
-            guest.setEmail("guest");
-            token = new Token(guest, null, null);
-        }
+
         MDC.put("requestId", UUID.randomUUID().toString());
-        MDC.put("email", token.getEmail());
+        MDC.put("email", token.getUser().getEmail());
 
         return true;
     }

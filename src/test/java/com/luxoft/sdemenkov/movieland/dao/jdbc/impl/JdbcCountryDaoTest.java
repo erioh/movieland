@@ -31,8 +31,8 @@ public class JdbcCountryDaoTest {
         assertEquals(2, actualCountryList.size());
         assertEquals(1, actualCountryList.get(0).getId());
         assertEquals(3, actualCountryList.get(1).getId());
-        assertEquals("USA", actualCountryList.get(0).getName());
-        assertEquals("Great Britain", actualCountryList.get(1).getName());
+        assertEquals("США", actualCountryList.get(0).getName());
+        assertEquals("Великобритания", actualCountryList.get(1).getName());
 
     }
 

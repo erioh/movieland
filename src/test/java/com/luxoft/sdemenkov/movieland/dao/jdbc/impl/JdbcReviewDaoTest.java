@@ -3,6 +3,8 @@ package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 import com.luxoft.sdemenkov.movieland.dao.api.ReviewDao;
 import com.luxoft.sdemenkov.movieland.model.Movie;
 import com.luxoft.sdemenkov.movieland.model.Review;
+import com.luxoft.sdemenkov.movieland.model.User;
+import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +33,20 @@ public class JdbcReviewDaoTest {
         Review review = movieList.get(0).getReviewList().get(0);
         assertEquals(1, review.getId());
         assertEquals(2, review.getUser().getId());
+    }
 
+    @Test
+    public void saveReview() throws Exception {
 
+        Review review = new Review();
+        User user = new User();
+        user.setEmail("user@u.com");
+        user.setId(125);
+        user.setNickname("nickname");
+        review.setText("Review");
+        review.setUser(user);
+        int i = reviewDao.saveReview(review, MovieGenerator.getMovieForTest());
+        assertEquals(1, i);
     }
 
 }
