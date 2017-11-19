@@ -5,4 +5,6 @@ import com.luxoft.sdemenkov.movieland.model.User;
 public interface UserDao {
 
     User getUser(String username, String password);
+
+    void enrichUserWithRoles(User user);
 }

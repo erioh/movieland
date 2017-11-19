@@ -1,10 +1,15 @@
 package com.luxoft.sdemenkov.movieland.model;
 
 
+import com.luxoft.sdemenkov.movieland.security.role.Role;
+
+import java.util.List;
+
 public class User {
     private int id;
     private String nickname;
     private String email;
+    private List<Role> roleList;
 
     public User() {
     }
@@ -46,5 +51,13 @@ public class User {
                 ", nickname='" + nickname + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
     }
 }

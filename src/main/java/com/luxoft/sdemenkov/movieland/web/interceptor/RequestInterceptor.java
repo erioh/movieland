@@ -29,8 +29,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
         Token token;
         if ("NAN".equals(uuidStr)) {
             token = authenticationService.getTokenForGuest();
-        }
-        else {
+        } else {
             token = authenticationService.getTokenByUuid(UUID.fromString(uuidStr));
         }
         TokenPrincipal principal = new TokenPrincipal(token);

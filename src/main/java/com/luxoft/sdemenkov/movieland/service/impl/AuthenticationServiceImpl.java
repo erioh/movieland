@@ -1,9 +1,9 @@
 package com.luxoft.sdemenkov.movieland.service.impl;
 
-import com.luxoft.sdemenkov.movieland.dao.api.UserDao;
 import com.luxoft.sdemenkov.movieland.model.Token;
 import com.luxoft.sdemenkov.movieland.model.User;
 import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
+import com.luxoft.sdemenkov.movieland.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +28,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private Integer hoursBeforeLogout;
 
     @Autowired
-    private UserDao userDao;
+    private UserService userService;
 
     public Token login(String email, String password) {
-        User user = userDao.getUser(email, password);
+        User user = userService.getUser(email, password);
         if (user == null) {
             logger.error("Login or password are invalid. Used login = {}, used password = {}", email, password);
             throw new RuntimeException("Login or password are invalid");

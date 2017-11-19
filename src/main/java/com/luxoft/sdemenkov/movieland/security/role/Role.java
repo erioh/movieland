@@ -2,7 +2,8 @@ package com.luxoft.sdemenkov.movieland.security.role;
 
 
 public enum Role {
-    USER("USER");
+    USER("USER"),
+    ADMIN("ADMIN");
 
     final String roleDescr;
 

@@ -131,6 +131,7 @@ public class MovieController {
         if (priceDirection != null) {
             movieByGenreDtoList = sortService.sortByPrice(movieByGenreDtoList, sortParameters.getSecondValue());
         }
+        log.debug("getMoviesByGenre. It took {} ms", System.currentTimeMillis() - startTime);
         return new ResponseEntity<>(movieByGenreDtoList, HttpStatus.OK);
 
     }

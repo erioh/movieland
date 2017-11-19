@@ -1,12 +1,97 @@
 package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
+import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.Review;
+import com.luxoft.sdemenkov.movieland.model.Token;
+import com.luxoft.sdemenkov.movieland.model.User;
+import com.luxoft.sdemenkov.movieland.security.TokenPrincipal;
+import com.luxoft.sdemenkov.movieland.security.role.Role;
+import com.luxoft.sdemenkov.movieland.service.ReviewService;
+import com.luxoft.sdemenkov.movieland.service.impl.ReviewServiceImpl;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
+import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@RunWith(MockitoJUnitRunner.class)
+@ContextConfiguration(locations = "classpath:/spring-test-config.xml")
+@WebAppConfiguration
 public class ReviewControllerTest {
-    @Test
-    public void saveReview() throws Exception {
 
+    private MockMvc mockMvc;
+
+    @InjectMocks
+    private ReviewController reviewController;
+
+    @Mock
+    private ReviewServiceImpl mockedReviewService;
+
+    @Before
+    public void setUp() {
+        this.mockMvc = MockMvcBuilders.standaloneSetup(reviewController).build();
+    }
+    @Test
+    public void saveReviewReviewIsAdded() throws Exception {
+        String body = "{\"movieId\":1,\"text\":\"Test\"}";
+        User user = new User();
+        List<Role> roleList = new ArrayList<>();
+        roleList.add(Role.USER);
+        user.setRoleList(roleList);
+        Token token = new Token(user);
+        TokenPrincipal tokenPrincipal = new TokenPrincipal(token);
+
+        mockMvc.perform(post("/review").principal(tokenPrincipal)
+                .contentType("application/json;charset=UTF-8")
+                .content(body))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void saveReviewReviewUserIsNotAllowedToAddReviews() throws Exception {
+        String body = "{\"movieId\":1,\"text\":\"Test\"}";
+        User user = new User();
+        List<Role> roleList = new ArrayList<>();
+        roleList.add(Role.ADMIN);
+        user.setRoleList(roleList);
+        Token token = new Token(user);
+        TokenPrincipal tokenPrincipal = new TokenPrincipal(token);
+
+        mockMvc.perform(post("/review").principal(tokenPrincipal)
+                .contentType("application/json;charset=UTF-8")
+                .content(body))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void saveReviewReviewUserIsNotLoggedIn() throws Exception {
+        String body = "{\"movieId\":1,\"text\":\"Test\"}";
+        User user = new User();
+        user.setEmail("guest");
+        List<Role> roleList = new ArrayList<>();
+        roleList.add(Role.USER);
+        user.setRoleList(roleList);
+        Token token = new Token(user);
+        TokenPrincipal tokenPrincipal = new TokenPrincipal(token);
+
+        mockMvc.perform(post("/review").principal(tokenPrincipal)
+                .contentType("application/json;charset=UTF-8")
+                .content(body))
+                .andExpect(status().isBadRequest());
     }
 
 }

@@ -53,3 +53,16 @@ CREATE TABLE users (
   password varchar(256) NOT NULL,
   PRIMARY KEY (user_id)
 );
+
+drop TABLE IF EXISTS role;
+CREATE TABLE role (
+  role_id INT NOT NULL,
+  role VARCHAR(45) NOT NULL,
+  PRIMARY KEY (role_id));
+
+drop TABLE IF EXISTS user_role;
+CREATE TABLE user_role (
+  user_id INT NOT NULL,
+  role_id INT NOT NULL,
+  PRIMARY KEY (user_id, role_id));
+

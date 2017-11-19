@@ -1,8 +1,6 @@
 package com.luxoft.sdemenkov.movieland.web.response;
 
-/**
- * Created by sergeydemenkov on 15.11.2017.
- */
+
 public class LogoutMessageDto {
     private String message;
 

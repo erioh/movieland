@@ -30,11 +30,9 @@ public class ExchangeRatesExchangeServiceImplTest {
         movieListExpected.add(MovieGenerator.getMovieForTest());
         movieListActual.add(MovieGenerator.getMovieForTest());
 
-        try {
-            movieListActual = currencyExchangeService.getMovieWithChangedCurrency(movieListActual, Currency.EUR);
-            assertTrue(movieListActual.get(0).getPrice().compareTo(movieListExpected.get(0).getPrice()) < 0);
-        } catch (HttpServerErrorException e) {
-        }
+        movieListActual = currencyExchangeService.getMovieWithChangedCurrency(movieListActual, Currency.EUR);
+        assertTrue(movieListActual.get(0).getPrice().compareTo(movieListExpected.get(0).getPrice()) < 0);
+
 
 
     }
