@@ -12,4 +12,8 @@ public interface AuthenticationService {
     boolean isAlive(UUID uuid);
 
     void removeInactiveUsers();
+
+    Token getTokenByUuid(UUID uuid);
+
+    Token getTokenForGuest();
 }

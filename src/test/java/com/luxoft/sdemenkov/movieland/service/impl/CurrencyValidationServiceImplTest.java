@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 
 public class CurrencyValidationServiceImplTest {
-    CurrencyValidationService currencyValidationService = new CurrencyValidationServiceImpl();
+    private CurrencyValidationService currencyValidationService = new CurrencyValidationServiceImpl();
 
     @Test
     public void getValidationErrors() throws Exception {

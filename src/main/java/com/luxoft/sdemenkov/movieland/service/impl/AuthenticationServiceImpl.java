@@ -66,6 +66,28 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         for (Map.Entry<UUID, Token> entryMap : tokenMap.entrySet()) {
             isAlive(entryMap.getKey());
         }
+        logger.debug("Dead sessions are removed");
+    }
+
+    @Override
+    public Token getTokenByUuid(UUID uuid) {
+        if (isAlive(uuid)) {
+            Token token = tokenMap.get(uuid);
+            logger.debug("getTokenByUuid is executed. token {} is found for uuid {}", token, uuid);
+            return token;
+        } else {
+            logger.debug("getTokenByUuid is executed. token  for uuid {} is not found", uuid);
+            return getTokenForGuest();
+        }
+    }
+
+    @Override
+    public Token getTokenForGuest() {
+        User guest = new User();
+        guest.setEmail("guest");
+        Token token = new Token(guest);
+        logger.debug("getTokenForGuest is executed. Guest Token {} is created", token);
+        return token;
     }
 
 }

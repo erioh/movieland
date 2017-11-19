@@ -7,7 +7,7 @@
             <MaxFileSize>5MB</MaxFileSize>
         </rollingPolicy>
         <encoder>
-            <Pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</Pattern>
+            <Pattern>%date [%thread] %X{requestId} %X{email} %level %logger{10} [%file:%line] %msg%n</Pattern>
         </encoder>
     </appender>
 

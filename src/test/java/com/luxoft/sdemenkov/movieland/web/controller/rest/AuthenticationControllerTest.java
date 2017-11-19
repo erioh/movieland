@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class AuthenticationControllerTest {
     @Mock
-    AuthenticationService mockedAuthenticationService;
+    private AuthenticationService mockedAuthenticationService;
     private MockMvc mockMvc;
     @InjectMocks
     private AuthenticationController authenticationController;
@@ -61,7 +61,7 @@ public class AuthenticationControllerTest {
     public void logout() throws Exception {
         mockMvc.perform(delete("/logout").header("x-auth-token", UUID.randomUUID().toString()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("exceptionMessage").value("User is logged out"));
+                .andExpect(jsonPath("message").value("User is logged out"));
 
     }
 

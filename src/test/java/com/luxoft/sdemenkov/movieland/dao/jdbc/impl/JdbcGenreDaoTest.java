@@ -19,8 +19,7 @@ import static org.junit.Assert.assertEquals;
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
 public class JdbcGenreDaoTest {
     @Autowired
-    private
-    GenreDao genreDao;
+    private GenreDao genreDao;
 
     @Test
     public void getGenreListByMove() throws Exception {
@@ -53,7 +52,7 @@ public class JdbcGenreDaoTest {
     @Test(expected = UnsupportedOperationException.class)
     public void test() throws Exception {
         List<Genre> genreListCached1 = genreDao.getAllGenres();
-        genreListCached1.set(0, new Genre(0, "Test"));
+        genreListCached1.set(0, new Genre(0, "Main"));
         List<Genre> genreListCached2 = genreDao.getAllGenres();
 
     }
