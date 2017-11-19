@@ -6,6 +6,6 @@
 
     <bean id="getUserSQL" class="java.lang.String">
         <constructor-arg
-                value="select user_name,user_email from users where user_email =:email and password =:password ;"/>
+                value="select user_id, user_name,user_email from users where user_email =:email and password =:password ;"/>
     </bean>
 </beans>

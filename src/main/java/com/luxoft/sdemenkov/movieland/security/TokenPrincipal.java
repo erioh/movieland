@@ -23,7 +23,7 @@ public class TokenPrincipal implements Principal {
 
     @Override
     public String getName() {
-        return token.getUuid().toString();
+        return token.getUser().getEmail();
     }
 
     @Override

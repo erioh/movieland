@@ -16,7 +16,8 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean class="com.luxoft.sdemenkov.movieland.web.logger.RequestInterceptor"/>
+            <bean class="com.luxoft.sdemenkov.movieland.web.interceptor.RequestInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
+
 </beans>

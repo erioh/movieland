@@ -1,7 +1,6 @@
-package com.luxoft.sdemenkov.movieland.web.logger;
+package com.luxoft.sdemenkov.movieland.web.interceptor;
 
 import com.luxoft.sdemenkov.movieland.model.Token;
-import com.luxoft.sdemenkov.movieland.model.User;
 import com.luxoft.sdemenkov.movieland.security.SecurityHttpRequestWrapper;
 import com.luxoft.sdemenkov.movieland.security.TokenPrincipal;
 import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
@@ -13,7 +12,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.security.Principal;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,6 +25,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uuidStr = Optional.ofNullable(request.getHeader("x-auth-token")).orElse("NAN");
+        logger.debug("String {} is received as uuid from header x-auth-token", uuidStr);
         Token token;
         if ("NAN".equals(uuidStr)) {
             token = authenticationService.getTokenForGuest();

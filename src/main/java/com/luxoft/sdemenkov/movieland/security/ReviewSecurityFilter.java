@@ -7,15 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.IOException;
 
-@WebFilter("/review")
+@WebFilter("/v1/*")
 public class ReviewSecurityFilter implements Filter {
-
-    FilterConfig filterConfig;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        this.filterConfig = filterConfig;
-
     }
 
     @Override

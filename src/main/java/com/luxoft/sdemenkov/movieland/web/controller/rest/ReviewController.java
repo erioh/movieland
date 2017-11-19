@@ -15,10 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.UUID;
@@ -35,14 +33,14 @@ public class ReviewController {
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> saveReview(Principal principal, @RequestBody SaveReviewDTO saveReviewDTO) {
-//        SaveReviewDTO saveReviewDTO = new SaveReviewDTO();
-        logger.debug("saveReview. Object {} is receved", saveReviewDTO);
-        System.out.println(saveReviewDTO);
+
+        logger.debug("saveReview. Object {} is receved as saveReviewDTO", saveReviewDTO);
         TokenPrincipal tokenPrincipal = (TokenPrincipal) principal;
-        logger.debug("saveReview. Object {} is receved", tokenPrincipal);
-        System.out.println(tokenPrincipal);
+        logger.debug("saveReview. Object {} is receved as tokenPrincipal", principal);
         Token token = tokenPrincipal.getToken();
+        logger.debug("saveReview. Received token is", token);
         UUID uuid = token.getUuid();
+        logger.debug("saveReview. Received uuid is", uuid);
         if (authenticationService.isAlive(uuid)) {
             logger.debug("saveReview. is started");
             Review review = new Review()

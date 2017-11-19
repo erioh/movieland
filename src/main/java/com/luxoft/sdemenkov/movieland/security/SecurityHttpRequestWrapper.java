@@ -9,7 +9,6 @@ public class SecurityHttpRequestWrapper extends HttpServletRequestWrapper {
 
     private Principal principal;
 
-
     public SecurityHttpRequestWrapper(HttpServletRequest request) {
         super(request);
     }
