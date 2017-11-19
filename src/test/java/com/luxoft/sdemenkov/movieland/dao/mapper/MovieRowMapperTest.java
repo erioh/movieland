@@ -29,7 +29,7 @@ public class MovieRowMapperTest {
                 .thenReturn(8.9);
         when(resultSet.getBigDecimal(anyString())).thenReturn(new BigDecimal("123.45"));
 
-        // Main
+        // Test
         MovieRowMapper movieRowMapper = new MovieRowMapper();
         Movie movie = movieRowMapper.mapRow(resultSet, 0);
         assertEquals(movie.getId(), 1);

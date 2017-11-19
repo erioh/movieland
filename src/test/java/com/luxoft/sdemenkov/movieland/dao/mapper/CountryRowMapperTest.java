@@ -19,7 +19,7 @@ public class CountryRowMapperTest {
         when(resultSet.getInt(anyString())).thenReturn(1);
         when(resultSet.getString(anyString())).thenReturn("Tester");
 
-        // Main
+        // Test
         CountryRowMapper countryRowMapper = new CountryRowMapper();
         Country country = countryRowMapper.mapRow(resultSet, 0);
         assertEquals(1, country.getId());

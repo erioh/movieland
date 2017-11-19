@@ -55,7 +55,7 @@ public class JdbcMovieDaoTest {
 
         // Expected movie
         Movie expectedMovie = MovieGenerator.getMovieForTest();
-        //Main
+        //Test
         Set<Integer> ids = new HashSet<>();
         ids.add(15);
         List<Movie> actualMovieList = movieDao.getMovieListByIds(ids);
