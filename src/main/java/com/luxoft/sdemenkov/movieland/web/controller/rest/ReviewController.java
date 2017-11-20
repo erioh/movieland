@@ -55,11 +55,11 @@ public class ReviewController {
                 reviewService.saveReview(review, movie);
                 return new ResponseEntity<>(new ResponseMessageDto("Review is saved"), HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(new ExceptionMessageDto("User is not allowed to add reviews"), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new ExceptionMessageDto("User is not allowed to add reviews"), HttpStatus.UNAUTHORIZED);
             }
 
         } else {
-            return new ResponseEntity<>(new ExceptionMessageDto("User is not logged in"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ExceptionMessageDto("User is not logged in"), HttpStatus.UNAUTHORIZED);
         }
     }
 
