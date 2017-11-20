@@ -9,6 +9,6 @@ import java.sql.SQLException;
 public class RoleRowMapper implements RowMapper<Role> {
     @Override
     public Role mapRow(ResultSet resultSet, int i) throws SQLException {
-        return Role.getRolebyText(resultSet.getString("role"));
+        return Role.getRoleByText(resultSet.getString("role"));
     }
 }

@@ -1,13 +1,13 @@
 package com.luxoft.sdemenkov.movieland.web.response;
 
-import com.luxoft.sdemenkov.movieland.model.Token;
+import com.luxoft.sdemenkov.movieland.model.technical.Token;
 
 
-public class TokenDTO {
+public class TokenDto {
     private String nickname;
     private String uuid;
 
-    public TokenDTO(Token token) {
+    public TokenDto(Token token) {
         this.uuid = token.getUuid().toString();
         this.nickname = token.getUser().getNickname();
     }
@@ -30,7 +30,7 @@ public class TokenDTO {
 
     @Override
     public String toString() {
-        return "TokenDTO{" +
+        return "TokenDto{" +
                 "uuid=" + uuid +
                 ", nickname='" + nickname + '\'' +
                 '}';

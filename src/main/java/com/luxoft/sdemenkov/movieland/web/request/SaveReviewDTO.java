@@ -1,10 +1,6 @@
 package com.luxoft.sdemenkov.movieland.web.request;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.luxoft.sdemenkov.movieland.web.mapper.SaveReviewDtoMapper;
-
-@JsonDeserialize(using = SaveReviewDtoMapper.class)
-public class SaveReviewDTO {
+public class SaveReviewDto {
     private int movieId;
     private String text;
 
@@ -12,7 +8,7 @@ public class SaveReviewDTO {
         return movieId;
     }
 
-    public SaveReviewDTO setMovieId(int movieId) {
+    public SaveReviewDto setMovieId(int movieId) {
         this.movieId = movieId;
         return this;
     }
@@ -21,14 +17,14 @@ public class SaveReviewDTO {
         return text;
     }
 
-    public SaveReviewDTO setText(String text) {
+    public SaveReviewDto setText(String text) {
         this.text = text;
         return this;
     }
 
     @Override
     public String toString() {
-        return "SaveReviewDTO{" +
+        return "SaveReviewDto{" +
                 "movieId=" + movieId +
                 ", text='" + text + '\'' +
                 '}';

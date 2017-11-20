@@ -1,11 +1,11 @@
 package com.luxoft.sdemenkov.movieland.web.response;
 
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 
 import java.math.BigDecimal;
 
-public class MoviesByGenreDTO implements Sortable {
+public class MoviesByGenreDto implements Sortable {
     private int id;
     private String nameRussian;
     private String nameNative;
@@ -14,10 +14,10 @@ public class MoviesByGenreDTO implements Sortable {
     private BigDecimal price;
     private String picturePath;
 
-    public MoviesByGenreDTO() {
+    public MoviesByGenreDto() {
     }
 
-    public MoviesByGenreDTO(Movie movie) {
+    public MoviesByGenreDto(Movie movie) {
         id = movie.getId();
         nameRussian = movie.getNameRussian();
         nameNative = movie.getNameNative();
@@ -62,7 +62,7 @@ public class MoviesByGenreDTO implements Sortable {
 
     @Override
     public String toString() {
-        return "MoviesByGenreDTO{" +
+        return "MoviesByGenreDto{" +
                 "id=" + id +
                 ", nameRussian='" + nameRussian + '\'' +
                 ", nameNative='" + nameNative + '\'' +

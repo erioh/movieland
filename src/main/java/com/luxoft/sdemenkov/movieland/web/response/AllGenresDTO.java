@@ -1,16 +1,16 @@
 package com.luxoft.sdemenkov.movieland.web.response;
 
-import com.luxoft.sdemenkov.movieland.model.Genre;
+import com.luxoft.sdemenkov.movieland.model.business.Genre;
 
 
-public class AllGenresDTO {
+public class AllGenresDto {
     private int id;
     private String name;
 
-    public AllGenresDTO() {
+    public AllGenresDto() {
     }
 
-    public AllGenresDTO(Genre genre) {
+    public AllGenresDto(Genre genre) {
         id = genre.getId();
         name = genre.getName();
     }
@@ -25,7 +25,7 @@ public class AllGenresDTO {
 
     @Override
     public String toString() {
-        return "AllGenresDTO{" +
+        return "AllGenresDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

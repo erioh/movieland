@@ -5,15 +5,15 @@ public enum Role {
     USER("USER"),
     ADMIN("ADMIN");
 
-    final String roleDescr;
+    final String roleDescription;
 
     Role(String role) {
-        this.roleDescr = role;
+        this.roleDescription = role;
     }
 
-    public static Role getRolebyText(String text) {
+    public static Role getRoleByText(String text) {
         for (Role role : values()) {
-            if (role.roleDescr.equals(text)) {
+            if (role.roleDescription.equals(text)) {
                 return role;
             }
         }

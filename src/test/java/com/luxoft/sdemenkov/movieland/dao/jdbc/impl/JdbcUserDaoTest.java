@@ -1,7 +1,7 @@
 package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.UserDao;
-import com.luxoft.sdemenkov.movieland.model.User;
+import com.luxoft.sdemenkov.movieland.model.business.User;
 import com.luxoft.sdemenkov.movieland.security.role.Role;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -2,8 +2,8 @@ package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.GenreDao;
 import com.luxoft.sdemenkov.movieland.dao.mapper.GenreRowMapper;
-import com.luxoft.sdemenkov.movieland.model.Genre;
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Genre;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +39,9 @@ public class JdbcGenreDao implements GenreDao {
         return genreList;
     }
 
-    public List<Genre> getAllGenres() {
+    public List<Genre> getAll() {
         List<Genre> genreList = jdbcTemplate.query(getAllGenresSQL, GENRE_ROW_MAPPER);
-        log.debug("Calling method getAllGenres with query {}", getAllGenresSQL);
+        log.debug("Calling method getAll with query {}", getAllGenresSQL);
         return genreList;
     }
 

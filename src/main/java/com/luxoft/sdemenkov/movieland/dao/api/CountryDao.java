@@ -1,7 +1,7 @@
 package com.luxoft.sdemenkov.movieland.dao.api;
 
-import com.luxoft.sdemenkov.movieland.model.Country;
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Country;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ public interface CountryDao {
 
     void enrichMoviesWithCountries(List<Movie> movieList);
 
-    List<Country> getAllCountries();
+    List<Country> getAll();
 }

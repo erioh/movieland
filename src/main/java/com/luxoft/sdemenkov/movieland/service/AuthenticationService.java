@@ -1,7 +1,8 @@
 package com.luxoft.sdemenkov.movieland.service;
 
-import com.luxoft.sdemenkov.movieland.model.Token;
+import com.luxoft.sdemenkov.movieland.model.technical.Token;
 
+import java.util.Map;
 import java.util.UUID;
 
 public interface AuthenticationService {
@@ -16,4 +17,5 @@ public interface AuthenticationService {
     Token getTokenByUuid(UUID uuid);
 
     Token getTokenForGuest();
+
 }

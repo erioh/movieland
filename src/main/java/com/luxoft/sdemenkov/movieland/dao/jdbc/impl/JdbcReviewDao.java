@@ -2,9 +2,9 @@ package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.ReviewDao;
 import com.luxoft.sdemenkov.movieland.dao.mapper.ReviewToMovieRowMapper;
-import com.luxoft.sdemenkov.movieland.model.Movie;
-import com.luxoft.sdemenkov.movieland.model.Pair;
-import com.luxoft.sdemenkov.movieland.model.Review;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Review;
+import com.luxoft.sdemenkov.movieland.model.technical.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

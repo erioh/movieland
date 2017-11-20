@@ -1,6 +1,6 @@
 package com.luxoft.sdemenkov.testutils;
 
-import com.luxoft.sdemenkov.movieland.model.*;
+import com.luxoft.sdemenkov.movieland.model.business.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

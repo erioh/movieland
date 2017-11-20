@@ -1,7 +1,7 @@
 package com.luxoft.sdemenkov.movieland.service;
 
 
-import com.luxoft.sdemenkov.movieland.model.User;
+import com.luxoft.sdemenkov.movieland.model.business.User;
 
 public interface UserService {
     void enrichUserWithRoles(User user);

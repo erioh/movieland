@@ -1,7 +1,7 @@
 package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +25,7 @@ public class JdbcMovieDaoTest {
 
     @Test
     public void getAllMovies() throws Exception {
-        List<Movie> movieList = movieDao.getAllMovies();
+        List<Movie> movieList = movieDao.getAll();
         Movie expectedMovie = MovieGenerator.getMovieForTest();
         Movie actualMovie = null;
         for (Movie movie :

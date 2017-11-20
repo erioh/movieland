@@ -1,7 +1,7 @@
 package com.luxoft.sdemenkov.movieland.service.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.service.CountryService;
 import com.luxoft.sdemenkov.movieland.service.GenreService;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
@@ -38,9 +38,9 @@ public class MovieServiceImplTest {
         // Mocking objects
         List<Movie> list = new ArrayList<>();
         list.add(expectedMovie);
-        when(mockedMovieDao.getAllMovies()).thenReturn(list);
+        when(mockedMovieDao.getAll()).thenReturn(list);
         // Test
-        List<Movie> movieList = movieService.getAllMovies();
+        List<Movie> movieList = movieService.getAll();
         Movie actualMovie = movieList.get(0);
         assertEquals(expectedMovie.getId(), actualMovie.getId());
         assertEquals(expectedMovie.getNameRussian(), actualMovie.getNameRussian());

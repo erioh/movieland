@@ -1,12 +1,12 @@
 package com.luxoft.sdemenkov.movieland.web.response;
 
-import com.luxoft.sdemenkov.movieland.model.Country;
+import com.luxoft.sdemenkov.movieland.model.business.Country;
 
-public class AllCountryDTO {
+public class AllCountryDto {
     private int id;
     private String name;
 
-    public AllCountryDTO(Country genre) {
+    public AllCountryDto(Country genre) {
         id = genre.getId();
         name = genre.getName();
     }
@@ -29,7 +29,7 @@ public class AllCountryDTO {
 
     @Override
     public String toString() {
-        return "AllCountryDTO{" +
+        return "AllCountryDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

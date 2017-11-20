@@ -1,7 +1,7 @@
 package com.luxoft.sdemenkov.movieland.service.impl;
 
-import com.luxoft.sdemenkov.movieland.model.Currency;
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Currency;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -9,7 +9,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,6 @@ public class ExchangeRatesExchangeServiceImplTest {
 
         movieListActual = currencyExchangeService.getMovieWithChangedCurrency(movieListActual, Currency.EUR);
         assertTrue(movieListActual.get(0).getPrice().compareTo(movieListExpected.get(0).getPrice()) < 0);
-
 
 
     }

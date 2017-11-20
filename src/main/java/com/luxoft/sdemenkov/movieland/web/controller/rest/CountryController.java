@@ -1,8 +1,8 @@
 package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
-import com.luxoft.sdemenkov.movieland.model.Country;
+import com.luxoft.sdemenkov.movieland.model.business.Country;
 import com.luxoft.sdemenkov.movieland.service.CountryService;
-import com.luxoft.sdemenkov.movieland.web.response.AllCountryDTO;
+import com.luxoft.sdemenkov.movieland.web.response.AllCountryDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +26,13 @@ public class CountryController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseEntity<?> getAllCountries() {
         long startTime = System.currentTimeMillis();
-        List<AllCountryDTO> allCountryDTOList = new ArrayList<>();
-        List<Country> countryList = countryService.getAllCountries();
-        log.debug("Method getAllCountries. Filling countryList with countries");
+        List<AllCountryDto> allCountryDtoList = new ArrayList<>();
+        List<Country> countryList = countryService.getAll();
+        log.debug("Method getAll. Filling countryList with countries");
         for (Country country : countryList) {
-            allCountryDTOList.add(new AllCountryDTO(country));
+            allCountryDtoList.add(new AllCountryDto(country));
         }
-        log.debug("Method getAllCountries.  It took {} ms", System.currentTimeMillis() - startTime);
-        return new ResponseEntity<>(allCountryDTOList, HttpStatus.OK);
+        log.debug("Method getAll.  It took {} ms", System.currentTimeMillis() - startTime);
+        return new ResponseEntity<>(allCountryDtoList, HttpStatus.OK);
     }
 }

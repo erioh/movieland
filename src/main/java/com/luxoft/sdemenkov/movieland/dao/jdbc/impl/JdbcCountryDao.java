@@ -2,8 +2,8 @@ package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.CountryDao;
 import com.luxoft.sdemenkov.movieland.dao.mapper.CountryRowMapper;
-import com.luxoft.sdemenkov.movieland.model.Country;
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Country;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +65,7 @@ public class JdbcCountryDao implements CountryDao {
     }
 
     @Override
-    public List<Country> getAllCountries() {
+    public List<Country> getAll() {
         List<Country> countryList = jdbcTemplate.query(getAllCountriesSQL, COUNTRY_ROW_MAPPER);
         log.debug("Result of getAllCountriesSQL is {}", countryList);
         return countryList;

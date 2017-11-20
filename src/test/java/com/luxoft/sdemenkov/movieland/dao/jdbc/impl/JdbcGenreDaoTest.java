@@ -1,8 +1,8 @@
 package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.GenreDao;
-import com.luxoft.sdemenkov.movieland.model.Genre;
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Genre;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,7 +36,7 @@ public class JdbcGenreDaoTest {
 
     @Test
     public void getAllGenres() throws Exception {
-        List<Genre> genreList = genreDao.getAllGenres();
+        List<Genre> genreList = genreDao.getAll();
         assertEquals(15, genreList.size());
     }
 
@@ -51,9 +51,9 @@ public class JdbcGenreDaoTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void test() throws Exception {
-        List<Genre> genreListCached1 = genreDao.getAllGenres();
+        List<Genre> genreListCached1 = genreDao.getAll();
         genreListCached1.set(0, new Genre(0, "Main"));
-        List<Genre> genreListCached2 = genreDao.getAllGenres();
+        List<Genre> genreListCached2 = genreDao.getAll();
 
     }
 

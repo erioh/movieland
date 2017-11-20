@@ -1,14 +1,14 @@
 package com.luxoft.sdemenkov.movieland.web.response;
 
-import com.luxoft.sdemenkov.movieland.model.Country;
-import com.luxoft.sdemenkov.movieland.model.Genre;
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Country;
+import com.luxoft.sdemenkov.movieland.model.business.Genre;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public class ThreeRandomMoviesDTO implements Sortable {
+public class ThreeRandomMoviesDto implements Sortable {
     private int id;
     private String nameRussian;
     private String nameNative;
@@ -20,7 +20,7 @@ public class ThreeRandomMoviesDTO implements Sortable {
     private List<Country> countries;
     private List<Genre> genres;
 
-    public ThreeRandomMoviesDTO(Movie movie) {
+    public ThreeRandomMoviesDto(Movie movie) {
         this.id = movie.getId();
         this.nameRussian = movie.getNameRussian();
         this.nameNative = movie.getNameNative();
@@ -33,7 +33,7 @@ public class ThreeRandomMoviesDTO implements Sortable {
         this.genres = movie.getGenreList();
     }
 
-    public ThreeRandomMoviesDTO() {
+    public ThreeRandomMoviesDto() {
     }
 
     public int getId() {
@@ -78,7 +78,7 @@ public class ThreeRandomMoviesDTO implements Sortable {
 
     @Override
     public String toString() {
-        return "ThreeRandomMoviesDTO{" +
+        return "ThreeRandomMoviesDto{" +
                 "id=" + id +
                 ", nameRussian='" + nameRussian + '\'' +
                 ", nameNative='" + nameNative + '\'' +

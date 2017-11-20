@@ -1,15 +1,15 @@
 package com.luxoft.sdemenkov.movieland.web.response;
 
-import com.luxoft.sdemenkov.movieland.model.Country;
-import com.luxoft.sdemenkov.movieland.model.Genre;
-import com.luxoft.sdemenkov.movieland.model.Movie;
-import com.luxoft.sdemenkov.movieland.model.Review;
+import com.luxoft.sdemenkov.movieland.model.business.Country;
+import com.luxoft.sdemenkov.movieland.model.business.Genre;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Review;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 
-public class MovieByIdDTO {
+public class MovieByIdDto {
     private int id;
     private String nameRussian;
     private String nameNative;
@@ -22,7 +22,7 @@ public class MovieByIdDTO {
     private List<Genre> genres;
     private List<Review> reviews;
 
-    public MovieByIdDTO(Movie movie) {
+    public MovieByIdDto(Movie movie) {
         this.id = movie.getId();
         this.nameRussian = movie.getNameRussian();
         this.nameNative = movie.getNameNative();
@@ -126,7 +126,7 @@ public class MovieByIdDTO {
 
     @Override
     public String toString() {
-        return "MovieByIdDTO{" +
+        return "MovieByIdDto{" +
                 "id=" + id +
                 ", nameRussian='" + nameRussian + '\'' +
                 ", nameNative='" + nameNative + '\'' +

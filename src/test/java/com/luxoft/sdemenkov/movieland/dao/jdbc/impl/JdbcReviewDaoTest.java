@@ -1,9 +1,9 @@
 package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.ReviewDao;
-import com.luxoft.sdemenkov.movieland.model.Movie;
-import com.luxoft.sdemenkov.movieland.model.Review;
-import com.luxoft.sdemenkov.movieland.model.User;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Review;
+import com.luxoft.sdemenkov.movieland.model.business.User;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;

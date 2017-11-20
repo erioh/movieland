@@ -2,7 +2,7 @@ package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
 import com.luxoft.sdemenkov.movieland.dao.mapper.MovieRowMapper;
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +35,10 @@ public class JdbcMovieDao implements MovieDao {
     private String getMovieByIdSQL;
 
     @Override
-    public List<Movie> getAllMovies() {
+    public List<Movie> getAll() {
         List<Movie> movieList = jdbcTemplate.query(getAllMoviesSQL, MOVIE_ROW_MAPPER);
-        log.debug("Calling method getAllMovies. with query = {}", getAllMoviesSQL);
-        log.debug("Calling method getAllMovies. Result = {}", movieList);
+        log.debug("Calling method getAll. with query = {}", getAllMoviesSQL);
+        log.debug("Calling method getAll. Result = {}", movieList);
         return movieList;
     }
 

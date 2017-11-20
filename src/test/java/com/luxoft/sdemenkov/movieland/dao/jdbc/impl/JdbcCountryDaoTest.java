@@ -1,8 +1,8 @@
 package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.CountryDao;
-import com.luxoft.sdemenkov.movieland.model.Country;
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Country;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,7 +49,7 @@ public class JdbcCountryDaoTest {
 
     @Test
     public void getAllCountries() throws Exception {
-        List<Country> countryList = countryDao.getAllCountries();
+        List<Country> countryList = countryDao.getAll();
         assertEquals(7, countryList.size());
     }
 

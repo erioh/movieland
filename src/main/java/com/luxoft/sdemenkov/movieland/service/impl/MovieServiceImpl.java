@@ -1,7 +1,7 @@
 package com.luxoft.sdemenkov.movieland.service.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.service.CountryService;
 import com.luxoft.sdemenkov.movieland.service.GenreService;
 import com.luxoft.sdemenkov.movieland.service.MovieService;
@@ -28,9 +28,9 @@ public class MovieServiceImpl implements MovieService {
     private ReviewService reviewService;
 
     @Override
-    public List<Movie> getAllMovies() {
-        List<Movie> allMovies = movieDao.getAllMovies();
-        log.debug("Calling method getAllMovies, result = {}", allMovies);
+    public List<Movie> getAll() {
+        List<Movie> allMovies = movieDao.getAll();
+        log.debug("Calling method getAll, result = {}", allMovies);
         return allMovies;
     }
 

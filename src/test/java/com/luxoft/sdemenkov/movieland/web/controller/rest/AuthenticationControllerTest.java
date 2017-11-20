@@ -1,7 +1,7 @@
 package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
-import com.luxoft.sdemenkov.movieland.model.Token;
-import com.luxoft.sdemenkov.movieland.model.User;
+import com.luxoft.sdemenkov.movieland.model.business.User;
+import com.luxoft.sdemenkov.movieland.model.technical.Token;
 import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
 import org.junit.Before;
 import org.junit.Test;

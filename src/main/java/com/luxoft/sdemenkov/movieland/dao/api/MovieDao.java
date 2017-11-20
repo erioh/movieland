@@ -1,13 +1,13 @@
 package com.luxoft.sdemenkov.movieland.dao.api;
 
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 
 import java.util.List;
 import java.util.Set;
 
 
 public interface MovieDao {
-    List<Movie> getAllMovies();
+    List<Movie> getAll();
 
     List<Movie> getThreeRandomMovies();
 

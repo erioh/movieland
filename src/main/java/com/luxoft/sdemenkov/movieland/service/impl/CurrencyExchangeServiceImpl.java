@@ -1,8 +1,8 @@
 package com.luxoft.sdemenkov.movieland.service.impl;
 
-import com.luxoft.sdemenkov.movieland.model.Currency;
-import com.luxoft.sdemenkov.movieland.model.ExchangeRate;
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Currency;
+import com.luxoft.sdemenkov.movieland.model.business.ExchangeRate;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.service.CurrencyExchangeService;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;

@@ -1,8 +1,8 @@
 package com.luxoft.sdemenkov.movieland.dao.mapper;
 
-import com.luxoft.sdemenkov.movieland.model.Pair;
-import com.luxoft.sdemenkov.movieland.model.Review;
-import com.luxoft.sdemenkov.movieland.model.User;
+import com.luxoft.sdemenkov.movieland.model.business.Review;
+import com.luxoft.sdemenkov.movieland.model.business.User;
+import com.luxoft.sdemenkov.movieland.model.technical.Pair;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -22,6 +22,6 @@ public class ReviewToMovieRowMapper implements RowMapper<Pair<Integer, Review>> 
 
         int movieId = resultSet.getInt("movie_id");
 
-        return (Pair<Integer, Review>) new Pair(movieId, review);
+        return new Pair(movieId, review);
     }
 }

@@ -1,6 +1,6 @@
 package com.luxoft.sdemenkov.movieland.dao.mapper;
 
-import com.luxoft.sdemenkov.movieland.model.User;
+import com.luxoft.sdemenkov.movieland.model.business.User;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

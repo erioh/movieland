@@ -1,10 +1,10 @@
 package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
-import com.luxoft.sdemenkov.movieland.model.Token;
+import com.luxoft.sdemenkov.movieland.model.technical.Token;
 import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
 import com.luxoft.sdemenkov.movieland.web.response.ExceptionMessageDto;
 import com.luxoft.sdemenkov.movieland.web.response.ResponseMessageDto;
-import com.luxoft.sdemenkov.movieland.web.response.TokenDTO;
+import com.luxoft.sdemenkov.movieland.web.response.TokenDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +29,9 @@ public class AuthenticationController {
         } catch (RuntimeException e) {
             return new ResponseEntity<>(new ExceptionMessageDto(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
-        TokenDTO tokenDTO = new TokenDTO(token);
+        TokenDto tokenDto = new TokenDto(token);
         logger.debug("Getting of user with email {} and password {} returns {}", email, password, token);
-        return new ResponseEntity<>(tokenDTO, HttpStatus.OK);
+        return new ResponseEntity<>(tokenDto, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.DELETE)

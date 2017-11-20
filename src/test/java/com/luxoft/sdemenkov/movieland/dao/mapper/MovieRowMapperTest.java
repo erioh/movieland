@@ -1,6 +1,6 @@
 package com.luxoft.sdemenkov.movieland.dao.mapper;
 
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import org.junit.Test;
 
 import java.math.BigDecimal;

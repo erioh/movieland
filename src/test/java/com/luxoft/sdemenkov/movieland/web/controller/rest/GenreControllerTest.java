@@ -1,6 +1,6 @@
 package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
-import com.luxoft.sdemenkov.movieland.model.Genre;
+import com.luxoft.sdemenkov.movieland.model.business.Genre;
 import com.luxoft.sdemenkov.movieland.service.GenreService;
 import com.luxoft.sdemenkov.movieland.service.MovieService;
 import com.luxoft.sdemenkov.movieland.service.SortService;
@@ -50,7 +50,7 @@ public class GenreControllerTest {
         List<Genre> mockedGenreList = new ArrayList<>();
         mockedGenreList.add(GenreGenerator.getGenreForTest());
         mockedGenreList.add(GenreGenerator.getGenreForTest());
-        when(mockedGenreService.getAllGenres()).thenReturn(mockedGenreList);
+        when(mockedGenreService.getAll()).thenReturn(mockedGenreList);
         mockMvc.perform(get("/genre"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))

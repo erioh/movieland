@@ -1,7 +1,7 @@
 package com.luxoft.sdemenkov.movieland.security;
 
 
-import com.luxoft.sdemenkov.movieland.model.Token;
+import com.luxoft.sdemenkov.movieland.model.technical.Token;
 
 import java.security.Principal;
 

@@ -1,7 +1,7 @@
 package com.luxoft.sdemenkov.movieland.service.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.UserDao;
-import com.luxoft.sdemenkov.movieland.model.User;
+import com.luxoft.sdemenkov.movieland.model.business.User;
 import com.luxoft.sdemenkov.movieland.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
