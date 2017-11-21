@@ -6,7 +6,6 @@ import com.luxoft.sdemenkov.movieland.model.technical.Token;
 import com.luxoft.sdemenkov.movieland.security.Protected;
 import com.luxoft.sdemenkov.movieland.security.TokenPrincipal;
 import com.luxoft.sdemenkov.movieland.security.role.Role;
-import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
 import com.luxoft.sdemenkov.movieland.service.impl.ReviewServiceImpl;
 import com.luxoft.sdemenkov.movieland.web.request.SaveReviewDto;
 import com.luxoft.sdemenkov.movieland.web.response.ResponseMessageDto;
