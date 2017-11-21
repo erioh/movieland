@@ -30,8 +30,6 @@ public class ReviewController {
 
     @Autowired
     ReviewServiceImpl reviewService;
-    @Autowired
-    AuthenticationService authenticationService;
 
     @Protected(protectedBy = Role.USER)
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
