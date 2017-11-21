@@ -38,7 +38,6 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
         logger.debug("String {} is received as uuid from header x-auth-token", uuidStr);
         Token token;
         if ("NAN".equals(uuidStr)) {
-            System.out.println("TAR");
             token = authenticationService.getTokenForGuest();
         } else {
             token = authenticationService.getTokenByUuid(UUID.fromString(uuidStr));
@@ -65,7 +64,6 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
     public void validateToken(Token token, Object handler) {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         if (handlerMethod.hasMethodAnnotation(Protected.class)) {
-            System.out.println(token);
             if("guest".equals(token.getUser().getEmail())) {
                 throw new UserNotLoggedInException();
             }
