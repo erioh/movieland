@@ -25,10 +25,10 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/review")
 public class ReviewController {
-    Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    ReviewServiceImpl reviewService;
+    private ReviewServiceImpl reviewService;
 
     @Protected(protectedBy = Role.USER)
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
