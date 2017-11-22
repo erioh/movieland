@@ -21,6 +21,7 @@ public class Token {
         this.user = user;
     }
 
+
     public UUID getUuid() {
         return uuid;
     }

@@ -1,4 +1,4 @@
-package com.luxoft.sdemenkov.movieland.web.response;
+package com.luxoft.sdemenkov.movieland.web.dto.response;
 
 import com.luxoft.sdemenkov.movieland.model.technical.Token;
 

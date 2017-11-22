@@ -2,9 +2,9 @@ package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.technical.Token;
 import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
-import com.luxoft.sdemenkov.movieland.web.response.ExceptionMessageDto;
-import com.luxoft.sdemenkov.movieland.web.response.ResponseMessageDto;
-import com.luxoft.sdemenkov.movieland.web.response.TokenDto;
+import com.luxoft.sdemenkov.movieland.web.dto.response.ExceptionMessageDto;
+import com.luxoft.sdemenkov.movieland.web.dto.response.ResponseMessageDto;
+import com.luxoft.sdemenkov.movieland.web.dto.response.TokenDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

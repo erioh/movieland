@@ -4,6 +4,7 @@ import com.luxoft.sdemenkov.movieland.model.business.User;
 import com.luxoft.sdemenkov.movieland.model.technical.Token;
 import com.luxoft.sdemenkov.movieland.security.ReviewSecurityFilter;
 import com.luxoft.sdemenkov.movieland.security.TokenPrincipal;
+import com.luxoft.sdemenkov.movieland.security.client.Client;
 import com.luxoft.sdemenkov.movieland.security.role.Role;
 import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
 import com.luxoft.sdemenkov.movieland.service.impl.AuthenticationServiceImpl;
@@ -24,6 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -64,8 +66,9 @@ public class ReviewControllerTest {
         List<Role> roleList = new ArrayList<>();
         roleList.add(Role.USER);
         user.setRoleList(roleList);
-        Token token = new Token(user);
-        when(authenticationService.getTokenByUuid(any())).thenReturn(token);
+        Optional<Token> token = Optional.of(new Token(user));
+        Client client = new Client(token.get());
+        when(authenticationService.getClientByUuid(any())).thenReturn(client);
         TokenPrincipal tokenPrincipal = new TokenPrincipal(token);
 
         mockMvc.perform(post("/review").principal(tokenPrincipal).header("x-auth-token", "f7367061-ac52-4284-827e-3bc23d841dc1")
@@ -83,9 +86,10 @@ public class ReviewControllerTest {
         List<Role> roleList = new ArrayList<>();
         roleList.add(Role.ADMIN);
         user.setRoleList(roleList);
-        Token token = new Token(user);
+        Optional<Token> token = Optional.of(new Token(user));
         TokenPrincipal tokenPrincipal = new TokenPrincipal(token);
-        when(authenticationService.getTokenByUuid(any())).thenReturn(token);
+        Client client = new Client(token.get());
+        when(authenticationService.getClientByUuid(any())).thenReturn(client);
 
         mockMvc.perform(post("/review").principal(tokenPrincipal)
                 .header("x-auth-token", "f7367061-ac52-4284-827e-3bc23d841dc1")
@@ -97,15 +101,9 @@ public class ReviewControllerTest {
     @Test
     public void saveReviewReviewUserIsNotLoggedIn() throws Exception {
         String body = "{\"movieId\":1,\"text\":\"ReviewControllerTest\"}";
-        User user = new User();
-        user.setEmail("guest");
-        List<Role> roleList = new ArrayList<>();
-        roleList.add(Role.USER);
-        user.setRoleList(roleList);
-        Token token = new Token(user);
-        TokenPrincipal tokenPrincipal = new TokenPrincipal(token);
-        when(authenticationService.getTokenForGuest()).thenReturn(token);
-        mockMvc.perform(post("/review").principal(tokenPrincipal)
+        Client client = new Client();
+        when(authenticationService.getGuest()).thenReturn(client);
+        mockMvc.perform(post("/review")
                 .contentType("application/json;charset=UTF-8")
                 .content(body))
                 .andExpect(status().isUnauthorized());

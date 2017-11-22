@@ -2,6 +2,7 @@ package com.luxoft.sdemenkov.movieland.service.impl;
 
 import com.luxoft.sdemenkov.movieland.model.business.User;
 import com.luxoft.sdemenkov.movieland.model.technical.Token;
+import com.luxoft.sdemenkov.movieland.security.client.Client;
 import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
 import com.luxoft.sdemenkov.movieland.service.UserService;
 import org.slf4j.Logger;
@@ -70,24 +71,22 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public Token getTokenByUuid(UUID uuid) {
+    public Client getClientByUuid(UUID uuid) {
         if (isAlive(uuid)) {
-            Token token = tokenMap.get(uuid);
-            logger.debug("getTokenByUuid is executed. token {} is found for uuid {}", token, uuid);
-            return token;
+            Client client = new Client(tokenMap.get(uuid));
+            logger.debug("getTokenByUuid is executed. client {} is used for uuid {}", client, uuid);
+            return client;
         } else {
             logger.debug("getTokenByUuid is executed. token  for uuid {} is not found", uuid);
-            return getTokenForGuest();
+            return getGuest();
         }
     }
 
     @Override
-    public Token getTokenForGuest() {
-        User guest = new User();
-        guest.setEmail("guest");
-        Token token = new Token(guest);
-        logger.debug("getTokenForGuest is executed. Guest Token {} is created", token);
-        return token;
+    public Client getGuest() {
+        Client client = new Client();
+        logger.debug("getTokenForGuest is executed. Guest client {} is created", client, true);
+        return client;
     }
 
 }

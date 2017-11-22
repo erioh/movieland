@@ -1,11 +1,15 @@
-package com.luxoft.sdemenkov.movieland.web.response;
+package com.luxoft.sdemenkov.movieland.web.dto.response;
 
 import com.luxoft.sdemenkov.movieland.model.business.Country;
 import com.luxoft.sdemenkov.movieland.model.business.Genre;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.model.business.Review;
+import com.luxoft.sdemenkov.movieland.web.dto.CountryDto;
+import com.luxoft.sdemenkov.movieland.web.dto.GenreDto;
+import com.luxoft.sdemenkov.movieland.web.dto.ReviewDto;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,9 +22,9 @@ public class MovieByIdDto {
     private double rating;
     private BigDecimal price;
     private String picturePath;
-    private List<Country> countries;
-    private List<Genre> genres;
-    private List<Review> reviews;
+    private List<CountryDto> countries = new ArrayList<>();
+    private List<GenreDto> genres = new ArrayList<>();
+    private List<ReviewDto> reviews = new ArrayList<>();
 
     public MovieByIdDto(Movie movie) {
         this.id = movie.getId();
@@ -31,9 +35,15 @@ public class MovieByIdDto {
         this.rating = movie.getRating();
         this.price = movie.getPrice();
         this.picturePath = movie.getPicturePath();
-        this.countries = movie.getCountryList();
-        this.genres = movie.getGenreList();
-        this.reviews = movie.getReviewList();
+        for (Country country : movie.getCountryList()) {
+            this.countries.add(new CountryDto(country));
+        }
+        for (Genre genre : movie.getGenreList()) {
+            this.genres.add(new GenreDto(genre));
+        }
+        for (Review review : movie.getReviewList()) {
+            this.reviews.add(new ReviewDto(review));
+        }
     }
 
     public int getId() {
@@ -100,27 +110,27 @@ public class MovieByIdDto {
         this.picturePath = picturePath;
     }
 
-    public List<Country> getCountries() {
+    public List<CountryDto> getCountries() {
         return countries;
     }
 
-    public void setCountries(List<Country> countries) {
+    public void setCountries(List<CountryDto> countries) {
         this.countries = countries;
     }
 
-    public List<Genre> getGenres() {
+    public List<GenreDto> getGenres() {
         return genres;
     }
 
-    public void setGenres(List<Genre> genres) {
+    public void setGenres(List<GenreDto> genres) {
         this.genres = genres;
     }
 
-    public List<Review> getReviews() {
+    public List<ReviewDto> getReviews() {
         return reviews;
     }
 
-    public void setReviews(List<Review> reviews) {
+    public void setReviews(List<ReviewDto> reviews) {
         this.reviews = reviews;
     }
 

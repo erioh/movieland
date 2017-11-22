@@ -1,5 +1,4 @@
-package com.luxoft.sdemenkov.movieland.web.request;
-
+package com.luxoft.sdemenkov.movieland.web.dto.request;
 public class SaveReviewDto {
     private int movieId;
     private String text;
@@ -24,7 +23,7 @@ public class SaveReviewDto {
 
     @Override
     public String toString() {
-        return "SaveReviewDto{" +
+        return "saveReviewDto{" +
                 "movieId=" + movieId +
                 ", text='" + text + '\'' +
                 '}';

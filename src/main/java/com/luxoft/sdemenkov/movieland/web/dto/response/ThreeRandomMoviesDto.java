@@ -1,11 +1,14 @@
-package com.luxoft.sdemenkov.movieland.web.response;
+package com.luxoft.sdemenkov.movieland.web.dto.response;
 
 import com.luxoft.sdemenkov.movieland.model.business.Country;
 import com.luxoft.sdemenkov.movieland.model.business.Genre;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
+import com.luxoft.sdemenkov.movieland.web.dto.CountryDto;
+import com.luxoft.sdemenkov.movieland.web.dto.GenreDto;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ThreeRandomMoviesDto implements Sortable {
@@ -17,8 +20,8 @@ public class ThreeRandomMoviesDto implements Sortable {
     private double rating;
     private BigDecimal price;
     private String picturePath;
-    private List<Country> countries;
-    private List<Genre> genres;
+    private List<CountryDto> countries = new ArrayList<>();
+    private List<GenreDto> genres = new ArrayList<>();
 
     public ThreeRandomMoviesDto(Movie movie) {
         this.id = movie.getId();
@@ -29,8 +32,12 @@ public class ThreeRandomMoviesDto implements Sortable {
         this.rating = movie.getRating();
         this.price = movie.getPrice();
         this.picturePath = movie.getPicturePath();
-        this.countries = movie.getCountryList();
-        this.genres = movie.getGenreList();
+        for (Country country : movie.getCountryList()) {
+            this.countries.add(new CountryDto(country));
+        }
+        for (Genre genre : movie.getGenreList()) {
+            this.genres.add(new GenreDto(genre));
+        }
     }
 
     public ThreeRandomMoviesDto() {
@@ -68,11 +75,11 @@ public class ThreeRandomMoviesDto implements Sortable {
         return picturePath;
     }
 
-    public List<Country> getCountries() {
+    public List<CountryDto> getCountries() {
         return countries;
     }
 
-    public List<Genre> getGenres() {
+    public List<GenreDto> getGenres() {
         return genres;
     }
 

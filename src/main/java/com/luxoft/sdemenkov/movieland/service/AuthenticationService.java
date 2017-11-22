@@ -1,6 +1,7 @@
 package com.luxoft.sdemenkov.movieland.service;
 
 import com.luxoft.sdemenkov.movieland.model.technical.Token;
+import com.luxoft.sdemenkov.movieland.security.client.Client;
 
 import java.util.Map;
 import java.util.UUID;
@@ -14,8 +15,8 @@ public interface AuthenticationService {
 
     void removeInactiveUsers();
 
-    Token getTokenByUuid(UUID uuid);
+    Client getClientByUuid(UUID uuid);
 
-    Token getTokenForGuest();
+    Client getGuest();
 
 }

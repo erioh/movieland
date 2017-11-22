@@ -1,16 +1,15 @@
 package com.luxoft.sdemenkov.movieland.web.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.luxoft.sdemenkov.movieland.model.business.User;
-import com.luxoft.sdemenkov.movieland.model.technical.Token;
 import com.luxoft.sdemenkov.movieland.security.Protected;
 import com.luxoft.sdemenkov.movieland.security.SecurityHttpRequestWrapper;
 import com.luxoft.sdemenkov.movieland.security.TokenPrincipal;
+import com.luxoft.sdemenkov.movieland.security.client.Client;
 import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
 import com.luxoft.sdemenkov.movieland.web.exception.NeededRolesAneAbsentException;
 import com.luxoft.sdemenkov.movieland.web.exception.RestException;
 import com.luxoft.sdemenkov.movieland.web.exception.UserNotLoggedInException;
-import com.luxoft.sdemenkov.movieland.web.response.ExceptionMessageDto;
+import com.luxoft.sdemenkov.movieland.web.dto.response.ExceptionMessageDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -25,7 +24,7 @@ import java.util.UUID;
 
 public class RequestInterceptor extends HandlerInterceptorAdapter {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private AuthenticationService authenticationService;
@@ -34,41 +33,41 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String uuidStr = Optional.ofNullable(request.getHeader("x-auth-token")).orElse("NAN");
-        logger.debug("String {} is received as uuid from header x-auth-token", uuidStr);
-        Token token;
-        if ("NAN".equals(uuidStr)) {
-            token = authenticationService.getTokenForGuest();
+        Optional<String> requestHeader = Optional.ofNullable(request.getHeader("x-auth-token"));
+        logger.debug("String {} is received as uuid from header x-auth-token", requestHeader);
+        Client client;
+        if (!requestHeader.isPresent()) {
+            client = authenticationService.getGuest();
         } else {
-            token = authenticationService.getTokenByUuid(UUID.fromString(uuidStr));
+            client = authenticationService.getClientByUuid(UUID.fromString(requestHeader.get()));
         }
         try {
-            validateToken(token, handler);
-            TokenPrincipal principal = new TokenPrincipal(token);
+            validateToken(client, handler);
+            TokenPrincipal principal = new TokenPrincipal(client.getToken());
             logger.debug("Principal {} is received", principal);
             ((SecurityHttpRequestWrapper) request).setPrincipal(principal);
         } catch (RestException e) {
             response.setStatus(e.getHttpStatus().value());
             response.setContentType("application/json");
-            response.setContentType("UTF-8");
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(new ExceptionMessageDto(e.getMessage())));
             return false;
         }
 
         MDC.put("requestId", UUID.randomUUID().toString());
-        MDC.put("email", token.getUser().getEmail());
+        MDC.put("email", client.getClientIdentificator());
 
         return true;
     }
 
-    public void validateToken(Token token, Object handler) {
+    public void validateToken(Client client, Object handler) {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         if (handlerMethod.hasMethodAnnotation(Protected.class)) {
-            if("guest".equals(token.getUser().getEmail())) {
+            if(client.isGuest()) {
                 throw new UserNotLoggedInException();
             }
             Protected annotation = handlerMethod.getMethodAnnotation(Protected.class);
-            if (!token.getUser().getRoleList().contains(annotation.protectedBy())){
+            if (!client.getRoleList().contains(annotation.protectedBy())){
                 throw new NeededRolesAneAbsentException();
             }
         }

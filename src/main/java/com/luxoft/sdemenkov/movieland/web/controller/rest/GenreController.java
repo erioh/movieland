@@ -2,7 +2,7 @@ package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.business.Genre;
 import com.luxoft.sdemenkov.movieland.service.GenreService;
-import com.luxoft.sdemenkov.movieland.web.response.AllGenresDto;
+import com.luxoft.sdemenkov.movieland.web.dto.response.AllGenresDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

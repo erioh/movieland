@@ -2,7 +2,7 @@ package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.business.Country;
 import com.luxoft.sdemenkov.movieland.service.CountryService;
-import com.luxoft.sdemenkov.movieland.web.response.AllCountryDto;
+import com.luxoft.sdemenkov.movieland.web.dto.response.AllCountryDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

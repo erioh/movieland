@@ -3,7 +3,7 @@ package com.luxoft.sdemenkov.movieland.service.impl;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.model.technical.SortDirection;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
-import com.luxoft.sdemenkov.movieland.web.response.AllMoviesDto;
+import com.luxoft.sdemenkov.movieland.web.dto.response.AllMoviesDto;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 

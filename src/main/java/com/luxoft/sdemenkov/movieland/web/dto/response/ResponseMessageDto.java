@@ -1,10 +1,10 @@
-package com.luxoft.sdemenkov.movieland.web.response;
+package com.luxoft.sdemenkov.movieland.web.dto.response;
 
 
-public class LogoutMessageDto {
+public class ResponseMessageDto {
     private String message;
 
-    public LogoutMessageDto(String message) {
+    public ResponseMessageDto(String message) {
         this.message = message;
     }
 
