@@ -1,6 +1,6 @@
 package com.luxoft.sdemenkov.movieland.dao.mapper;
 
-import com.luxoft.sdemenkov.movieland.model.Country;
+import com.luxoft.sdemenkov.movieland.model.business.Country;
 import org.junit.Test;
 
 import java.sql.ResultSet;

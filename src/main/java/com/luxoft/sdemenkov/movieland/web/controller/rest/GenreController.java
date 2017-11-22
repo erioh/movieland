@@ -1,8 +1,8 @@
 package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
-import com.luxoft.sdemenkov.movieland.model.Genre;
+import com.luxoft.sdemenkov.movieland.model.business.Genre;
 import com.luxoft.sdemenkov.movieland.service.GenreService;
-import com.luxoft.sdemenkov.movieland.web.response.AllGenresDTO;
+import com.luxoft.sdemenkov.movieland.web.dto.response.AllGenresDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +25,15 @@ public class GenreController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<?> getAllGenres() {
         long startTime = System.currentTimeMillis();
-        List<AllGenresDTO> allGenresDTOList = new ArrayList<>();
-        List<Genre> genreList = genreService.getAllGenres();
-        log.debug("Method getAllGenres. Filling allGenresDTOList with genres");
+        List<AllGenresDto> allGenresDtoList = new ArrayList<>();
+        List<Genre> genreList = genreService.getAll();
+        log.debug("Method getAll. Filling allGenresDtoList with genres");
         for (Genre genre : genreList) {
-            allGenresDTOList.add(new AllGenresDTO(genre));
+            allGenresDtoList.add(new AllGenresDto(genre));
         }
 
-        log.debug("Method getAllGenres.  It took {} ms", System.currentTimeMillis() - startTime);
-        return allGenresDTOList;
+        log.debug("Method getAll.  It took {} ms", System.currentTimeMillis() - startTime);
+        return allGenresDtoList;
 
     }
 

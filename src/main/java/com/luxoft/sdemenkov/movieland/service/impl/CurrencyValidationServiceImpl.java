@@ -1,6 +1,6 @@
 package com.luxoft.sdemenkov.movieland.service.impl;
 
-import com.luxoft.sdemenkov.movieland.model.Currency;
+import com.luxoft.sdemenkov.movieland.model.business.Currency;
 import com.luxoft.sdemenkov.movieland.service.CurrencyValidationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

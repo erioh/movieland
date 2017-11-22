@@ -6,26 +6,20 @@
 
     <bean id="getMoviesByGenreIdSQL" class="java.lang.String">
         <constructor-arg value="select m.movie_id, m.name_russian, m.name_native,
-        m.year_of_release, m.description, m.rating, m.price, p.picture_path from movie m
-        inner join movie_poster mp on m.movie_id = mp.movie_id
-        inner join poster p on mp.picture_id = p.picture_id
+        m.year_of_release, m.description, m.rating, m.price, m.picture_path from movie m
         inner join movie_genre mg on m.movie_id = mg.movie_id
         where mg.genre_id = ?"/>
     </bean>
     <bean id="getAllMoviesSQL" class="java.lang.String">
         <constructor-arg value="select m.movie_id, m.name_russian, m.name_native,
-        m.year_of_release, m.description, m.rating, m.price, p.picture_path from movie m
-        inner join movie_poster mp on m.movie_id = mp.movie_id
-        inner join poster p on mp.picture_id = p.picture_id"/>
+        m.year_of_release, m.description, m.rating, m.price, m.picture_path from movie m"/>
     </bean>
     <bean id="getCountOfMoviesSQL" class="java.lang.String">
         <constructor-arg value="select count(*) from movie;"/>
     </bean>
     <bean id="getMovieByIdSQL" class="java.lang.String">
         <constructor-arg value="select m.movie_id, m.name_russian, m.name_native,
-        m.year_of_release, m.description, m.rating, m.price, p.picture_path from movie m
-        inner join movie_poster mp on m.movie_id = mp.movie_id
-        inner join poster p on mp.picture_id = p.picture_id
+        m.year_of_release, m.description, m.rating, m.price, m.picture_path from movie m
         where m.movie_id in (:ids);"/>
     </bean>
 

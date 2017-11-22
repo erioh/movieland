@@ -1,8 +1,8 @@
 package com.luxoft.sdemenkov.movieland.service.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.CountryDao;
-import com.luxoft.sdemenkov.movieland.model.Country;
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Country;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.service.CountryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +25,9 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public List<Country> getAllCountries() {
-        List<Country> countryList = countryDao.getAllCountries();
-        log.debug("getAllCountries is executed");
+    public List<Country> getAll() {
+        List<Country> countryList = countryDao.getAll();
+        log.debug("getAll is executed");
         return countryList;
     }
 }

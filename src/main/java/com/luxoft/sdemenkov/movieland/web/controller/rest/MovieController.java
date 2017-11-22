@@ -1,12 +1,12 @@
 package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
-import com.luxoft.sdemenkov.movieland.model.Currency;
-import com.luxoft.sdemenkov.movieland.model.Movie;
-import com.luxoft.sdemenkov.movieland.model.Pair;
-import com.luxoft.sdemenkov.movieland.model.SortDirection;
+import com.luxoft.sdemenkov.movieland.model.business.Currency;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
+import com.luxoft.sdemenkov.movieland.model.technical.Pair;
+import com.luxoft.sdemenkov.movieland.model.technical.SortDirection;
 import com.luxoft.sdemenkov.movieland.service.*;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
-import com.luxoft.sdemenkov.movieland.web.response.*;
+import com.luxoft.sdemenkov.movieland.web.dto.response.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,9 +52,9 @@ public class MovieController {
         }
         long startTime = System.currentTimeMillis();
         List<Sortable> allMoviesDTOList = new ArrayList<>();
-        List<Movie> movieList = movieService.getAllMovies();
+        List<Movie> movieList = movieService.getAll();
         for (Movie movie : movieList) {
-            allMoviesDTOList.add(new AllMoviesDTO(movie));
+            allMoviesDTOList.add(new AllMoviesDto(movie));
         }
         if (ratingDirection != null) {
             allMoviesDTOList = sortService.sortByRating(allMoviesDTOList, sortParameters.getFirstValue());
@@ -64,7 +64,7 @@ public class MovieController {
             allMoviesDTOList = sortService.sortByPrice(allMoviesDTOList, sortParameters.getSecondValue());
             log.debug("Sorting.  It took {} ms", System.currentTimeMillis() - startTime);
         }
-        log.debug("Method getAllMovies.  It took {} ms", System.currentTimeMillis() - startTime);
+        log.debug("Method getAll.  It took {} ms", System.currentTimeMillis() - startTime);
 
         return new ResponseEntity<>(allMoviesDTOList, HttpStatus.OK);
     }
@@ -89,20 +89,20 @@ public class MovieController {
         if (currency != null) {
             movieList = currencyExchangeService.getMovieWithChangedCurrency(movieList, Currency.getCurrency(currency));
         }
-        MovieByIdDTO movieByIdDTO = new MovieByIdDTO(movieList.get(0));
+        MovieByIdDto movieByIdDto = new MovieByIdDto(movieList.get(0));
 
         log.debug("Method getMoviesById. It took {} ms", System.currentTimeMillis() - startTime);
-        return new ResponseEntity<>(movieByIdDTO, HttpStatus.OK);
+        return new ResponseEntity<>(movieByIdDto, HttpStatus.OK);
 
     }
 
     @RequestMapping(value = "/random", method = RequestMethod.GET)
     public ResponseEntity<?> getThreeRandomMovies() {
         long startTime = System.currentTimeMillis();
-        List<ThreeRandomMoviesDTO> threeRandomMovieDTOS = new ArrayList<>();
+        List<ThreeRandomMoviesDto> threeRandomMovieDTOS = new ArrayList<>();
         List<Movie> movieList = movieService.getThreeRandomMovies();
         for (Movie movie : movieList) {
-            threeRandomMovieDTOS.add(new ThreeRandomMoviesDTO(movie));
+            threeRandomMovieDTOS.add(new ThreeRandomMoviesDto(movie));
         }
         log.debug("Method getThreeRandomMovies.  It took {} ms", System.currentTimeMillis() - startTime);
 
@@ -123,7 +123,7 @@ public class MovieController {
         List<Movie> movieList = movieService.getMoviesByGenre(genreId);
         List<Sortable> movieByGenreDtoList = new ArrayList<>();
         for (Movie movie : movieList) {
-            movieByGenreDtoList.add(new MoviesByGenreDTO(movie));
+            movieByGenreDtoList.add(new MoviesByGenreDto(movie));
         }
         if (ratingDirection != null) {
             movieByGenreDtoList = sortService.sortByRating(movieByGenreDtoList, sortParameters.getFirstValue());
@@ -131,6 +131,7 @@ public class MovieController {
         if (priceDirection != null) {
             movieByGenreDtoList = sortService.sortByPrice(movieByGenreDtoList, sortParameters.getSecondValue());
         }
+        log.debug("getMoviesByGenre. It took {} ms", System.currentTimeMillis() - startTime);
         return new ResponseEntity<>(movieByGenreDtoList, HttpStatus.OK);
 
     }

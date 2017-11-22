@@ -1,6 +1,6 @@
 package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
-import com.luxoft.sdemenkov.movieland.model.Country;
+import com.luxoft.sdemenkov.movieland.model.business.Country;
 import com.luxoft.sdemenkov.movieland.service.CountryService;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +42,7 @@ public class CountryControllerTest {
         countryList.add(new Country(1, "country Name"));
         countryList.add(new Country(1, "country Name"));
         countryList.add(new Country(1, "country Name"));
-        when(countryService.getAllCountries()).thenReturn(countryList);
+        when(countryService.getAll()).thenReturn(countryList);
         mockMvc.perform(get("/country"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))

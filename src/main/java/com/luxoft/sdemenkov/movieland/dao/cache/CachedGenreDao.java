@@ -1,8 +1,8 @@
 package com.luxoft.sdemenkov.movieland.dao.cache;
 
 import com.luxoft.sdemenkov.movieland.dao.api.GenreDao;
-import com.luxoft.sdemenkov.movieland.model.Genre;
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Genre;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class CachedGenreDao implements GenreDao {
     @PostConstruct
     @Scheduled(fixedRateString = "${cron.cache.genre.schedule}", initialDelayString = "${cron.cache.genre.schedule}")
     public void invalidate() {
-        cachedGenreList = genreDao.getAllGenres();
+        cachedGenreList = genreDao.getAll();
         logger.debug("Cache for Genre is updated");
         logger.trace("Cache for Genre is updated. Cache value is {}", cachedGenreList);
     }
@@ -36,7 +36,7 @@ public class CachedGenreDao implements GenreDao {
     }
 
     @Override
-    public List<Genre> getAllGenres() {
+    public List<Genre> getAll() {
         return Collections.unmodifiableList(cachedGenreList);
 
     }

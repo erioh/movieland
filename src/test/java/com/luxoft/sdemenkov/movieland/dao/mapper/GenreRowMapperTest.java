@@ -1,6 +1,6 @@
 package com.luxoft.sdemenkov.movieland.dao.mapper;
 
-import com.luxoft.sdemenkov.movieland.model.Genre;
+import com.luxoft.sdemenkov.movieland.model.business.Genre;
 import org.junit.Test;
 
 import java.sql.ResultSet;

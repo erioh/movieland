@@ -1,15 +1,15 @@
 package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
-import com.luxoft.sdemenkov.movieland.model.Movie;
-import com.luxoft.sdemenkov.movieland.model.Pair;
-import com.luxoft.sdemenkov.movieland.model.SortDirection;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
+import com.luxoft.sdemenkov.movieland.model.technical.Pair;
+import com.luxoft.sdemenkov.movieland.model.technical.SortDirection;
 import com.luxoft.sdemenkov.movieland.service.CurrencyValidationService;
+import com.luxoft.sdemenkov.movieland.service.MovieService;
 import com.luxoft.sdemenkov.movieland.service.SortDirectionValidationService;
 import com.luxoft.sdemenkov.movieland.service.SortService;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
-import com.luxoft.sdemenkov.movieland.service.impl.MovieServiceImpl;
-import com.luxoft.sdemenkov.movieland.web.response.AllMoviesDTO;
-import com.luxoft.sdemenkov.movieland.web.response.MoviesByGenreDTO;
+import com.luxoft.sdemenkov.movieland.web.dto.response.AllMoviesDto;
+import com.luxoft.sdemenkov.movieland.web.dto.response.MoviesByGenreDto;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +40,7 @@ public class MovieControllerTest {
 
     private MockMvc mockMvc;
     @Mock
-    private MovieServiceImpl mockedMovieService;
+    private MovieService mockedMovieService;
     @Mock
     private SortService mockedSortService;
     @Mock
@@ -61,12 +61,12 @@ public class MovieControllerTest {
         List<Movie> mockedGetAllMoviesList = new ArrayList<>();
         mockedGetAllMoviesList.add(MovieGenerator.getMovieForTest());
 
-        when(mockedMovieService.getAllMovies()).thenReturn(mockedGetAllMoviesList);
+        when(mockedMovieService.getAll()).thenReturn(mockedGetAllMoviesList);
         mockMvc.perform(get("/movie/"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameRussian").value("Гладиатор"))
                 .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
                 .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
                 .andExpect(jsonPath("$[0].rating").value(8.6))
@@ -88,7 +88,7 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameRussian").value("Гладиатор"))
                 .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
                 .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
                 .andExpect(jsonPath("$[0].rating").value(8.6))
@@ -96,7 +96,7 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
     }
 
-    //    @Main
+    @Test
     public void getMoviesByGenre() throws Exception {
         List<Movie> mockedGetAllMoviesList = new ArrayList<>();
         mockedGetAllMoviesList.add(MovieGenerator.getMovieForTest());
@@ -109,7 +109,7 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameRussian").value("Гладиатор"))
                 .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
                 .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
                 .andExpect(jsonPath("$[0].rating").value(8.6))
@@ -120,9 +120,9 @@ public class MovieControllerTest {
     @Test
     public void getAllMoviesSortedByRating() throws Exception {
         List<Sortable> responseGetAllMoviesList = new ArrayList<>();
-        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
-        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
-        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
         Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
         when(mockedSortDirectionValidationService.getValidationErrors(anyString(), eq(null))).thenReturn(pair);
 
@@ -132,7 +132,7 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameRussian").value("Гладиатор"))
                 .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
                 .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
                 .andExpect(jsonPath("$[0].rating").value(8.6))
@@ -144,9 +144,9 @@ public class MovieControllerTest {
     @Test
     public void getAllMoviesSortedByPriceDesc() throws Exception {
         List<Sortable> responseGetAllMoviesList = new ArrayList<>();
-        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
-        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
-        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
         Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
         when(mockedSortDirectionValidationService.getValidationErrors(eq(null), anyString())).thenReturn(pair);
 
@@ -156,7 +156,7 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameRussian").value("Гладиатор"))
                 .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
                 .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
                 .andExpect(jsonPath("$[0].rating").value(8.6))
@@ -168,9 +168,9 @@ public class MovieControllerTest {
     @Test
     public void getAllMoviesSortedByPriceAsc() throws Exception {
         List<Sortable> responseGetAllMoviesList = new ArrayList<>();
-        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
-        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
-        responseGetAllMoviesList.add(new AllMoviesDTO(MovieGenerator.getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
         Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.ASC, SortDirection.ASC);
         when(mockedSortDirectionValidationService.getValidationErrors(eq(null), anyString())).thenReturn(pair);
         when(mockedSortService.sortByPrice(anyList(), eq(SortDirection.ASC))).thenReturn(responseGetAllMoviesList);
@@ -179,7 +179,7 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameRussian").value("Гладиатор"))
                 .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
                 .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
                 .andExpect(jsonPath("$[0].rating").value(8.6))
@@ -192,9 +192,9 @@ public class MovieControllerTest {
     @Test
     public void getMoviesByGenreSortedByRating() throws Exception {
         List<Sortable> movieDtoList = new ArrayList<>();
-        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
-        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
-        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
+        movieDtoList.add(new MoviesByGenreDto(MovieGenerator.getMovieForTest()));
+        movieDtoList.add(new MoviesByGenreDto(MovieGenerator.getMovieForTest()));
+        movieDtoList.add(new MoviesByGenreDto(MovieGenerator.getMovieForTest()));
         Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
         when(mockedSortDirectionValidationService.getValidationErrors(anyString(), eq(null))).thenReturn(pair);
         when(mockedSortService.sortByRating(anyList(), eq(SortDirection.DESC))).thenReturn(movieDtoList);
@@ -203,7 +203,7 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameRussian").value("Гладиатор"))
                 .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
                 .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
                 .andExpect(jsonPath("$[0].rating").value(8))
@@ -215,9 +215,9 @@ public class MovieControllerTest {
     @Test
     public void getMoviesByGenreSortedByPrice() throws Exception {
         List<Sortable> movieDtoList = new ArrayList<>();
-        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
-        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
-        movieDtoList.add(new MoviesByGenreDTO(MovieGenerator.getMovieForTest()));
+        movieDtoList.add(new MoviesByGenreDto(MovieGenerator.getMovieForTest()));
+        movieDtoList.add(new MoviesByGenreDto(MovieGenerator.getMovieForTest()));
+        movieDtoList.add(new MoviesByGenreDto(MovieGenerator.getMovieForTest()));
         Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
         when(mockedSortDirectionValidationService.getValidationErrors(eq(null), anyString())).thenReturn(pair);
         when(mockedSortService.sortByPrice(anyList(), eq(SortDirection.DESC))).thenReturn(movieDtoList);
@@ -226,7 +226,7 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$[0].id").value(15))
-                .andExpect(jsonPath("$[0].nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("$[0].nameRussian").value("Гладиатор"))
                 .andExpect(jsonPath("$[0].nameNative").value("Gladiator"))
                 .andExpect(jsonPath("$[0].yearOfRelease").value(2000))
                 .andExpect(jsonPath("$[0].rating").value(8))
@@ -245,7 +245,7 @@ public class MovieControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("id").value(15))
-                .andExpect(jsonPath("nameRussian").value("Gladiator"))
+                .andExpect(jsonPath("nameRussian").value("Гладиатор"))
                 .andExpect(jsonPath("nameNative").value("Gladiator"))
                 .andExpect(jsonPath("yearOfRelease").value(2000))
                 .andExpect(jsonPath("rating").value(8))

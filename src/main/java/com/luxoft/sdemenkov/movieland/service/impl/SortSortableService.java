@@ -1,6 +1,6 @@
 package com.luxoft.sdemenkov.movieland.service.impl;
 
-import com.luxoft.sdemenkov.movieland.model.SortDirection;
+import com.luxoft.sdemenkov.movieland.model.technical.SortDirection;
 import com.luxoft.sdemenkov.movieland.service.SortService;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
 import org.slf4j.Logger;

@@ -1,8 +1,8 @@
 package com.luxoft.sdemenkov.movieland.service.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.GenreDao;
-import com.luxoft.sdemenkov.movieland.model.Genre;
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Genre;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.testutils.GenreGenerator;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
@@ -29,8 +29,8 @@ public class GenreServiceImplTest {
         // Mocking expected result
         List<Genre> genreList = new ArrayList<>();
         genreList.add(GenreGenerator.getGenreForTest());
-        when(mockedGenreDao.getAllGenres()).thenReturn(genreList);
-        assertEquals(1, genreService.getAllGenres().size());
+        when(mockedGenreDao.getAll()).thenReturn(genreList);
+        assertEquals(1, genreService.getAll().size());
 
     }
 

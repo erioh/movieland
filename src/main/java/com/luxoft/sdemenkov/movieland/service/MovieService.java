@@ -1,13 +1,13 @@
 package com.luxoft.sdemenkov.movieland.service;
 
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 
 import java.util.List;
 import java.util.Set;
 
 
 public interface MovieService {
-    List<Movie> getAllMovies();
+    List<Movie> getAll();
 
     List<Movie> getThreeRandomMovies();
 

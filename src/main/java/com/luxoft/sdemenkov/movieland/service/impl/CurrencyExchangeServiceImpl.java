@@ -1,8 +1,8 @@
 package com.luxoft.sdemenkov.movieland.service.impl;
 
-import com.luxoft.sdemenkov.movieland.model.Currency;
-import com.luxoft.sdemenkov.movieland.model.ExchangeRate;
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Currency;
+import com.luxoft.sdemenkov.movieland.model.business.ExchangeRate;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.service.CurrencyExchangeService;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.math.BigDecimal;
@@ -25,7 +26,8 @@ public class CurrencyExchangeServiceImpl implements CurrencyExchangeService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final DateFormat dateFormat = new SimpleDateFormat("YYYYMMdd");
-    private BouncyCastleProvider bouncyCastleProvider = new BouncyCastleProvider();
+    private final BouncyCastleProvider bouncyCastleProvider = new BouncyCastleProvider();
+    private RestTemplate restTemplate = new RestTemplate();
     @Value("${bank.url}")
     private String bankUrl;
 
@@ -43,14 +45,13 @@ public class CurrencyExchangeServiceImpl implements CurrencyExchangeService {
     public ExchangeRate getExchangeRateForCurrency(Currency currency) {
         Security.insertProviderAt(bouncyCastleProvider, 1);
         String currentDate = dateFormat.format(new Date().getTime());
-
-        RestTemplate restTemplate = new RestTemplate();
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(bankUrl)
+        UriComponents components = UriComponentsBuilder.fromHttpUrl(bankUrl)
                 .queryParam("valcode", currency)
                 .queryParam("date", currentDate)
-                .queryParam("json");
+                .queryParam("json")
+                .build();
 
-        ExchangeRate[] exchangeRates = restTemplate.getForObject(builder.toUriString(), ExchangeRate[].class);
+        ExchangeRate[] exchangeRates = restTemplate.getForObject(components.toUri(), ExchangeRate[].class);
         if (exchangeRates.length == 0) {
             logger.error("No currencies were received");
             throw new RuntimeException("No currencies were received");

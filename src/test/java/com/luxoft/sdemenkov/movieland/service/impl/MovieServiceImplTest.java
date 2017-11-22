@@ -1,7 +1,7 @@
 package com.luxoft.sdemenkov.movieland.service.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
-import com.luxoft.sdemenkov.movieland.model.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.service.CountryService;
 import com.luxoft.sdemenkov.movieland.service.GenreService;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
@@ -38,9 +38,9 @@ public class MovieServiceImplTest {
         // Mocking objects
         List<Movie> list = new ArrayList<>();
         list.add(expectedMovie);
-        when(mockedMovieDao.getAllMovies()).thenReturn(list);
-        // Main
-        List<Movie> movieList = movieService.getAllMovies();
+        when(mockedMovieDao.getAll()).thenReturn(list);
+        // Test
+        List<Movie> movieList = movieService.getAll();
         Movie actualMovie = movieList.get(0);
         assertEquals(expectedMovie.getId(), actualMovie.getId());
         assertEquals(expectedMovie.getNameRussian(), actualMovie.getNameRussian());
@@ -61,7 +61,7 @@ public class MovieServiceImplTest {
         movieList.add(MovieGenerator.getMovieForTest());
         //Mocking objects
         when(mockedMovieDao.getThreeRandomMovies()).thenReturn(movieList);
-        // Main
+        // Test
         List<Movie> actualMovieList = movieService.getThreeRandomMovies();
         assertEquals(3, actualMovieList.size());
     }
@@ -78,7 +78,7 @@ public class MovieServiceImplTest {
         //Mocking objects
         when(mockedMovieDao.getMoviesByGenre(1)).thenReturn(movieList);
 
-        // Main
+        // Test
         List<Movie> actualResult = movieService.getMoviesByGenre(1);
         assertEquals(3, actualResult.size());
     }

@@ -1,6 +1,6 @@
 package com.luxoft.sdemenkov.testutils;
 
-import com.luxoft.sdemenkov.movieland.model.Genre;
+import com.luxoft.sdemenkov.movieland.model.business.Genre;
 
 
 public class GenreGenerator {

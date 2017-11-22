@@ -1,6 +1,6 @@
 package com.luxoft.sdemenkov.testutils;
 
-import com.luxoft.sdemenkov.movieland.model.*;
+import com.luxoft.sdemenkov.movieland.model.business.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ public class MovieGenerator {
     public static Movie getMovieForTest() {
         Movie movie = new Movie();
         movie.setId(15);
-        movie.setNameRussian("Gladiator");
+        movie.setNameRussian("Гладиатор");
         movie.setNameNative("Gladiator");
         movie.setYearOfRelease(2000);
         movie.setRating(8.6);

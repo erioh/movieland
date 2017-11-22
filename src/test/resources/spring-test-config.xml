@@ -13,7 +13,7 @@
 
     <jdbc:embedded-database id="dataSource" type="H2">
         <jdbc:script location="classpath:/db/create-db.sql"/>
-        <jdbc:script location="classpath:/db/insert-data.sql"/>
+        <jdbc:script location="classpath:/db/insert-data.sql" encoding="UTF-8"/>
     </jdbc:embedded-database>
 
     <bean name="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
@@ -28,5 +28,8 @@
     </bean>
 
     <bean name="genreDao" class="com.luxoft.sdemenkov.movieland.dao.cache.CachedGenreDao"/>
+    <bean name="authenticationService" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="com.luxoft.sdemenkov.movieland.service.impl.AuthenticationServiceImpl"/>
+    </bean>
 
 </beans>

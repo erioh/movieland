@@ -1,7 +1,7 @@
 package com.luxoft.sdemenkov.movieland.dao.mapper;
 
-import com.luxoft.sdemenkov.movieland.model.Pair;
-import com.luxoft.sdemenkov.movieland.model.Review;
+import com.luxoft.sdemenkov.movieland.model.business.Review;
+import com.luxoft.sdemenkov.movieland.model.technical.Pair;
 import org.junit.Test;
 
 import java.sql.ResultSet;
