@@ -5,6 +5,8 @@ import com.luxoft.sdemenkov.movieland.model.business.ExchangeRate;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.service.CurrencyExchangeService;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +27,7 @@ import java.util.List;
 public class CurrencyExchangeServiceImpl implements CurrencyExchangeService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final DateFormat dateFormat = new SimpleDateFormat("YYYYMMdd");
+    private final DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("YYYYMMdd");
     private final BouncyCastleProvider bouncyCastleProvider = new BouncyCastleProvider();
     private RestTemplate restTemplate = new RestTemplate();
     @Value("${bank.url}")
@@ -44,7 +46,7 @@ public class CurrencyExchangeServiceImpl implements CurrencyExchangeService {
 
     public ExchangeRate getExchangeRateForCurrency(Currency currency) {
         Security.insertProviderAt(bouncyCastleProvider, 1);
-        String currentDate = dateFormat.format(new Date().getTime());
+        String currentDate = dateTimeFormat.print(new Date().getTime());
         UriComponents components = UriComponentsBuilder.fromHttpUrl(bankUrl)
                 .queryParam("valcode", currency)
                 .queryParam("date", currentDate)
