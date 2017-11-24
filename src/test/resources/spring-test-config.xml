@@ -31,5 +31,8 @@
     <bean name="authenticationService" class="org.mockito.Mockito" factory-method="mock">
         <constructor-arg value="com.luxoft.sdemenkov.movieland.service.impl.AuthenticationServiceImpl"/>
     </bean>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <constructor-arg ref="dataSource"/>
+    </bean>
 
 </beans>

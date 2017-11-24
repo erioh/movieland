@@ -6,25 +6,28 @@ import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
+@Transactional
 public class JdbcMovieDaoTest {
-
     @Autowired
-    private
-    MovieDao movieDao;
+    private MovieDao movieDao;
 
     @Test
-    public void getAllMovies() throws Exception {
+    public void getAll() throws Exception {
         List<Movie> movieList = movieDao.getAll();
         Movie expectedMovie = MovieGenerator.getMovieForTest();
         Movie actualMovie = null;
@@ -47,7 +50,7 @@ public class JdbcMovieDaoTest {
 
     @Test
     public void getCountOfMovies() throws Exception {
-        assertEquals(25, movieDao.getCountOfMovies());
+        assertNotEquals(0, movieDao.getCountOfMovies());
     }
 
     @Test
@@ -81,6 +84,16 @@ public class JdbcMovieDaoTest {
     public void getMoviesByGenre() throws Exception {
         List<Movie> movieList = movieDao.getMoviesByGenre(1);
         assertEquals(16, movieList.size());
+    }
+
+    @Test
+    @Transactional
+    public void save() throws Exception {
+        Movie movie = MovieGenerator.getMovieForTest();
+        movie.setId(0);
+        movieDao.save(movie);
+        assertNotEquals(0, movie.getId());
+
     }
 
 }

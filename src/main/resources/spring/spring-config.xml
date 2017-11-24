@@ -32,6 +32,9 @@
     <bean name="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
         <constructor-arg ref="dataSource"/>
     </bean>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <constructor-arg ref="dataSource"/>
+    </bean>
 
     <!--Use Cached Genre DAO bean-->
     <bean name="genreDao" class="com.luxoft.sdemenkov.movieland.dao.cache.CachedGenreDao"/>

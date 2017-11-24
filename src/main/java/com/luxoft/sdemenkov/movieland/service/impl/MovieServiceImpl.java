@@ -59,4 +59,19 @@ public class MovieServiceImpl implements MovieService {
         log.debug("Method getMovieById is called for iss = {} with result = {}", movieIds, movieList);
         return movieList;
     }
+
+    @Override
+    public Movie save(Movie movie) {
+
+        movieDao.save(movie);
+        genreService.mapMoviesGenre(movie);
+        countryService.mapMoviesCountry(movie);
+        log.debug("save. Movie {} is successfully  saved",movie);
+        return movie;
+    }
+
+    @Override
+    public Movie set(Movie movie) {
+        return movieDao.set(movie);
+    }
 }

@@ -12,4 +12,6 @@ public interface GenreDao {
     List<Genre> getAll();
 
     void enrichMoviesWithGenres(List<Movie> movieList);
+
+    void mapMoviesGenre(Movie movie);
 }

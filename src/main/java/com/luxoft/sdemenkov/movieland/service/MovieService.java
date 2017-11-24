@@ -14,4 +14,8 @@ public interface MovieService {
     List<Movie> getMoviesByGenre(int genreId);
 
     List<Movie> getMovieById(Set<Integer> movieIds);
+
+    Movie save(Movie movie);
+
+    Movie set(Movie movie);
 }

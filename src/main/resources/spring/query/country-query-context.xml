@@ -18,4 +18,7 @@
     <bean id="getAllCountriesSQL" class="java.lang.String">
         <constructor-arg value="select country_id, name from country"/>
     </bean>
+    <bean id="movieIdCountryMapperSQL" class="java.lang.String">
+        <constructor-arg value="insert into movie_country (movie_id, country_id) values (:movieId, :countryId);"/>
+    </bean>
 </beans>

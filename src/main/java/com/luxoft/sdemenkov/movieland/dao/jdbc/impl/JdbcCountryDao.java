@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -31,6 +33,8 @@ public class JdbcCountryDao implements CountryDao {
     private String getCountryByMovieIdSQL;
     @Autowired
     private String getAllCountriesSQL;
+    @Autowired
+    private String movieIdCountryMapperSQL;
 
 
     public List<Country> getCountryListByMovie(Movie movie) {
@@ -69,5 +73,42 @@ public class JdbcCountryDao implements CountryDao {
         List<Country> countryList = jdbcTemplate.query(getAllCountriesSQL, COUNTRY_ROW_MAPPER);
         log.debug("Result of getAllCountriesSQL is {}", countryList);
         return countryList;
+    }
+
+    @Override
+    public void mapMoviesCountry(Movie movie) {
+        log.debug("mapMoviesCountry. is called for movie {}",movie);
+        int movieId = movie.getId();
+        List<MovieIdCountryMapper> movieIdCountryMapperList = new ArrayList<>();
+        for (Country country : movie.getCountryList()) {
+            movieIdCountryMapperList.add(new MovieIdCountryMapper(movieId, country.getId()));
+        }
+        SqlParameterSource[] sqlParameterSources = SqlParameterSourceUtils.createBatch(movieIdCountryMapperList.toArray());
+        namedParameterJdbcTemplate.batchUpdate(movieIdCountryMapperSQL, sqlParameterSources);
+    }
+    private class MovieIdCountryMapper {
+        private int movieId;
+        private int countryId;
+
+        public MovieIdCountryMapper(int movieId, int countryId) {
+            this.movieId = movieId;
+            this.countryId = countryId;
+        }
+
+        public int getMovieId() {
+            return movieId;
+        }
+
+        public void setMovieId(int movieId) {
+            this.movieId = movieId;
+        }
+
+        public int getCountryId() {
+            return countryId;
+        }
+
+        public void setCountryId(int countryId) {
+            this.countryId = countryId;
+        }
     }
 }

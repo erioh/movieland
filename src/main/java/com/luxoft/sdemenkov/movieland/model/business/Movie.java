@@ -126,4 +126,5 @@ public class Movie {
     public void setReviewList(List<Review> reviewList) {
         this.reviewList = reviewList;
     }
+
 }

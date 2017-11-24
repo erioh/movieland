@@ -4,9 +4,13 @@ import com.luxoft.sdemenkov.movieland.model.business.Currency;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.model.technical.Pair;
 import com.luxoft.sdemenkov.movieland.model.technical.SortDirection;
+import com.luxoft.sdemenkov.movieland.security.Protected;
+import com.luxoft.sdemenkov.movieland.security.role.Role;
 import com.luxoft.sdemenkov.movieland.service.*;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
+import com.luxoft.sdemenkov.movieland.web.dto.request.SaveMovieDto;
 import com.luxoft.sdemenkov.movieland.web.dto.response.*;
+import com.luxoft.sdemenkov.movieland.web.util.MovieBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,11 +73,23 @@ public class MovieController {
         return new ResponseEntity<>(allMoviesDTOList, HttpStatus.OK);
     }
 
+    @Protected(protectedBy = Role.ADMIN)
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> saveMovie(@RequestBody SaveMovieDto saveMovieDto){
+        log.debug("saveMovie. Method is called. Changes = {}", saveMovieDto);
+        log.info("method saveMovie is called");
+
+        Movie movie = MovieBuilder.fromMovieDto(saveMovieDto).getMovie().getCountries().getGenres().build();
+        Movie savedMovie = movieService.save(movie);
+
+        return new ResponseEntity<>(new SaveMovieDto(movie), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/{movieId}", method = RequestMethod.GET)
     public ResponseEntity<?> getMovieById(
             @PathVariable(value = "movieId") int movieId,
             @RequestParam(value = "currency", required = false) String currency) {
-        log.debug("Method getMoviesById is called");
+        log.info("Method getMoviesById is called");
         log.debug("Start validation of input parameter");
         try {
             Currency cur = currencyValidationService.getCurrency(currency);
@@ -94,6 +110,15 @@ public class MovieController {
         log.debug("Method getMoviesById. It took {} ms", System.currentTimeMillis() - startTime);
         return new ResponseEntity<>(movieByIdDto, HttpStatus.OK);
 
+    }
+    @Protected(protectedBy = Role.ADMIN)
+    @RequestMapping(value = "/{movieId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> setMovie(@RequestBody SaveMovieDto saveMovieDto) {
+        log.debug("setMovie. Method is called. Changes = {}", saveMovieDto);
+        log.info("method setMovie is called");
+        Movie movie = MovieBuilder.fromMovieDto(saveMovieDto).getMovie().getCountries().getGenres().build();
+        Movie settedMovie = movieService.set(movie);
+        return new ResponseEntity<>(new SaveMovieDto(settedMovie), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/random", method = RequestMethod.GET)

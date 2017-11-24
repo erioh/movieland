@@ -7,8 +7,10 @@ import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,9 +50,17 @@ public class JdbcCountryDaoTest {
     }
 
     @Test
-    public void getAllCountries() throws Exception {
+    public void getAll() throws Exception {
         List<Country> countryList = countryDao.getAll();
         assertEquals(7, countryList.size());
+    }
+
+    @Test
+    public void mapMoviesCountry() throws Exception {
+        Movie movie = MovieGenerator.getMovieForTest();
+        List<Movie> movies = new ArrayList<>();
+        movies.add(movie);
+        countryDao.mapMoviesCountry(movie);
     }
 
 

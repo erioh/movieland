@@ -7,6 +7,9 @@ public class GenreDto {
     private int id;
     private String name;
 
+    public GenreDto() {
+    }
+
     public GenreDto(Genre genre) {
         this.id = genre.getId();
         this.name = genre.getName();

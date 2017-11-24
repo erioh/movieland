@@ -7,8 +7,10 @@ import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
 public class JdbcGenreDaoTest {
+
     @Autowired
     private GenreDao genreDao;
 
@@ -35,7 +38,7 @@ public class JdbcGenreDaoTest {
     }
 
     @Test
-    public void getAllGenres() throws Exception {
+    public void getAll() throws Exception {
         List<Genre> genreList = genreDao.getAll();
         assertEquals(15, genreList.size());
     }
@@ -55,6 +58,15 @@ public class JdbcGenreDaoTest {
         genreListCached1.set(0, new Genre(0, "Main"));
         List<Genre> genreListCached2 = genreDao.getAll();
 
+    }
+
+    @Test
+    @Transactional
+    public void mapMoviesGenre() throws Exception {
+        Movie movie = MovieGenerator.getMovieForTest();
+        List<Movie> movies = new ArrayList<>();
+        movies.add(movie);
+        genreDao.mapMoviesGenre(movie);
     }
 
 

@@ -12,4 +12,6 @@ public interface CountryDao {
     void enrichMoviesWithCountries(List<Movie> movieList);
 
     List<Country> getAll();
+
+    void mapMoviesCountry(Movie movie);
 }

@@ -6,6 +6,9 @@ public class CountryDto {
     private int id;
     private String name;
 
+    public CountryDto() {
+    }
+
     public CountryDto(Country country) {
         this.id = country.getId();
         this.name = country.getName();

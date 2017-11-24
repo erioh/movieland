@@ -10,4 +10,6 @@ public interface GenreService {
     List<Genre> getAll();
 
     void enrichMoviesWithGenres(List<Movie> movieList);
+
+    void mapMoviesGenre(Movie movie);
 }

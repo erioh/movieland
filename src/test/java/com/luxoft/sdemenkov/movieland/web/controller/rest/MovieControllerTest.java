@@ -1,5 +1,6 @@
 package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.model.technical.Pair;
 import com.luxoft.sdemenkov.movieland.model.technical.SortDirection;
@@ -8,8 +9,14 @@ import com.luxoft.sdemenkov.movieland.service.MovieService;
 import com.luxoft.sdemenkov.movieland.service.SortDirectionValidationService;
 import com.luxoft.sdemenkov.movieland.service.SortService;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
+import com.luxoft.sdemenkov.movieland.web.dto.CountryDto;
+import com.luxoft.sdemenkov.movieland.web.dto.GenreDto;
+import com.luxoft.sdemenkov.movieland.web.dto.request.SaveMovieDto;
 import com.luxoft.sdemenkov.movieland.web.dto.response.AllMoviesDto;
 import com.luxoft.sdemenkov.movieland.web.dto.response.MoviesByGenreDto;
+import com.luxoft.sdemenkov.testutils.CountryDtoGenerator;
+import com.luxoft.sdemenkov.testutils.GenreDtoGenerator;
+import com.luxoft.sdemenkov.testutils.MovieDtoGenerator;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +36,8 @@ import static com.jayway.jsonassert.impl.matcher.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -36,7 +45,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
 @WebAppConfiguration
 public class MovieControllerTest {
-
 
     private MockMvc mockMvc;
     @Mock
@@ -62,6 +70,7 @@ public class MovieControllerTest {
         mockedGetAllMoviesList.add(MovieGenerator.getMovieForTest());
 
         when(mockedMovieService.getAll()).thenReturn(mockedGetAllMoviesList);
+
         mockMvc.perform(get("/movie/"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
@@ -83,6 +92,7 @@ public class MovieControllerTest {
         mockedGetAllMoviesList.add(MovieGenerator.getMovieForTest());
 
         when(mockedMovieService.getThreeRandomMovies()).thenReturn(mockedGetAllMoviesList);
+
         mockMvc.perform(get("/movie/random"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
@@ -104,6 +114,7 @@ public class MovieControllerTest {
         mockedGetAllMoviesList.add(MovieGenerator.getMovieForTest());
 
         when(mockedMovieService.getMoviesByGenre(anyInt())).thenReturn(mockedGetAllMoviesList);
+
         mockMvc.perform(get("/movie/genre/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
@@ -123,10 +134,12 @@ public class MovieControllerTest {
         responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
         responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
         responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
-        Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
-        when(mockedSortDirectionValidationService.getValidationErrors(anyString(), eq(null))).thenReturn(pair);
 
+        Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
+
+        when(mockedSortDirectionValidationService.getValidationErrors(anyString(), eq(null))).thenReturn(pair);
         when(mockedSortService.sortByRating(anyList(), eq(SortDirection.DESC))).thenReturn(responseGetAllMoviesList);
+
         mockMvc.perform(get("/movie").param("rating", "desc"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
@@ -144,13 +157,16 @@ public class MovieControllerTest {
     @Test
     public void getAllMoviesSortedByPriceDesc() throws Exception {
         List<Sortable> responseGetAllMoviesList = new ArrayList<>();
-        responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
-        responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
-        responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
-        Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
-        when(mockedSortDirectionValidationService.getValidationErrors(eq(null), anyString())).thenReturn(pair);
 
+        responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
+        responseGetAllMoviesList.add(new AllMoviesDto(MovieGenerator.getMovieForTest()));
+
+        Pair<SortDirection, SortDirection> pair = new Pair<>(SortDirection.DESC, SortDirection.DESC);
+
+        when(mockedSortDirectionValidationService.getValidationErrors(eq(null), anyString())).thenReturn(pair);
         when(mockedSortService.sortByPrice(anyList(), eq(SortDirection.DESC))).thenReturn(responseGetAllMoviesList);
+
         mockMvc.perform(get("/movie").param("price", "desc"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
@@ -162,7 +178,6 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$[0].rating").value(8.6))
                 .andExpect(jsonPath("$[0].price").value(175.0))
                 .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
-
     }
 
     @Test
@@ -187,7 +202,6 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
 
     }
-
 
     @Test
     public void getMoviesByGenreSortedByRating() throws Exception {
@@ -232,11 +246,10 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$[0].rating").value(8))
                 .andExpect(jsonPath("$[0].price").value(175.0))
                 .andExpect(jsonPath("$[0].picturePath").value("https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1._SY209_CR0,0,140,209_.jpg"));
-
     }
 
     @Test
-    public void getMoviesById() throws Exception {
+    public void getMovieById() throws Exception {
         Movie movie = MovieGenerator.getMovieForTest();
         List<Movie> movieList = new ArrayList<>();
         movieList.add(movie);
@@ -260,8 +273,43 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("reviews[0].text").value("Review text"))
                 .andExpect(jsonPath("reviews[0].user.id").value(1))
                 .andExpect(jsonPath("reviews[0].user.nickname").value("User name"));
-
-
     }
 
+    @Test
+    public void saveMovie() throws Exception {
+        SaveMovieDto saveMovieDto = MovieDtoGenerator.getMovieForTest();
+        Movie movie = MovieGenerator.getMovieForTest();
+        List<GenreDto> genreDtoList = new ArrayList<>();
+        genreDtoList.add( GenreDtoGenerator.getGenreForTest());
+        List<CountryDto> countryDtoList = new ArrayList<>();
+        countryDtoList.add(CountryDtoGenerator.getCountryDtoForTest());
+        saveMovieDto.setCountries(countryDtoList);
+        saveMovieDto.setGenres(genreDtoList);
+        ObjectMapper mapper = new ObjectMapper();
+        SaveMovieDto test = mapper.readValue(mapper.writeValueAsString(saveMovieDto), SaveMovieDto.class);
+        when(mockedMovieService.save(any())).thenReturn(movie);
+        mockMvc.perform(post("/movie")
+                .contentType("application/json;charset=UTF-8")
+                .content(mapper.writeValueAsString(saveMovieDto)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void setMovie() throws Exception {
+        SaveMovieDto saveMovieDto = MovieDtoGenerator.getMovieForTest();
+        Movie movie = MovieGenerator.getMovieForTest();
+        List<GenreDto> genreDtoList = new ArrayList<>();
+        genreDtoList.add( GenreDtoGenerator.getGenreForTest());
+        List<CountryDto> countryDtoList = new ArrayList<>();
+        countryDtoList.add(CountryDtoGenerator.getCountryDtoForTest());
+        saveMovieDto.setCountries(countryDtoList);
+        saveMovieDto.setGenres(genreDtoList);
+        ObjectMapper mapper = new ObjectMapper();
+        when(mockedMovieService.set(any())).thenReturn(movie);
+        SaveMovieDto test = mapper.readValue(mapper.writeValueAsString(saveMovieDto), SaveMovieDto.class);
+        mockMvc.perform(post("/movie/1")
+                .contentType("application/json;charset=UTF-8")
+                .content(mapper.writeValueAsString(saveMovieDto)))
+                .andExpect(status().isOk());
+    }
 }

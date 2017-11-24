@@ -7,6 +7,7 @@ import com.luxoft.sdemenkov.movieland.service.GenreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,5 +33,11 @@ public class GenreServiceImpl implements GenreService {
         genreDao.enrichMoviesWithGenres(movieList);
         log.debug("enrichMoviesByGenres is executed");
     }
+
+    @Override
+    public void mapMoviesGenre(Movie movie) {
+        genreDao.mapMoviesGenre(movie);
+    }
+
 
 }

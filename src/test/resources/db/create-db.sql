@@ -14,7 +14,7 @@ CREATE TABLE genre (
 );
 drop TABLE IF EXISTS movie;
 CREATE TABLE movie (
-  movie_id integer NOT NULL ,
+  movie_id integer auto_increment NOT NULL ,
   name_Russian varchar(256) NOT NULL,
   name_Native varchar(256) NOT NULL,
   year_Of_Release integer NOT NULL,

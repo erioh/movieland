@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -33,6 +36,8 @@ public class JdbcMovieDao implements MovieDao {
     private String getCountOfMoviesSQL;
     @Autowired
     private String getMovieByIdSQL;
+    @Autowired
+    private String saveMovieSQL;
 
     @Override
     public List<Movie> getAll() {
@@ -79,5 +84,30 @@ public class JdbcMovieDao implements MovieDao {
         log.debug("Method getMoviesByGenre is called with sql = {} and genre_id = {} ", getMoviesByGenreIdSQL, genreId);
         log.debug("Method getMoviesByGenre is called. Result is {}", movieList);
         return movieList;
+    }
+
+    @Override
+    @Transactional
+    public void save(Movie movie) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        log.debug("Starting to save movie into DB");
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("nameRussian", movie.getNameRussian());
+        mapSqlParameterSource.addValue("nameNative", movie.getNameNative());
+        mapSqlParameterSource.addValue("yearOfRelease", movie.getYearOfRelease());
+        mapSqlParameterSource.addValue("description", movie.getDescription());
+        mapSqlParameterSource.addValue("rating", movie.getRating());
+        mapSqlParameterSource.addValue("price", movie.getPrice());
+        mapSqlParameterSource.addValue("picturePath", movie.getPicturePath());
+        namedParameterJdbcTemplate.update(saveMovieSQL, mapSqlParameterSource, keyHolder);
+        Number key = keyHolder.getKey();
+        int id = key.intValue();
+        log.debug("Movie {} is saved with id = {}", movie, id);
+        movie.setId(key.intValue());
+    }
+
+    @Override
+    public Movie set(Movie movie) {
+        return null;
     }
 }

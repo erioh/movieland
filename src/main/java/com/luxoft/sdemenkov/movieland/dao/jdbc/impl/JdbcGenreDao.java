@@ -10,11 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class JdbcGenreDao implements GenreDao {
@@ -31,6 +32,8 @@ public class JdbcGenreDao implements GenreDao {
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    @Autowired
+    private String movieIdGenreMapperSQL;
 
     public List<Genre> getGenreListByMove(Movie movie) {
         List<Genre> genreList = jdbcTemplate.query(getGenreListByMovieSQL, new Object[]{movie.getId()}, GENRE_ROW_MAPPER);
@@ -63,6 +66,45 @@ public class JdbcGenreDao implements GenreDao {
                 }
             }
             movie.setGenreList(genreList);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void mapMoviesGenre(Movie movie) {
+        log.debug("mapMoviesGenre. mapping genres to movie");
+        int movieId = movie.getId();
+        List<MovieIdGenreMapper> movieIdGenreMapList = new ArrayList<>();
+        for (Genre genre : movie.getGenreList()) {
+            movieIdGenreMapList.add(new MovieIdGenreMapper(movieId, genre.getId()));
+        }
+        SqlParameterSource[] sqlParameterSources = SqlParameterSourceUtils.createBatch(movieIdGenreMapList.toArray());
+        namedParameterJdbcTemplate.batchUpdate(movieIdGenreMapperSQL, sqlParameterSources);
+    }
+
+    private class MovieIdGenreMapper {
+        private int movieId;
+        private int genreId;
+
+        public MovieIdGenreMapper(int movieId, int genreId) {
+            this.movieId = movieId;
+            this.genreId = genreId;
+        }
+
+        public int getMovieId() {
+            return movieId;
+        }
+
+        public void setMovieId(int movieId) {
+            this.movieId = movieId;
+        }
+
+        public int getGenreId() {
+            return genreId;
+        }
+
+        public void setGenreId(int genreId) {
+            this.genreId = genreId;
         }
     }
 

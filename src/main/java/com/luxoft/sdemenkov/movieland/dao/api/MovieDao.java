@@ -17,4 +17,7 @@ public interface MovieDao {
 
     List<Movie> getMoviesByGenre(int genreId);
 
+    void save(Movie movie);
+
+    Movie set(Movie movie);
 }

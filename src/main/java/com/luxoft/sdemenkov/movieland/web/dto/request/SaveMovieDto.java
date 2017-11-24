@@ -1,12 +1,16 @@
 package com.luxoft.sdemenkov.movieland.web.dto.request;
 
 
+import com.luxoft.sdemenkov.movieland.model.business.Country;
+import com.luxoft.sdemenkov.movieland.model.business.Genre;
+import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.web.dto.CountryDto;
 import com.luxoft.sdemenkov.movieland.web.dto.GenreDto;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class AddMovieDto {
+public class SaveMovieDto {
     private int id;
     private String nameRussian;
     private String nameNative;
@@ -17,6 +21,28 @@ public class AddMovieDto {
     private String picturePath;
     private List<CountryDto> countries;
     private List<GenreDto> genres;
+
+    public SaveMovieDto() {
+    }
+
+    public SaveMovieDto(Movie movie) {
+        this.id = movie.getId();
+        this.nameRussian = movie.getNameRussian();
+        this.nameNative = movie.getNameNative();
+        this.yearOfRelease = movie.getYearOfRelease();
+        this.description = movie.getDescription();
+        this.rating = movie.getRating();
+        this.price = movie.getId();
+        this.picturePath = movie.getPicturePath();
+        this.countries = new ArrayList<>();
+        for (Country country : movie.getCountryList()) {
+            this.countries.add(new CountryDto(country));
+        }
+        this.genres = new ArrayList<>();
+        for (Genre genre : movie.getGenreList()) {
+            this.genres.add(new GenreDto(genre));
+        }
+    }
 
     public int getId() {
         return id;
@@ -100,7 +126,7 @@ public class AddMovieDto {
 
     @Override
     public String toString() {
-        return "AddMovieDto{" +
+        return "SaveMovieDto{" +
                 "id=" + id +
                 ", nameRussian='" + nameRussian + '\'' +
                 ", nameNative='" + nameNative + '\'' +

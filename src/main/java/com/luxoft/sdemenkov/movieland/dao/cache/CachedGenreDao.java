@@ -45,4 +45,9 @@ public class CachedGenreDao implements GenreDao {
     public void enrichMoviesWithGenres(List<Movie> movieList) {
         genreDao.enrichMoviesWithGenres(movieList);
     }
+
+    @Override
+    public void mapMoviesGenre(Movie movie) {
+        genreDao.mapMoviesGenre(movie);
+    }
 }
