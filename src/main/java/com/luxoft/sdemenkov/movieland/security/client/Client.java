@@ -17,6 +17,7 @@ public class Client {
         clientIdentificator = "guest";
         isGuest = true;
     }
+
     public Client(Token token) {
         this.token = Optional.of(token);
         this.clientIdentificator = token.getUser().getEmail();

@@ -19,5 +19,5 @@ public interface MovieDao {
 
     void save(Movie movie);
 
-    Movie set(Movie movie);
+    void set(Movie movie);
 }

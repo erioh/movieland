@@ -4,8 +4,6 @@ package com.luxoft.sdemenkov.movieland.web.dto.request;
 import com.luxoft.sdemenkov.movieland.model.business.Country;
 import com.luxoft.sdemenkov.movieland.model.business.Genre;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
-import com.luxoft.sdemenkov.movieland.web.dto.CountryDto;
-import com.luxoft.sdemenkov.movieland.web.dto.GenreDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +17,8 @@ public class SaveMovieDto {
     private double rating;
     private double price;
     private String picturePath;
-    private List<CountryDto> countries;
-    private List<GenreDto> genres;
+    private List<Integer> countries;
+    private List<Integer> genres;
 
     public SaveMovieDto() {
     }
@@ -36,11 +34,11 @@ public class SaveMovieDto {
         this.picturePath = movie.getPicturePath();
         this.countries = new ArrayList<>();
         for (Country country : movie.getCountryList()) {
-            this.countries.add(new CountryDto(country));
+            this.countries.add(country.getId());
         }
         this.genres = new ArrayList<>();
         for (Genre genre : movie.getGenreList()) {
-            this.genres.add(new GenreDto(genre));
+            this.genres.add(genre.getId());
         }
     }
 
@@ -108,19 +106,20 @@ public class SaveMovieDto {
         this.picturePath = picturePath;
     }
 
-    public List<CountryDto> getCountries() {
+    public List<Integer> getCountries() {
         return countries;
     }
 
-    public void setCountries(List<CountryDto> countries) {
+
+    public void setCountries(List<Integer> countries) {
         this.countries = countries;
     }
 
-    public List<GenreDto> getGenres() {
+    public List<Integer> getGenres() {
         return genres;
     }
 
-    public void setGenres(List<GenreDto> genres) {
+    public void setGenres(List<Integer> genres) {
         this.genres = genres;
     }
 
@@ -139,4 +138,5 @@ public class SaveMovieDto {
                 ", genres=" + genres +
                 '}';
     }
+
 }

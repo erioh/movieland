@@ -1,4 +1,5 @@
 package com.luxoft.sdemenkov.movieland.web.dto.request;
+
 public class SaveReviewDto {
     private int movieId;
     private String text;

@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -61,17 +62,20 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie save(Movie movie) {
-
+    @Transactional
+    public void save(Movie movie) {
         movieDao.save(movie);
         genreService.mapMoviesGenre(movie);
         countryService.mapMoviesCountry(movie);
-        log.debug("save. Movie {} is successfully  saved",movie);
-        return movie;
+        log.debug("save. Movie {} is successfully  saved", movie);
     }
 
     @Override
-    public Movie set(Movie movie) {
-        return movieDao.set(movie);
+    @Transactional
+    public void set(Movie movie) {
+        movieDao.set(movie);
+        genreService.mapMoviesGenre(movie);
+        countryService.mapMoviesCountry(movie);
+        log.debug("set. Movie {} is successfully  updated", movie);
     }
 }

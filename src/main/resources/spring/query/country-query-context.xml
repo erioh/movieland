@@ -21,4 +21,7 @@
     <bean id="movieIdCountryMapperSQL" class="java.lang.String">
         <constructor-arg value="insert into movie_country (movie_id, country_id) values (:movieId, :countryId);"/>
     </bean>
+    <bean id="removeMappedCountriesSQL" class="java.lang.String">
+        <constructor-arg value="delete from movie_country where movie_id = :movieId;"/>
+    </bean>
 </beans>

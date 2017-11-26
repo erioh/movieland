@@ -3,11 +3,12 @@ package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 import com.luxoft.sdemenkov.movieland.dao.api.GenreDao;
 import com.luxoft.sdemenkov.movieland.model.business.Genre;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
+import com.luxoft.sdemenkov.movieland.web.dto.request.SaveMovieDto;
+import com.luxoft.sdemenkov.movieland.web.util.MovieBuilder;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,7 +67,28 @@ public class JdbcGenreDaoTest {
         Movie movie = MovieGenerator.getMovieForTest();
         List<Movie> movies = new ArrayList<>();
         movies.add(movie);
-        genreDao.mapMoviesGenre(movie);
+        int[] counts = genreDao.mapMoviesGenre(movie);
+        assertEquals(1, counts[0]);
+    }
+
+    @Test
+    @Transactional
+    public void mapMoviesGenrenNullGenres() throws Exception {
+        SaveMovieDto saveMovieDto = new SaveMovieDto();
+        Movie movie = MovieBuilder.fromMovieDto(saveMovieDto).getMovie().getCountries().getGenres().build();
+        List<Movie> movies = new ArrayList<>();
+        movies.add(movie);
+        int[] counts = genreDao.mapMoviesGenre(movie);
+        assertEquals(0, counts[0]);
+    }
+
+    @Test
+    @Transactional
+    public void removeMappedGenres() throws Exception {
+        Movie movie = new Movie();
+        movie.setId(1);
+        int count = genreDao.removeMappedGenres(movie);
+        assertEquals(2, count);
     }
 
 

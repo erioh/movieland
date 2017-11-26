@@ -23,7 +23,18 @@
         where m.movie_id in (:ids);"/>
     </bean>
     <bean id="saveMovieSQL" class="java.lang.String">
-        <constructor-arg value="insert into movie (name_Russian, name_Native, year_Of_Release, description, rating, price, picture_path) values (:nameRussian, :nameNative, :yearOfRelease, :description, :rating, :price, :picturePath);"/>
+        <constructor-arg
+                value="insert into movie (name_Russian, name_Native, year_Of_Release, description, rating, price, picture_path) values (:nameRussian, :nameNative, :yearOfRelease, :description, :rating, :price, :picturePath);"/>
+    </bean>
+    <bean id="setMovieSQL" class="java.lang.String">
+        <constructor-arg value="update movie set name_Russian = :nameRussian
+, name_Native = :nameNative
+, year_Of_Release = :yearOfRelease
+, description = :description
+, rating = :rating
+, price = :price
+, picture_path = :picturePath
+where movie_id = :movieId;"/>
     </bean>
 
 

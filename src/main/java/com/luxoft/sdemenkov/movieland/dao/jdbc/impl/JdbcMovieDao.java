@@ -38,6 +38,8 @@ public class JdbcMovieDao implements MovieDao {
     private String getMovieByIdSQL;
     @Autowired
     private String saveMovieSQL;
+    @Autowired
+    private String setMovieSQL;
 
     @Override
     public List<Movie> getAll() {
@@ -107,7 +109,17 @@ public class JdbcMovieDao implements MovieDao {
     }
 
     @Override
-    public Movie set(Movie movie) {
-        return null;
+    @Transactional
+    public void set(Movie movie) {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("nameRussian", movie.getNameRussian());
+        mapSqlParameterSource.addValue("nameNative", movie.getNameNative());
+        mapSqlParameterSource.addValue("yearOfRelease", movie.getYearOfRelease());
+        mapSqlParameterSource.addValue("description", movie.getDescription());
+        mapSqlParameterSource.addValue("rating", movie.getRating());
+        mapSqlParameterSource.addValue("price", movie.getPrice());
+        mapSqlParameterSource.addValue("picturePath", movie.getPicturePath());
+        mapSqlParameterSource.addValue("movieId", movie.getId());
+        namedParameterJdbcTemplate.update(setMovieSQL, mapSqlParameterSource);
     }
 }

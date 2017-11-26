@@ -47,7 +47,12 @@ public class CachedGenreDao implements GenreDao {
     }
 
     @Override
-    public void mapMoviesGenre(Movie movie) {
-        genreDao.mapMoviesGenre(movie);
+    public int[] mapMoviesGenre(Movie movie) {
+        return genreDao.mapMoviesGenre(movie);
+    }
+
+    @Override
+    public int removeMappedGenres(Movie movie) {
+        return genreDao.removeMappedGenres(movie);
     }
 }

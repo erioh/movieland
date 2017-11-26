@@ -13,5 +13,7 @@ public interface CountryDao {
 
     List<Country> getAll();
 
-    void mapMoviesCountry(Movie movie);
+    int[] mapMoviesCountry(Movie movie);
+
+    int removeMappedCountries(Movie movie);
 }

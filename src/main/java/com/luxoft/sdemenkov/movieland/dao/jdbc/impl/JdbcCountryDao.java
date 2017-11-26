@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,8 @@ public class JdbcCountryDao implements CountryDao {
     private String getAllCountriesSQL;
     @Autowired
     private String movieIdCountryMapperSQL;
+    @Autowired
+    private String removeMappedCountriesSQL;
 
 
     public List<Country> getCountryListByMovie(Movie movie) {
@@ -75,17 +78,27 @@ public class JdbcCountryDao implements CountryDao {
         return countryList;
     }
 
+    @Transactional
     @Override
-    public void mapMoviesCountry(Movie movie) {
-        log.debug("mapMoviesCountry. is called for movie {}",movie);
+    public int[] mapMoviesCountry(Movie movie) {
+        log.debug("mapMoviesCountry. is called for movie {}", movie);
+        removeMappedCountries(movie);
         int movieId = movie.getId();
         List<MovieIdCountryMapper> movieIdCountryMapperList = new ArrayList<>();
         for (Country country : movie.getCountryList()) {
             movieIdCountryMapperList.add(new MovieIdCountryMapper(movieId, country.getId()));
         }
         SqlParameterSource[] sqlParameterSources = SqlParameterSourceUtils.createBatch(movieIdCountryMapperList.toArray());
-        namedParameterJdbcTemplate.batchUpdate(movieIdCountryMapperSQL, sqlParameterSources);
+        return namedParameterJdbcTemplate.batchUpdate(movieIdCountryMapperSQL, sqlParameterSources);
     }
+
+    @Transactional
+    public int removeMappedCountries(Movie movie) {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("movieId", movie.getId());
+        return namedParameterJdbcTemplate.update(removeMappedCountriesSQL, mapSqlParameterSource);
+    }
+
     private class MovieIdCountryMapper {
         private int movieId;
         private int countryId;

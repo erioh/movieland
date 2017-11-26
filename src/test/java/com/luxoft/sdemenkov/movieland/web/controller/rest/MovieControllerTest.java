@@ -9,13 +9,9 @@ import com.luxoft.sdemenkov.movieland.service.MovieService;
 import com.luxoft.sdemenkov.movieland.service.SortDirectionValidationService;
 import com.luxoft.sdemenkov.movieland.service.SortService;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
-import com.luxoft.sdemenkov.movieland.web.dto.CountryDto;
-import com.luxoft.sdemenkov.movieland.web.dto.GenreDto;
 import com.luxoft.sdemenkov.movieland.web.dto.request.SaveMovieDto;
 import com.luxoft.sdemenkov.movieland.web.dto.response.AllMoviesDto;
 import com.luxoft.sdemenkov.movieland.web.dto.response.MoviesByGenreDto;
-import com.luxoft.sdemenkov.testutils.CountryDtoGenerator;
-import com.luxoft.sdemenkov.testutils.GenreDtoGenerator;
 import com.luxoft.sdemenkov.testutils.MovieDtoGenerator;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Before;
@@ -35,9 +31,7 @@ import java.util.List;
 import static com.jayway.jsonassert.impl.matcher.IsCollectionWithSize.hasSize;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -279,15 +273,14 @@ public class MovieControllerTest {
     public void saveMovie() throws Exception {
         SaveMovieDto saveMovieDto = MovieDtoGenerator.getMovieForTest();
         Movie movie = MovieGenerator.getMovieForTest();
-        List<GenreDto> genreDtoList = new ArrayList<>();
-        genreDtoList.add( GenreDtoGenerator.getGenreForTest());
-        List<CountryDto> countryDtoList = new ArrayList<>();
-        countryDtoList.add(CountryDtoGenerator.getCountryDtoForTest());
-        saveMovieDto.setCountries(countryDtoList);
-        saveMovieDto.setGenres(genreDtoList);
+        List<Integer> genreIds = new ArrayList<>();
+        genreIds.add(1);
+        List<Integer> countryIds = new ArrayList<>();
+        countryIds.add(2);
+        saveMovieDto.setCountries(countryIds);
+        saveMovieDto.setGenres(genreIds);
         ObjectMapper mapper = new ObjectMapper();
         SaveMovieDto test = mapper.readValue(mapper.writeValueAsString(saveMovieDto), SaveMovieDto.class);
-        when(mockedMovieService.save(any())).thenReturn(movie);
         mockMvc.perform(post("/movie")
                 .contentType("application/json;charset=UTF-8")
                 .content(mapper.writeValueAsString(saveMovieDto)))
@@ -298,16 +291,15 @@ public class MovieControllerTest {
     public void setMovie() throws Exception {
         SaveMovieDto saveMovieDto = MovieDtoGenerator.getMovieForTest();
         Movie movie = MovieGenerator.getMovieForTest();
-        List<GenreDto> genreDtoList = new ArrayList<>();
-        genreDtoList.add( GenreDtoGenerator.getGenreForTest());
-        List<CountryDto> countryDtoList = new ArrayList<>();
-        countryDtoList.add(CountryDtoGenerator.getCountryDtoForTest());
-        saveMovieDto.setCountries(countryDtoList);
-        saveMovieDto.setGenres(genreDtoList);
+        List<Integer> genreIds = new ArrayList<>();
+        genreIds.add(1);
+        List<Integer> countryIds = new ArrayList<>();
+        countryIds.add(2);
+        saveMovieDto.setCountries(countryIds);
+        saveMovieDto.setGenres(genreIds);
         ObjectMapper mapper = new ObjectMapper();
-        when(mockedMovieService.set(any())).thenReturn(movie);
         SaveMovieDto test = mapper.readValue(mapper.writeValueAsString(saveMovieDto), SaveMovieDto.class);
-        mockMvc.perform(post("/movie/1")
+        mockMvc.perform(put("/movie/1")
                 .contentType("application/json;charset=UTF-8")
                 .content(mapper.writeValueAsString(saveMovieDto)))
                 .andExpect(status().isOk());

@@ -6,10 +6,8 @@ import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
@@ -94,6 +92,13 @@ public class JdbcMovieDaoTest {
         movieDao.save(movie);
         assertNotEquals(0, movie.getId());
 
+    }
+
+    @Test
+    @Transactional
+    public void set() throws Exception {
+        Movie movie = MovieGenerator.getMovieForTest();
+        movieDao.set(movie);
     }
 
 }

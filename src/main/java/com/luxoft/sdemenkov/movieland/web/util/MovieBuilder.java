@@ -3,20 +3,17 @@ package com.luxoft.sdemenkov.movieland.web.util;
 import com.luxoft.sdemenkov.movieland.model.business.Country;
 import com.luxoft.sdemenkov.movieland.model.business.Genre;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
-import com.luxoft.sdemenkov.movieland.web.dto.CountryDto;
-import com.luxoft.sdemenkov.movieland.web.dto.GenreDto;
 import com.luxoft.sdemenkov.movieland.web.dto.request.SaveMovieDto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class MovieBuilder {
     private SaveMovieDto saveMovieDto;
-    private Optional<Movie> movie = Optional.empty();
-    private Optional<List<Country>> countryList = Optional.empty();
-    private Optional<List<Genre>> genreList =Optional.empty();
+    private Movie movie;
+    private List<Country> countryList = new ArrayList<>();
+    private List<Genre> genreList = new ArrayList<>();
 
     public static MovieBuilder fromMovieDto(SaveMovieDto saveMovieDto) {
         MovieBuilder movieBuilder = new MovieBuilder();
@@ -24,36 +21,44 @@ public class MovieBuilder {
         return movieBuilder;
     }
 
-    public MovieBuilder getMovie(){
-        this.movie = Optional.of(new Movie());
-        this.movie.get().setNameNative(this.saveMovieDto.getNameNative());
-        this.movie.get().setNameRussian(this.saveMovieDto.getNameRussian());
-        this.movie.get().setYearOfRelease(this.saveMovieDto.getYearOfRelease());
-        this.movie.get().setRating(this.saveMovieDto.getRating());
-        this.movie.get().setPrice(new BigDecimal(this.saveMovieDto.getPrice()));
-        this.movie.get().setPicturePath(this.saveMovieDto.getPicturePath());
-        this.movie.get().setDescription(this.saveMovieDto.getDescription());
+    public MovieBuilder getMovie() {
+        this.movie = new Movie();
+        this.movie.setId(this.saveMovieDto.getId());
+        this.movie.setNameNative(this.saveMovieDto.getNameNative());
+        this.movie.setNameRussian(this.saveMovieDto.getNameRussian());
+        this.movie.setYearOfRelease(this.saveMovieDto.getYearOfRelease());
+        this.movie.setRating(this.saveMovieDto.getRating());
+        this.movie.setPrice(new BigDecimal(this.saveMovieDto.getPrice()));
+        this.movie.setPicturePath(this.saveMovieDto.getPicturePath());
+        this.movie.setDescription(this.saveMovieDto.getDescription());
         return this;
     }
+
     public MovieBuilder getCountries() {
-        this.countryList = Optional.of(new ArrayList<>());
-        for (CountryDto countryDto : this.saveMovieDto.getCountries()) {
-            this.countryList.get().add(new Country(countryDto.getId(), countryDto.getName()));
+        if (this.saveMovieDto.getCountries() == null) {
+            return this;
+        }
+        countryList = new ArrayList<>();
+        for (Integer countryId : this.saveMovieDto.getCountries()) {
+            this.countryList.add(new Country(countryId));
         }
         return this;
     }
+
     public MovieBuilder getGenres() {
-        this.genreList = Optional.of(new ArrayList<>());
-        for (GenreDto genreDto : this.saveMovieDto.getGenres()) {
-            this.genreList.get().add(new Genre(genreDto.getId(), genreDto.getName()));
+        if (this.saveMovieDto.getGenres() == null) {
+            return this;
+        }
+        for (Integer genreId : this.saveMovieDto.getGenres()) {
+            this.genreList.add(new Genre(genreId));
         }
         return this;
     }
 
     public Movie build() {
-        this.movie.get().setCountryList(this.countryList.orElse(new ArrayList<>()));
-        this.movie.get().setGenreList(this.genreList.orElse(new ArrayList<>()));
-        return this.movie.get();
+        this.movie.setCountryList(this.countryList);
+        this.movie.setGenreList(this.genreList);
+        return this.movie;
     }
 
 

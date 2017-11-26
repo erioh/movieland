@@ -13,5 +13,7 @@ public interface GenreDao {
 
     void enrichMoviesWithGenres(List<Movie> movieList);
 
-    void mapMoviesGenre(Movie movie);
+    int[] mapMoviesGenre(Movie movie);
+
+    int removeMappedGenres(Movie movie);
 }

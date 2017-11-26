@@ -6,10 +6,10 @@ import com.luxoft.sdemenkov.movieland.security.SecurityHttpRequestWrapper;
 import com.luxoft.sdemenkov.movieland.security.TokenPrincipal;
 import com.luxoft.sdemenkov.movieland.security.client.Client;
 import com.luxoft.sdemenkov.movieland.service.AuthenticationService;
+import com.luxoft.sdemenkov.movieland.web.dto.response.ExceptionMessageDto;
 import com.luxoft.sdemenkov.movieland.web.exception.NeededRolesAneAbsentException;
 import com.luxoft.sdemenkov.movieland.web.exception.RestException;
 import com.luxoft.sdemenkov.movieland.web.exception.UserNotLoggedInException;
-import com.luxoft.sdemenkov.movieland.web.dto.response.ExceptionMessageDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -25,11 +25,9 @@ import java.util.UUID;
 public class RequestInterceptor extends HandlerInterceptorAdapter {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-
+    private final ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     private AuthenticationService authenticationService;
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -63,11 +61,11 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
     public void validateToken(Client client, Object handler) {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         if (handlerMethod.hasMethodAnnotation(Protected.class)) {
-            if(client.isGuest()) {
+            if (client.isGuest()) {
                 throw new UserNotLoggedInException();
             }
             Protected annotation = handlerMethod.getMethodAnnotation(Protected.class);
-            if (!client.getRoleList().contains(annotation.protectedBy())){
+            if (!client.getRoleList().contains(annotation.protectedBy())) {
                 throw new NeededRolesAneAbsentException();
             }
         }

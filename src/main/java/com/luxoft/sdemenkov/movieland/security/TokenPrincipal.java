@@ -24,7 +24,7 @@ public class TokenPrincipal implements Principal {
 
     @Override
     public String getName() {
-        if(token.isPresent()) {
+        if (token.isPresent()) {
             return token.get().getUser().getEmail();
         } else {
             return "guest";
@@ -34,7 +34,7 @@ public class TokenPrincipal implements Principal {
     @Override
     public String toString() {
         return "TokenPrincipal{" +
-                "token=" + (token.isPresent()?token.get():"null") +
+                "token=" + (token.isPresent() ? token.get() : "null") +
                 '}';
     }
 }

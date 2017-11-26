@@ -15,7 +15,7 @@ public interface MovieService {
 
     List<Movie> getMovieById(Set<Integer> movieIds);
 
-    Movie save(Movie movie);
+    void save(Movie movie);
 
-    Movie set(Movie movie);
+    void set(Movie movie);
 }

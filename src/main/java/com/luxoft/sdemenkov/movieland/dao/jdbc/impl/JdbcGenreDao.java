@@ -15,7 +15,9 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class JdbcGenreDao implements GenreDao {
@@ -34,6 +36,8 @@ public class JdbcGenreDao implements GenreDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     @Autowired
     private String movieIdGenreMapperSQL;
+    @Autowired
+    private String removeMappedGenresSQL;
 
     public List<Genre> getGenreListByMove(Movie movie) {
         List<Genre> genreList = jdbcTemplate.query(getGenreListByMovieSQL, new Object[]{movie.getId()}, GENRE_ROW_MAPPER);
@@ -71,15 +75,25 @@ public class JdbcGenreDao implements GenreDao {
 
     @Override
     @Transactional
-    public void mapMoviesGenre(Movie movie) {
+    public int[] mapMoviesGenre(Movie movie) {
         log.debug("mapMoviesGenre. mapping genres to movie");
+        removeMappedGenres(movie);
         int movieId = movie.getId();
         List<MovieIdGenreMapper> movieIdGenreMapList = new ArrayList<>();
         for (Genre genre : movie.getGenreList()) {
             movieIdGenreMapList.add(new MovieIdGenreMapper(movieId, genre.getId()));
         }
         SqlParameterSource[] sqlParameterSources = SqlParameterSourceUtils.createBatch(movieIdGenreMapList.toArray());
-        namedParameterJdbcTemplate.batchUpdate(movieIdGenreMapperSQL, sqlParameterSources);
+        return namedParameterJdbcTemplate.batchUpdate(movieIdGenreMapperSQL, sqlParameterSources);
+    }
+
+    @Transactional
+    public int removeMappedGenres(Movie movie) {
+        log.debug("removing mapped genres");
+        int movieId = movie.getId();
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("movieId", movieId);
+        return namedParameterJdbcTemplate.update(removeMappedGenresSQL, mapSqlParameterSource);
     }
 
     private class MovieIdGenreMapper {

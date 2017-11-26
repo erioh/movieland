@@ -26,4 +26,7 @@
     <bean id="movieIdGenreMapperSQL" class="java.lang.String">
         <constructor-arg value="insert into movie_genre (movie_id, genre_id) values (:movieId, :genreId);"/>
     </bean>
+    <bean id="removeMappedGenresSQL" class="java.lang.String">
+        <constructor-arg value="delete from movie_genre where movie_id = :movieId"/>
+    </bean>
 </beans>

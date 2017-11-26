@@ -8,7 +8,6 @@ import com.luxoft.sdemenkov.movieland.security.client.Client;
 import com.luxoft.sdemenkov.movieland.security.role.Role;
 import com.luxoft.sdemenkov.movieland.service.impl.AuthenticationServiceImpl;
 import com.luxoft.sdemenkov.movieland.service.impl.ReviewServiceImpl;
-import com.luxoft.sdemenkov.movieland.web.controller.rest.ReviewController;
 import com.luxoft.sdemenkov.movieland.web.interceptor.RequestInterceptor;
 import org.junit.Before;
 import org.junit.Test;

@@ -75,12 +75,12 @@ public class MovieController {
 
     @Protected(protectedBy = Role.ADMIN)
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> saveMovie(@RequestBody SaveMovieDto saveMovieDto){
+    public ResponseEntity<?> saveMovie(@RequestBody SaveMovieDto saveMovieDto) {
         log.debug("saveMovie. Method is called. Changes = {}", saveMovieDto);
         log.info("method saveMovie is called");
 
         Movie movie = MovieBuilder.fromMovieDto(saveMovieDto).getMovie().getCountries().getGenres().build();
-        Movie savedMovie = movieService.save(movie);
+        movieService.save(movie);
 
         return new ResponseEntity<>(new SaveMovieDto(movie), HttpStatus.OK);
     }
@@ -111,14 +111,15 @@ public class MovieController {
         return new ResponseEntity<>(movieByIdDto, HttpStatus.OK);
 
     }
+
     @Protected(protectedBy = Role.ADMIN)
-    @RequestMapping(value = "/{movieId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/{movieId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> setMovie(@RequestBody SaveMovieDto saveMovieDto) {
         log.debug("setMovie. Method is called. Changes = {}", saveMovieDto);
         log.info("method setMovie is called");
         Movie movie = MovieBuilder.fromMovieDto(saveMovieDto).getMovie().getCountries().getGenres().build();
-        Movie settedMovie = movieService.set(movie);
-        return new ResponseEntity<>(new SaveMovieDto(settedMovie), HttpStatus.OK);
+        movieService.set(movie);
+        return new ResponseEntity<>(new SaveMovieDto(movie), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/random", method = RequestMethod.GET)

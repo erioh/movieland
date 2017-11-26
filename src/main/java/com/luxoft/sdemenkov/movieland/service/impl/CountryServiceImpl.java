@@ -7,12 +7,8 @@ import com.luxoft.sdemenkov.movieland.service.CountryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,5 +35,5 @@ public class CountryServiceImpl implements CountryService {
     public void mapMoviesCountry(Movie movie) {
         countryDao.mapMoviesCountry(movie);
     }
-    }
+}
 
