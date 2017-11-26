@@ -78,7 +78,6 @@ public class JdbcCountryDao implements CountryDao {
         return countryList;
     }
 
-    @Transactional
     @Override
     public int[] mapMoviesCountry(Movie movie) {
         log.debug("mapMoviesCountry. is called for movie {}", movie);
@@ -92,7 +91,7 @@ public class JdbcCountryDao implements CountryDao {
         return namedParameterJdbcTemplate.batchUpdate(movieIdCountryMapperSQL, sqlParameterSources);
     }
 
-    @Transactional
+    @Override
     public int removeMappedCountries(Movie movie) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("movieId", movie.getId());

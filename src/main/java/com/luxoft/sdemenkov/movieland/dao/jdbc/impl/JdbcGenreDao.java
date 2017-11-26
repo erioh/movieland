@@ -74,7 +74,6 @@ public class JdbcGenreDao implements GenreDao {
     }
 
     @Override
-    @Transactional
     public int[] mapMoviesGenre(Movie movie) {
         log.debug("mapMoviesGenre. mapping genres to movie");
         removeMappedGenres(movie);
@@ -87,7 +86,7 @@ public class JdbcGenreDao implements GenreDao {
         return namedParameterJdbcTemplate.batchUpdate(movieIdGenreMapperSQL, sqlParameterSources);
     }
 
-    @Transactional
+    @Override
     public int removeMappedGenres(Movie movie) {
         log.debug("removing mapped genres");
         int movieId = movie.getId();
