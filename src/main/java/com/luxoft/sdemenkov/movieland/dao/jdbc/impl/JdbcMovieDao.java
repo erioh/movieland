@@ -89,7 +89,6 @@ public class JdbcMovieDao implements MovieDao {
     }
 
     @Override
-    @Transactional
     public void save(Movie movie) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         log.debug("Starting to save movie into DB");
@@ -109,7 +108,6 @@ public class JdbcMovieDao implements MovieDao {
     }
 
     @Override
-    @Transactional
     public void set(Movie movie) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("nameRussian", movie.getNameRussian());
