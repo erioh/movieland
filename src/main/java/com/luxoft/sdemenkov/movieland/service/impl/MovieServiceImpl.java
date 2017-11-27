@@ -9,6 +9,7 @@ import com.luxoft.sdemenkov.movieland.service.ReviewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,9 @@ import java.util.Set;
 @Service
 public class MovieServiceImpl implements MovieService {
     private final Logger log = LoggerFactory.getLogger(getClass());
+
+    @Value("${web.movie.search.result.movies.per.page}")
+    private int moviesPerPage;
 
     @Autowired
     private MovieDao movieDao;
@@ -82,5 +86,13 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<Movie> searchByTitle(String title) {
         return movieDao.searchByTitle(title);
+    }
+
+    @Override
+    public List<Movie> searchByTitle(String title, int pageNumber) {
+        if (pageNumber < 0) {
+            throw new RuntimeException("Page number " + pageNumber + " is not valid");
+        }
+        return movieDao.searchByTitle(title, pageNumber, moviesPerPage);
     }
 }

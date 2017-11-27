@@ -22,4 +22,6 @@ public interface MovieDao {
     void set(Movie movie);
 
     List<Movie> searchByTitle(String title);
+
+    List<Movie> searchByTitle(String title, int pageNumber, int moviesPerPage);
 }

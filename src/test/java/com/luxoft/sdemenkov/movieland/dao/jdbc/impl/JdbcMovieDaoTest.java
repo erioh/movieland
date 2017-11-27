@@ -21,6 +21,8 @@ import static org.junit.Assert.assertNotEquals;
 @ContextConfiguration(locations = "classpath:/spring-test-config.xml")
 @Transactional
 public class JdbcMovieDaoTest {
+
+
     @Autowired
     private MovieDao movieDao;
 
@@ -98,7 +100,37 @@ public class JdbcMovieDaoTest {
     @Transactional
     public void set() throws Exception {
         Movie movie = MovieGenerator.getMovieForTest();
+        movieDao.save(movie);
         movieDao.set(movie);
     }
 
+    @Test
+    public void searchByTitleInNative() throws Exception {
+        List<Movie> movieList = movieDao.searchByTitle("GREeN");
+        assertEquals("Зеленая миля", movieList.get(0).getNameRussian());
+    }
+
+    @Test
+    public void searchByTitleInRussian() throws Exception {
+        List<Movie> movieList = movieDao.searchByTitle("Зеле");
+        assertEquals("Зеленая миля", movieList.get(0).getNameRussian());
+    }
+
+    @Test
+    public void searchByTitleWithLimitPageOne() throws Exception {
+        List<Movie> movieList = movieDao.searchByTitle("Зеле", 1, 5);
+        assertEquals("Зеленая миля", movieList.get(0).getNameRussian());
+    }
+
+    @Test
+    public void searchByTitleWithLimitPageTwoWithoutResult() throws Exception {
+        List<Movie> movieList = movieDao.searchByTitle("Зеле", 2, 5);
+        assertEquals(0, movieList.size());
+    }
+
+    @Test
+    public void searchByTitleWithLimitPageTwoWithResult() throws Exception {
+        List<Movie> movieList = movieDao.searchByTitle("З", 2, 5);
+        assertEquals(4, movieList.size());
+    }
 }

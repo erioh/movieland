@@ -20,4 +20,6 @@ public interface MovieService {
     void set(Movie movie);
 
     List<Movie> searchByTitle(String title);
+
+    List<Movie> searchByTitle(String title, int pageNumber);
 }

@@ -88,6 +88,12 @@ public class CachedMovieDao implements MovieDao {
     }
 
     @Override
+    public List<Movie> searchByTitle(String title, int pageNumber, int moviesPerPage) {
+        return movieDao.searchByTitle(title, pageNumber, moviesPerPage);
+    }
+
+
+    @Override
     public List<Movie> getAll() {
         return movieDao.getAll();
     }

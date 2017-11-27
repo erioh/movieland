@@ -1,6 +1,7 @@
 package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
+import com.luxoft.sdemenkov.movieland.dao.jdbc.impl.util.QueryBuilder;
 import com.luxoft.sdemenkov.movieland.dao.mapper.MovieRowMapper;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import org.slf4j.Logger;
@@ -131,4 +132,19 @@ public class JdbcMovieDao implements MovieDao {
         log.debug("searchByTitle. movies {} were received with title like {}", movieList, title);
         return movieList;
     }
+
+    @Override
+    public List<Movie> searchByTitle(String title, int pageNumber, int moviesPerPage) {
+        String searchByTitleSQLLimited = QueryBuilder.forQuery(searchByTitleSQL)
+                .withLimit(pageNumber, moviesPerPage)
+                .build();
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("nameRussian", title);
+        mapSqlParameterSource.addValue("nameNative", title);
+        List<Movie> movieList = namedParameterJdbcTemplate.query(searchByTitleSQLLimited, mapSqlParameterSource, MOVIE_ROW_MAPPER);
+        log.debug("searchByTitle. movies {} were received with title like {}", movieList, title);
+        return movieList;
+    }
+
+
 }
