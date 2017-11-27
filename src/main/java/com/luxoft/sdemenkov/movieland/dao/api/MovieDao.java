@@ -20,4 +20,6 @@ public interface MovieDao {
     void save(Movie movie);
 
     void set(Movie movie);
+
+    List<Movie> searchByTitle(String title);
 }

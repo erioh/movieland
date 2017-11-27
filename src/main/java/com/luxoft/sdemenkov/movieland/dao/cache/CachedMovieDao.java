@@ -23,7 +23,6 @@ public class CachedMovieDao implements MovieDao {
     @Override
     public List<Movie> getMovieListByIds(Set<Integer> ids) {
         logger.debug("Start cached getMovieListByIds. ");
-
         List<Movie> movieListForReturn = new ArrayList<>();
         for (Integer id : ids) {
             boolean isMovieCached = false;
@@ -31,13 +30,11 @@ public class CachedMovieDao implements MovieDao {
                 if (movie.get().getId() == id) {
                     movieListForReturn.add(movie.get());
                     isMovieCached = true;
-
                     logger.debug("Cached getMovieListByIds. movie {} is found in cache", movie);
                 }
             }
             if (!isMovieCached) {
                 logger.debug("Cached getMovieListByIds. movie with id ={} is not found in cache", id);
-
                 Set<Integer> notChachedMovieId = new HashSet<>();
                 notChachedMovieId.add(id);
                 List<Movie> movieListByIds = movieDao.getMovieListByIds(notChachedMovieId);
@@ -71,22 +68,23 @@ public class CachedMovieDao implements MovieDao {
             logger.debug("Cached set. movie {} is present in cache. ", movie);
             logger.debug("Movie to be cached is {}", movieToBeChanged);
             logger.debug("Stored cache is {}", cachedMovieList);
-
             int index = cachedMovieList.indexOf(movieToBeChanged.get());
-
             logger.debug("Cached set. index of cached movie is  {} ", index);
             cachedMovieList.set(index, new SoftReference<Movie>(movie));
             logger.debug("Cached set. movie {} is changed in cache. ", movie);
         } else {
             logger.debug("Cached set. movie {} is NOT present in cache. ", movie);
-
             cachedMovieList.add(new SoftReference<Movie>(movie));
-
             logger.debug("Cached set. movie {} is putted into cache ", movie);
         }
 
         movieDao.set(movie);
         logger.debug("Cached set. movie {} is changed in DataBase ", movie);
+    }
+
+    @Override
+    public List<Movie> searchByTitle(String title) {
+        return movieDao.searchByTitle(title);
     }
 
     @Override

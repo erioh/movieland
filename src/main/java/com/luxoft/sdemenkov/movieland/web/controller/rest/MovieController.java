@@ -162,6 +162,18 @@ public class MovieController {
 
     }
 
+    @RequestMapping(value = "/search", method = RequestMethod.GET,  produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> searchMovie(@RequestParam(value = "title") String title) {
+        log.info("Starting search movie by title {}", title);
+        List<Movie> movieList = movieService.searchByTitle(title);
+        log.debug("searchMovie. Results of searching with title = {} is {}", title, movieList);
+        List<SearchForMoviesDto> searchForMoviesDtoList = new ArrayList<>();
+        for (Movie movie : movieList) {
+            searchForMoviesDtoList.add(new SearchForMoviesDto(movie));
+        }
+        return  new ResponseEntity<>(searchForMoviesDtoList, HttpStatus.OK);
+    }
+
     private void setMovieService(MovieService movieService) {
         this.movieService = movieService;
     }
