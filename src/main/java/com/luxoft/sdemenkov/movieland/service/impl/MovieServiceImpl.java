@@ -78,4 +78,9 @@ public class MovieServiceImpl implements MovieService {
         countryService.mapMoviesCountry(movie);
         log.debug("set. Movie {} is successfully  updated", movie);
     }
+
+    @Override
+    public List<Movie> searchByTitle(String title) {
+        return movieDao.searchByTitle(title);
+    }
 }

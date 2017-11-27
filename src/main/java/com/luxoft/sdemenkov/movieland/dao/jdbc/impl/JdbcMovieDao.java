@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -40,6 +39,8 @@ public class JdbcMovieDao implements MovieDao {
     private String saveMovieSQL;
     @Autowired
     private String setMovieSQL;
+    @Autowired
+    private String searchByTitleSQL;
 
     @Override
     public List<Movie> getAll() {
@@ -119,5 +120,15 @@ public class JdbcMovieDao implements MovieDao {
         mapSqlParameterSource.addValue("picturePath", movie.getPicturePath());
         mapSqlParameterSource.addValue("movieId", movie.getId());
         namedParameterJdbcTemplate.update(setMovieSQL, mapSqlParameterSource);
+    }
+
+    @Override
+    public List<Movie> searchByTitle(String title) {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("nameRussian", title);
+        mapSqlParameterSource.addValue("nameNative", title);
+        List<Movie> movieList = namedParameterJdbcTemplate.query(searchByTitleSQL, mapSqlParameterSource, MOVIE_ROW_MAPPER);
+        log.debug("searchByTitle. movies {} were received with title like {}", movieList, title);
+        return movieList;
     }
 }
