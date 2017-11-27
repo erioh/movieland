@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <appender name="log_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>movieland.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <FileNamePattern>movieland-%d{yyyy-MM-dd}.log.%i</FileNamePattern>
@@ -11,7 +11,25 @@
         </encoder>
     </appender>
 
+    <appender name="EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">
+        <smtpHost>smtp.mailgun.org</smtpHost>
+        <smtpPort>587</smtpPort>
+        <SSL>true</SSL>
+        <username>postmaster@sandboxd77e9c1a478440b0b293c30a369b5a22.mailgun.org</username>
+        <password>5b5fb476da66331dc28fa008a75d7840</password>
+
+        <to>sergey.demenkov7@gmail.com</to>
+        <from>postmaster@sandboxd77e9c1a478440b0b293c30a369b5a22.mailgun.org</from>
+        <subject>TESTING: %logger{20} - %m</subject>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date [%thread] %X{requestId} %X{email} %level %logger{10} [%file:%line] %msg%n</pattern>
+        </layout>
+    </appender>
+
     <root>
-        <appender-ref ref="log_file" level="DEBUG"/>
+        <appender-ref ref="FILE" level="DEBUG"/>
+        <appender-ref ref="EMAIL" level="DEBUG"/>
     </root>
+
+
 </configuration>
