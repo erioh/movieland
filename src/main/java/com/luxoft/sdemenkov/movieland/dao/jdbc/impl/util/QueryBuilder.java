@@ -4,10 +4,6 @@ package com.luxoft.sdemenkov.movieland.dao.jdbc.impl.util;
 public class QueryBuilder {
     private StringBuilder stringBuilder;
 
-    private QueryBuilder() {
-
-    }
-
     private QueryBuilder(String query) {
         stringBuilder = new StringBuilder();
         stringBuilder.append(query);
