@@ -10,11 +10,13 @@ import org.springframework.stereotype.Repository;
 
 import java.lang.ref.SoftReference;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 @Primary
 public class CachedMovieDao implements MovieDao {
-    private volatile List<SoftReference<Movie>> cachedMovieList = new ArrayList<>();
+    private Map<Integer, SoftReference<Movie>> cachedMovieMap = new ConcurrentHashMap<>();
+
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -25,21 +27,18 @@ public class CachedMovieDao implements MovieDao {
         logger.debug("Start cached getMovieListByIds. ");
         List<Movie> movieListForReturn = new ArrayList<>();
         for (Integer id : ids) {
-            boolean isMovieCached = false;
-            for (SoftReference<Movie> movie : cachedMovieList) {
-                if (movie.get().getId() == id) {
-                    movieListForReturn.add(movie.get());
-                    isMovieCached = true;
-                    logger.debug("Cached getMovieListByIds. movie {} is found in cache", movie);
-                }
-            }
-            if (!isMovieCached) {
+            Optional<SoftReference<Movie>> movieSoft = Optional.ofNullable(cachedMovieMap.get(id));
+            if (movieSoft.isPresent()) {
+                Optional<Movie> movieOptional = Optional.ofNullable(movieSoft.get().get());
+                movieListForReturn.add(movieOptional.get());
+                logger.debug("Cached getMovieListByIds. movie {} is found in cache", movieOptional);
+            } else {
                 logger.debug("Cached getMovieListByIds. movie with id ={} is not found in cache", id);
-                Set<Integer> notChachedMovieId = new HashSet<>();
-                notChachedMovieId.add(id);
-                List<Movie> movieListByIds = movieDao.getMovieListByIds(notChachedMovieId);
+                Set<Integer> nonChachedMovieId = new HashSet<>();
+                nonChachedMovieId.add(id);
+                List<Movie> movieListByIds = movieDao.getMovieListByIds(nonChachedMovieId);
                 movieListForReturn.add(movieListByIds.get(0));
-                cachedMovieList.add(new SoftReference<Movie>(movieListByIds.get(0)));
+                cachedMovieMap.put(movieListByIds.get(0).getId(), new SoftReference<Movie>(movieListByIds.get(0)));
             }
         }
         return movieListForReturn;
@@ -48,7 +47,7 @@ public class CachedMovieDao implements MovieDao {
     @Override
     public void save(Movie movie) {
         logger.debug("Cached save. Method is called");
-        cachedMovieList.add(new SoftReference<Movie>(movie));
+        cachedMovieMap.put(movie.getId(), new SoftReference<Movie>(movie));
         movieDao.save(movie);
 
     }
@@ -57,24 +56,19 @@ public class CachedMovieDao implements MovieDao {
     public void update(Movie movie) {
         logger.debug("Cached update. Method is called");
         Optional<SoftReference<Movie>> movieToBeChanged = Optional.empty();
-
-        for (SoftReference<Movie> cachedMovie : cachedMovieList) {
-            if (cachedMovie.get().getId() == movie.getId()) {
-                movieToBeChanged = Optional.of(cachedMovie);
-            }
-        }
+        movieToBeChanged = Optional.ofNullable(cachedMovieMap.get(movie.getId()));
 
         if (movieToBeChanged.isPresent()) {
             logger.debug("Cached update. movie {} is present in cache. ", movie);
             logger.debug("Movie to be cached is {}", movieToBeChanged);
-            logger.debug("Stored cache is {}", cachedMovieList);
-            int index = cachedMovieList.indexOf(movieToBeChanged.get());
+            logger.debug("Stored cache is {}", cachedMovieMap);
+            int index = movieToBeChanged.get().get().getId();
             logger.debug("Cached update. index of cached movie is  {} ", index);
-            cachedMovieList.set(index, new SoftReference<Movie>(movie));
+            cachedMovieMap.put(index, new SoftReference<Movie>(movie));
             logger.debug("Cached update. movie {} is changed in cache. ", movie);
         } else {
             logger.debug("Cached update. movie {} is NOT present in cache. ", movie);
-            cachedMovieList.add(new SoftReference<Movie>(movie));
+            cachedMovieMap.put(movie.getId(), new SoftReference<Movie>(movie));
             logger.debug("Cached update. movie {} is putted into cache ", movie);
         }
 
