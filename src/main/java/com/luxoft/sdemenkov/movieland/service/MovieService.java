@@ -17,7 +17,7 @@ public interface MovieService {
 
     void save(Movie movie);
 
-    void set(Movie movie);
+    void update(Movie movie);
 
     List<Movie> searchByTitle(String title);
 

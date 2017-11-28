@@ -54,8 +54,8 @@ public class CachedMovieDao implements MovieDao {
     }
 
     @Override
-    public void set(Movie movie) {
-        logger.debug("Cached set. Method is called");
+    public void update(Movie movie) {
+        logger.debug("Cached update. Method is called");
         Optional<SoftReference<Movie>> movieToBeChanged = Optional.empty();
 
         for (SoftReference<Movie> cachedMovie : cachedMovieList) {
@@ -65,21 +65,21 @@ public class CachedMovieDao implements MovieDao {
         }
 
         if (movieToBeChanged.isPresent()) {
-            logger.debug("Cached set. movie {} is present in cache. ", movie);
+            logger.debug("Cached update. movie {} is present in cache. ", movie);
             logger.debug("Movie to be cached is {}", movieToBeChanged);
             logger.debug("Stored cache is {}", cachedMovieList);
             int index = cachedMovieList.indexOf(movieToBeChanged.get());
-            logger.debug("Cached set. index of cached movie is  {} ", index);
+            logger.debug("Cached update. index of cached movie is  {} ", index);
             cachedMovieList.set(index, new SoftReference<Movie>(movie));
-            logger.debug("Cached set. movie {} is changed in cache. ", movie);
+            logger.debug("Cached update. movie {} is changed in cache. ", movie);
         } else {
-            logger.debug("Cached set. movie {} is NOT present in cache. ", movie);
+            logger.debug("Cached update. movie {} is NOT present in cache. ", movie);
             cachedMovieList.add(new SoftReference<Movie>(movie));
-            logger.debug("Cached set. movie {} is putted into cache ", movie);
+            logger.debug("Cached update. movie {} is putted into cache ", movie);
         }
 
-        movieDao.set(movie);
-        logger.debug("Cached set. movie {} is changed in DataBase ", movie);
+        movieDao.update(movie);
+        logger.debug("Cached update. movie {} is changed in DataBase ", movie);
     }
 
     @Override

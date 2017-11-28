@@ -39,7 +39,7 @@ public class JdbcMovieDao implements MovieDao {
     @Autowired
     private String saveMovieSQL;
     @Autowired
-    private String setMovieSQL;
+    private String updateMovieSQL;
     @Autowired
     private String searchByTitleSQL;
 
@@ -110,7 +110,7 @@ public class JdbcMovieDao implements MovieDao {
     }
 
     @Override
-    public void set(Movie movie) {
+    public void update(Movie movie) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("nameRussian", movie.getNameRussian());
         mapSqlParameterSource.addValue("nameNative", movie.getNameNative());
@@ -120,7 +120,7 @@ public class JdbcMovieDao implements MovieDao {
         mapSqlParameterSource.addValue("price", movie.getPrice());
         mapSqlParameterSource.addValue("picturePath", movie.getPicturePath());
         mapSqlParameterSource.addValue("movieId", movie.getId());
-        namedParameterJdbcTemplate.update(setMovieSQL, mapSqlParameterSource);
+        namedParameterJdbcTemplate.update(updateMovieSQL, mapSqlParameterSource);
     }
 
     @Override

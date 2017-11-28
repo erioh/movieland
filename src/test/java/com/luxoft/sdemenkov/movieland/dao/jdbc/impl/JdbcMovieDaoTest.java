@@ -101,7 +101,7 @@ public class JdbcMovieDaoTest {
     public void set() throws Exception {
         Movie movie = MovieGenerator.getMovieForTest();
         movieDao.save(movie);
-        movieDao.set(movie);
+        movieDao.update(movie);
     }
 
     @Test

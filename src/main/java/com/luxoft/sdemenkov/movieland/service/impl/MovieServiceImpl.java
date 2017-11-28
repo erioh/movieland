@@ -76,11 +76,11 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     @Transactional
-    public void set(Movie movie) {
-        movieDao.set(movie);
+    public void update(Movie movie) {
+        movieDao.update(movie);
         genreService.mapMoviesGenre(movie);
         countryService.mapMoviesCountry(movie);
-        log.debug("set. Movie {} is successfully  updated", movie);
+        log.debug("update. Movie {} is successfully  updated", movie);
     }
 
     @Override

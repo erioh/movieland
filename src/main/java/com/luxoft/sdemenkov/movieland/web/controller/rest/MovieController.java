@@ -114,11 +114,11 @@ public class MovieController {
 
     @Protected(protectedBy = Role.ADMIN)
     @RequestMapping(value = "/{movieId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> setMovie(@RequestBody SaveMovieDto saveMovieDto) {
+    public ResponseEntity<?> updateMovie(@RequestBody SaveMovieDto saveMovieDto) {
         log.debug("setMovie. Method is called. Changes = {}", saveMovieDto);
         log.info("method setMovie is called");
         Movie movie = MovieBuilder.fromMovieDto(saveMovieDto).getMovie().getCountries().getGenres().build();
-        movieService.set(movie);
+        movieService.update(movie);
         return new ResponseEntity<>(new SaveMovieDto(movie), HttpStatus.OK);
     }
 
