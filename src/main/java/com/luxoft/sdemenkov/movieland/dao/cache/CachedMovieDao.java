@@ -124,4 +124,8 @@ public class CachedMovieDao implements MovieDao {
         return movieDao.getMoviesByGenre(genreId);
     }
 
+    public void invalidate() {
+        logger.info("Movie Cache is invalidated");
+        cachedMovieMap.clear();
+    }
 }

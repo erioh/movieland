@@ -27,7 +27,6 @@
         <constructor-arg value="https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange"/>
     </bean>
 
-    <bean name="genreDao" class="com.luxoft.sdemenkov.movieland.dao.cache.CachedGenreDao"/>
     <bean name="authenticationService" class="org.mockito.Mockito" factory-method="mock">
         <constructor-arg value="com.luxoft.sdemenkov.movieland.service.impl.AuthenticationServiceImpl"/>
     </bean>
