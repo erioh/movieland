@@ -114,11 +114,11 @@ public class MovieController {
 
     @Protected(protectedBy = Role.ADMIN)
     @RequestMapping(value = "/{movieId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> setMovie(@RequestBody SaveMovieDto saveMovieDto) {
+    public ResponseEntity<?> updateMovie(@RequestBody SaveMovieDto saveMovieDto) {
         log.debug("setMovie. Method is called. Changes = {}", saveMovieDto);
         log.info("method setMovie is called");
         Movie movie = MovieBuilder.fromMovieDto(saveMovieDto).getMovie().getCountries().getGenres().build();
-        movieService.set(movie);
+        movieService.update(movie);
         return new ResponseEntity<>(new SaveMovieDto(movie), HttpStatus.OK);
     }
 
@@ -162,16 +162,27 @@ public class MovieController {
 
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET,  produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> searchMovie(@RequestParam(value = "title") String title) {
+    @RequestMapping(value = "/search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> searchMovie(@RequestParam(value = "title") String title,
+                                         @RequestParam(value = "page", required = false) Integer pageNumber) {
         log.info("Starting search movie by title {}", title);
-        List<Movie> movieList = movieService.searchByTitle(title);
-        log.debug("searchMovie. Results of searching with title = {} is {}", title, movieList);
+        List<Movie> movieList;
+        if (null == pageNumber || 0 == pageNumber) {
+            movieList = movieService.searchByTitle(title);
+            log.debug("searchMovie. Results of searching with title = {} is {}", title, movieList);
+        } else {
+            try {
+                movieList = movieService.searchByTitle(title, pageNumber);
+            } catch (RuntimeException e) {
+                return new ResponseEntity<>(new ExceptionMessageDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+            }
+            log.debug("searchMovie. Results of searching with title = {} is {} for page number {}", title, movieList, pageNumber);
+        }
         List<SearchForMoviesDto> searchForMoviesDtoList = new ArrayList<>();
         for (Movie movie : movieList) {
             searchForMoviesDtoList.add(new SearchForMoviesDto(movie));
         }
-        return  new ResponseEntity<>(searchForMoviesDtoList, HttpStatus.OK);
+        return new ResponseEntity<>(searchForMoviesDtoList, HttpStatus.OK);
     }
 
     private void setMovieService(MovieService movieService) {

@@ -4,7 +4,7 @@ import com.luxoft.sdemenkov.movieland.model.business.Movie;
 
 import java.math.BigDecimal;
 
-public class SearchForMoviesDto{
+public class SearchForMoviesDto {
     private int id;
     private String nameRussian;
     private String nameNative;

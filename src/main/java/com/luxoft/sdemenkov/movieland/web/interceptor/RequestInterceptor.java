@@ -34,11 +34,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
         Optional<String> requestHeader = Optional.ofNullable(request.getHeader("x-auth-token"));
         logger.debug("String {} is received as uuid from header x-auth-token", requestHeader);
         Client client;
-        if (!requestHeader.isPresent()) {
-            client = authenticationService.getGuest();
-        } else {
-            client = authenticationService.getClientByUuid(UUID.fromString(requestHeader.get()));
-        }
+        client = requestHeader.map(s -> authenticationService.getClientByUuid(UUID.fromString(s))).orElseGet(() -> authenticationService.getGuest());
         try {
             validateToken(client, handler);
             TokenPrincipal principal = new TokenPrincipal(client.getToken());

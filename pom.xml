@@ -121,13 +121,13 @@
             <artifactId>jcl-over-slf4j</artifactId>
             <version>1.7.25</version>
         </dependency>
-        <!-- Needed to send emails -->
+
+        <!-- Needed for sending of emails-->
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.4.7</version>
         </dependency>
-
 
 
     </dependencies>
@@ -141,6 +141,7 @@
                 <configuration>
                     <path>/</path>
                     <path>/</path>
+                    <uriEncoding>UTF-8</uriEncoding>
                 </configuration>
             </plugin>
 

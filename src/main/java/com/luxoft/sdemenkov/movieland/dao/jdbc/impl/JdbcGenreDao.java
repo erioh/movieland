@@ -38,10 +38,10 @@ public class JdbcGenreDao implements GenreDao {
     @Autowired
     private String removeMappedGenresSQL;
 
-    public List<Genre> getGenreListByMove(Movie movie) {
+    public List<Genre> getGenreListByMovie(Movie movie) {
         List<Genre> genreList = jdbcTemplate.query(getGenreListByMovieSQL, new Object[]{movie.getId()}, GENRE_ROW_MAPPER);
-        log.debug("Calling method getGenreListByMove. with query = {}", getGenreListByMovieSQL);
-        log.debug("Calling method getGenreListByMove with movie_id = {}, ", movie.getId());
+        log.debug("Calling method getGenreListByMovie. with query = {}", getGenreListByMovieSQL);
+        log.debug("Calling method getGenreListByMovie with movie_id = {}, ", movie.getId());
         return genreList;
     }
 

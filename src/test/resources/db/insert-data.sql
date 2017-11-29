@@ -206,6 +206,9 @@ INSERT INTO users (user_id, user_name, user_email, password) VALUES
 	(8, 'Айда Дэвис', 'ida.davis80@example.com', 'pepsi1'),
 	(9, 'Джесси Паттерсон', 'jessie.patterson68@example.com', 'tommy'),
 	(10, 'Деннис Крейг', 'dennis.craig82@example.com', 'coldbeer');
-
-	insert into user_role (user_id, role_id) values (1,1);
 	insert into role (role_id, role) values (1, 'USER');
+	insert into role (role_id, role) values (2, 'ADMIN');
+	insert into user_role (user_id, role_id) values (1,1);
+	insert into user_role (user_id, role_id) values (2,2);
+	insert into user_role (user_id, role_id) values (3,1);
+    insert into rating  select movie_id, 1, rating from movie;

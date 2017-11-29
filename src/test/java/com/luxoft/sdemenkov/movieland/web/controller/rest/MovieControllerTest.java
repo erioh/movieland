@@ -304,4 +304,24 @@ public class MovieControllerTest {
                 .content(mapper.writeValueAsString(saveMovieDto)))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    public void searchMovie() throws Exception {
+        List<Movie> movieList = new ArrayList<>();
+        movieList.add(MovieGenerator.getMovieForTest());
+        when(mockedMovieService.searchByTitle(any())).thenReturn(movieList);
+        mockMvc.perform(get("/movie/search").param("title", "green")).andExpect(status().isOk())
+        ;
+    }
+
+    @Test
+    public void searchMovieLimited() throws Exception {
+        List<Movie> movieList = new ArrayList<>();
+        movieList.add(MovieGenerator.getMovieForTest());
+        when(mockedMovieService.searchByTitle(any(), anyInt())).thenReturn(movieList);
+        mockMvc.perform(get("/movie/search").param("title", "green").param("page", "2")).andExpect(status().isOk())
+        ;
+    }
+
+
 }

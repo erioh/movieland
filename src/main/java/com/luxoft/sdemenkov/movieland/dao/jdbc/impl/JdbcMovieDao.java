@@ -1,6 +1,7 @@
 package com.luxoft.sdemenkov.movieland.dao.jdbc.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
+import com.luxoft.sdemenkov.movieland.dao.jdbc.impl.util.QueryBuilder;
 import com.luxoft.sdemenkov.movieland.dao.mapper.MovieRowMapper;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ public class JdbcMovieDao implements MovieDao {
     @Autowired
     private String saveMovieSQL;
     @Autowired
-    private String setMovieSQL;
+    private String updateMovieSQL;
     @Autowired
     private String searchByTitleSQL;
 
@@ -109,7 +110,7 @@ public class JdbcMovieDao implements MovieDao {
     }
 
     @Override
-    public void set(Movie movie) {
+    public void update(Movie movie) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("nameRussian", movie.getNameRussian());
         mapSqlParameterSource.addValue("nameNative", movie.getNameNative());
@@ -119,7 +120,7 @@ public class JdbcMovieDao implements MovieDao {
         mapSqlParameterSource.addValue("price", movie.getPrice());
         mapSqlParameterSource.addValue("picturePath", movie.getPicturePath());
         mapSqlParameterSource.addValue("movieId", movie.getId());
-        namedParameterJdbcTemplate.update(setMovieSQL, mapSqlParameterSource);
+        namedParameterJdbcTemplate.update(updateMovieSQL, mapSqlParameterSource);
     }
 
     @Override
@@ -131,4 +132,19 @@ public class JdbcMovieDao implements MovieDao {
         log.debug("searchByTitle. movies {} were received with title like {}", movieList, title);
         return movieList;
     }
+
+    @Override
+    public List<Movie> searchByTitle(String title, int pageNumber, int moviesPerPage) {
+        String searchByTitleSQLLimited = QueryBuilder.forQuery(searchByTitleSQL)
+                .withLimit(pageNumber, moviesPerPage)
+                .build();
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("nameRussian", title);
+        mapSqlParameterSource.addValue("nameNative", title);
+        List<Movie> movieList = namedParameterJdbcTemplate.query(searchByTitleSQLLimited, mapSqlParameterSource, MOVIE_ROW_MAPPER);
+        log.debug("searchByTitle. movies {} were received with title like {}", movieList, title);
+        return movieList;
+    }
+
+
 }

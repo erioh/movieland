@@ -65,4 +65,9 @@ CREATE TABLE user_role (
   user_id INT NOT NULL,
   role_id INT NOT NULL,
   PRIMARY KEY (user_id, role_id));
-
+drop TABLE IF EXISTS rating;
+CREATE TABLE rating (
+  movie_id INT NOT NULL,
+  user_id INT NOT NULL,
+  rating DOUBLE NOT NULL,
+  PRIMARY KEY (movie_id, user_id));

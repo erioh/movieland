@@ -30,7 +30,7 @@ public class JdbcGenreDaoTest {
 
         Movie movie = new Movie();
         movie.setId(1);
-        List<Genre> actualGenreList = genreDao.getGenreListByMove(movie);
+        List<Genre> actualGenreList = genreDao.getGenreListByMovie(movie);
         assertEquals(2, actualGenreList.size());
         assertEquals(1, actualGenreList.get(0).getId());
         assertEquals(2, actualGenreList.get(1).getId());
