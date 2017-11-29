@@ -8,6 +8,7 @@
     <import resource="query/movie-query-context.xml"/>
     <import resource="query/genre-query-context.xml"/>
     <import resource="query/review-query-context.xml"/>
+    <import resource="query/rating-query-context.xml"/>
     <import resource="query/user-query-context.xml"/>
     <mvc:annotation-driven/>
 
@@ -36,7 +37,13 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <!--Use Cached Genre DAO bean-->
-    <bean name="genreDao" class="com.luxoft.sdemenkov.movieland.dao.cache.CachedGenreDao"/>
+
+
+    <bean id="rmiRegistry" class="org.springframework.remoting.rmi.RmiRegistryFactoryBean"/>
+    <bean id="mbeanExporter" class="org.springframework.jmx.export.annotation.AnnotationMBeanExporter"/>
+    <bean id="connectorServerBean" class="org.springframework.jmx.support.ConnectorServerFactoryBean" depends-on="rmiRegistry">
+        <property name="serviceUrl" value="service:jmx:rmi:///jndi/rmi://localhost:1099/movieland"/>
+    </bean>
+
 
 </beans>
