@@ -8,7 +8,6 @@
     <import resource="query/movie-query-context.xml"/>
     <import resource="query/genre-query-context.xml"/>
     <import resource="query/review-query-context.xml"/>
-    <import resource="query/rating-query-context.xml"/>
     <import resource="query/user-query-context.xml"/>
     <mvc:annotation-driven/>
 
