@@ -31,8 +31,8 @@ public class CachedGenreDao implements GenreDao {
     }
 
     @Override
-    public List<Genre> getGenreListByMove(Movie movie) {
-        return genreDao.getGenreListByMove(movie);
+    public List<Genre> getGenreListByMovie(Movie movie) {
+        return genreDao.getGenreListByMovie(movie);
     }
 
     @Override

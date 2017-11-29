@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public interface GenreDao {
-    List<Genre> getGenreListByMove(Movie movie);
+    List<Genre> getGenreListByMovie(Movie movie);
 
     List<Genre> getAll();
 
