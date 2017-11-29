@@ -24,11 +24,7 @@ public class TokenPrincipal implements Principal {
 
     @Override
     public String getName() {
-        if (token.isPresent()) {
-            return token.get().getUser().getEmail();
-        } else {
-            return "guest";
-        }
+        return token.map(token -> token.getUser().getEmail()).orElse("guest");
     }
 
     @Override

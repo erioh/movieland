@@ -28,17 +28,25 @@ public class CachedMovieDao implements MovieDao {
         List<Movie> movieListForReturn = new ArrayList<>();
         for (Integer id : ids) {
             Optional<SoftReference<Movie>> movieSoft = Optional.ofNullable(cachedMovieMap.get(id));
-            if (movieSoft.isPresent()) {
-                Optional<Movie> movieOptional = Optional.ofNullable(movieSoft.get().get());
-                movieListForReturn.add(movieOptional.get());
-                logger.debug("Cached getMovieListByIds. movie {} is found in cache", movieOptional);
-            } else {
+            try {
+                if (movieSoft.isPresent()) {
+                    Optional<Movie> movieOptional = Optional.ofNullable(movieSoft.get().get());
+                    if (movieOptional.isPresent()) {
+                        movieListForReturn.add(movieOptional.get());
+                        logger.debug("Cached getMovieListByIds. movie {} is found in cache", movieOptional);
+                    } else {
+                        throw new RuntimeException("cache is invalidated");
+                    }
+                } else {
+                    throw new RuntimeException("cache is invalidated");
+                }
+            } catch (RuntimeException e) {
                 logger.debug("Cached getMovieListByIds. movie with id ={} is not found in cache", id);
                 Set<Integer> nonChachedMovieId = new HashSet<>();
                 nonChachedMovieId.add(id);
                 List<Movie> movieListByIds = movieDao.getMovieListByIds(nonChachedMovieId);
                 movieListForReturn.add(movieListByIds.get(0));
-                cachedMovieMap.put(movieListByIds.get(0).getId(), new SoftReference<Movie>(movieListByIds.get(0)));
+                cachedMovieMap.put(movieListByIds.get(0).getId(), new SoftReference<>(movieListByIds.get(0)));
             }
         }
         return movieListForReturn;
@@ -47,7 +55,7 @@ public class CachedMovieDao implements MovieDao {
     @Override
     public void save(Movie movie) {
         logger.debug("Cached save. Method is called");
-        cachedMovieMap.put(movie.getId(), new SoftReference<Movie>(movie));
+        cachedMovieMap.put(movie.getId(), new SoftReference<>(movie));
         movieDao.save(movie);
 
     }
@@ -55,20 +63,29 @@ public class CachedMovieDao implements MovieDao {
     @Override
     public void update(Movie movie) {
         logger.debug("Cached update. Method is called");
-        Optional<SoftReference<Movie>> movieToBeChanged = Optional.empty();
+        Optional<SoftReference<Movie>> movieToBeChanged;
         movieToBeChanged = Optional.ofNullable(cachedMovieMap.get(movie.getId()));
 
-        if (movieToBeChanged.isPresent()) {
-            logger.debug("Cached update. movie {} is present in cache. ", movie);
-            logger.debug("Movie to be cached is {}", movieToBeChanged);
-            logger.debug("Stored cache is {}", cachedMovieMap);
-            int index = movieToBeChanged.get().get().getId();
-            logger.debug("Cached update. index of cached movie is  {} ", index);
-            cachedMovieMap.put(index, new SoftReference<Movie>(movie));
-            logger.debug("Cached update. movie {} is changed in cache. ", movie);
-        } else {
+        try {
+            if (movieToBeChanged.isPresent()) {
+                Optional<Movie> movieOptional = Optional.ofNullable(movieToBeChanged.get().get());
+                if (movieOptional.isPresent()) {
+                    int index = movieOptional.get().getId();
+                    cachedMovieMap.put(index, new SoftReference<>(movie));
+                    logger.debug("Cached update. movie {} is present in cache. ", movie);
+                    logger.debug("Movie to be cached is {}", movieToBeChanged);
+                    logger.debug("Stored cache is {}", cachedMovieMap);
+                    logger.debug("Cached update. index of cached movie is  {} ", index);
+                    logger.debug("Cached update. movie {} is changed in cache. ", movie);
+                } else {
+                    throw new RuntimeException("cache is invalidated");
+                }
+            } else {
+                throw new RuntimeException("cache is invalidated");
+            }
+        } catch (RuntimeException e) {
             logger.debug("Cached update. movie {} is NOT present in cache. ", movie);
-            cachedMovieMap.put(movie.getId(), new SoftReference<Movie>(movie));
+            cachedMovieMap.put(movie.getId(), new SoftReference<>(movie));
             logger.debug("Cached update. movie {} is putted into cache ", movie);
         }
 
