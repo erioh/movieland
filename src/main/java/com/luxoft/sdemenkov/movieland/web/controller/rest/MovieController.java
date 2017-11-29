@@ -2,15 +2,21 @@ package com.luxoft.sdemenkov.movieland.web.controller.rest;
 
 import com.luxoft.sdemenkov.movieland.model.business.Currency;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Rate;
+import com.luxoft.sdemenkov.movieland.model.business.User;
 import com.luxoft.sdemenkov.movieland.model.technical.Pair;
 import com.luxoft.sdemenkov.movieland.model.technical.SortDirection;
+import com.luxoft.sdemenkov.movieland.model.technical.Token;
 import com.luxoft.sdemenkov.movieland.security.Protected;
+import com.luxoft.sdemenkov.movieland.security.TokenPrincipal;
 import com.luxoft.sdemenkov.movieland.security.role.Role;
 import com.luxoft.sdemenkov.movieland.service.*;
 import com.luxoft.sdemenkov.movieland.service.api.Sortable;
+import com.luxoft.sdemenkov.movieland.web.dto.request.RateDto;
 import com.luxoft.sdemenkov.movieland.web.dto.request.SaveMovieDto;
 import com.luxoft.sdemenkov.movieland.web.dto.response.*;
 import com.luxoft.sdemenkov.movieland.web.util.MovieBuilder;
+import com.luxoft.sdemenkov.movieland.web.util.RateBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +41,8 @@ public class MovieController {
 
     @Autowired
     private SortService sortService;
+    @Autowired
+    private RateService rateService;
     @Autowired
     private CurrencyExchangeService currencyExchangeService;
 
@@ -183,6 +191,18 @@ public class MovieController {
             searchForMoviesDtoList.add(new SearchForMoviesDto(movie));
         }
         return new ResponseEntity<>(searchForMoviesDtoList, HttpStatus.OK);
+    }
+
+    @Protected(protectedBy = Role.USER)
+    @RequestMapping(value = "/{movieId}/rate", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public void rateMovie(@PathVariable(value = "movieId") Integer movieId, @RequestBody RateDto rateDto, TokenPrincipal principal) {
+        log.info("rateMovie is called");
+        log.debug("rateMovie is called for movieId = {} and rateDto = {}", movieId, rateDto);
+        Token token = principal.getToken().get();
+        User user = token.getUser();
+        Rate rate = RateBuilder.from(rateDto).withMovieId(movieId).withUser(user).build();
+        rateService.saveRate(rate);
+
     }
 
     private void setMovieService(MovieService movieService) {

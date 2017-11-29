@@ -9,6 +9,7 @@
     <import resource="classpath:/spring/query/movie-query-context.xml"/>
     <import resource="classpath:/spring/query/genre-query-context.xml"/>
     <import resource="classpath:/spring/query/review-query-context.xml"/>
+    <import resource="classpath:/spring/query/rating-query-context.xml"/>
     <import resource="classpath:/spring/query/user-query-context.xml"/>
 
     <jdbc:embedded-database id="dataSource" type="H2">
