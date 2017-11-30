@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jmx.export.annotation.ManagedOperation;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Repository;
 
 import java.lang.ref.SoftReference;
@@ -14,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 @Primary
+@ManagedResource(objectName = "MovieLandCache:name=MovieCacheInvalidator")
 public class CachedMovieDao implements MovieDao {
     private Map<Integer, SoftReference<Movie>> cachedMovieMap = new ConcurrentHashMap<>();
 
@@ -124,6 +127,7 @@ public class CachedMovieDao implements MovieDao {
         return movieDao.getMoviesByGenre(genreId);
     }
 
+    @ManagedOperation
     public void invalidate() {
         logger.info("Movie Cache is invalidated");
         cachedMovieMap.clear();
