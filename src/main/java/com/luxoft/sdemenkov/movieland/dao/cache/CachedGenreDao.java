@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jmx.export.annotation.ManagedOperation;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 @Repository
 @Primary
+@ManagedResource(objectName = "MovieLandCache:name=GenreCacheInvalidator")
 public class CachedGenreDao implements GenreDao {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
@@ -26,6 +29,7 @@ public class CachedGenreDao implements GenreDao {
     private volatile List<Genre> cachedGenreList = new ArrayList<>();
 
     @PostConstruct
+    @ManagedOperation
     @Scheduled(fixedRateString = "${cron.cache.genre.schedule}", initialDelayString = "${cron.cache.genre.schedule}")
     public void invalidate() {
         cachedGenreList = genreDao.getAll();
