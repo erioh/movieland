@@ -4,6 +4,7 @@ import com.luxoft.sdemenkov.movieland.dao.api.RateDao;
 import com.luxoft.sdemenkov.movieland.dao.mapper.RatingToCountOfRatedUsersRowMapper;
 import com.luxoft.sdemenkov.movieland.model.business.Rate;
 import com.luxoft.sdemenkov.movieland.model.technical.RatingToCounPair;
+import com.luxoft.sdemenkov.movieland.web.exception.WrongMovieIdException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +80,10 @@ public class JdbcRateDao implements RateDao {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("newRating", result);
         mapSqlParameterSource.addValue("movieId", movieId);
-        namedParameterJdbcTemplate.update(updateRateForMovieSql, mapSqlParameterSource);
+        int countOfChangedRows = namedParameterJdbcTemplate.update(updateRateForMovieSql, mapSqlParameterSource);
+        if (countOfChangedRows == 0 ) {
+            throw new WrongMovieIdException(movieId);
+        }
         return result;
     }
 }

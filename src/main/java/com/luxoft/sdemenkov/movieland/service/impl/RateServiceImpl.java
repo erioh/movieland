@@ -28,10 +28,6 @@ public class RateServiceImpl implements RateService {
     }
 
     public void validateRate(Rate rate) {
-        int movieId = rate.getMovieId();
-        if (movieId < 1) {
-            throw new WrongMovieIdException(movieId);
-        }
         double rating = rate.getRating();
         if (rating < 1 || rating > 10) {
             throw new WrongRateValueException(rating);

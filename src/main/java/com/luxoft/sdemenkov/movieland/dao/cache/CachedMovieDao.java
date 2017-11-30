@@ -22,6 +22,11 @@ public class CachedMovieDao implements MovieDao {
     @Autowired
     private MovieDao movieDao;
 
+    public void invalidate() {
+        cachedMovieMap.clear();
+        logger.debug("Cache for Movie is invalidated");
+    }
+
     @Override
     public List<Movie> getMovieListByIds(Set<Integer> ids) {
         logger.debug("Start cached getMovieListByIds. ");
