@@ -4,6 +4,7 @@ import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.service.CountryService;
 import com.luxoft.sdemenkov.movieland.service.GenreService;
+import com.luxoft.sdemenkov.movieland.service.RateService;
 import com.luxoft.sdemenkov.testutils.MovieGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -28,6 +30,8 @@ public class MovieServiceImplTest {
     private CountryService mockedCountryService;
     @Mock
     private GenreService mockedGenreService;
+    @Mock
+    private RateService mockedRateService;
 
     @Test
     public void getAllMovies() throws Exception {

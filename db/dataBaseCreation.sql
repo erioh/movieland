@@ -312,16 +312,37 @@ INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `password`) VALUES
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 
+DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `role_id` INT NOT NULL AUTO_INCREMENT,
   `role` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`role_id`));
 
   insert into `role` (role_id, role) value (1, 'USER');
+  insert into `role` (role_id, role) value (2, 'ADMIN');
 
+DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE `user_role` (
   `user_id` INT NOT NULL,
   `role_id` INT NOT NULL,
   PRIMARY KEY (`user_id`, `role_id`));
 
 insert into user_role (user_id, role_id) values (1,1);
+insert into user_role (user_id, role_id) values (2,2);
+insert into user_role (user_id, role_id) values (3,1);
+
+DROP TABLE IF EXISTS `rating`;
+CREATE TABLE `rating` (
+  `movie_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  `rating` DOUBLE NOT NULL,
+  PRIMARY KEY (`movie_id`, `user_id`));
+
+  insert into rating
+select movie_id, 1, rating from movie;
+
+ALTER TABLE `movie`.`movie`
+ADD COLUMN `number_of_rates` INT NOT NULL DEFAULT 0 AFTER `picture_path`;
+
+commit;
+

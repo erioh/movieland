@@ -23,5 +23,8 @@ group by movie_id;
     <bean id="updateRateForMovieSql" class="java.lang.String">
         <constructor-arg value="update movie set rating = :newRating where movie_id = :movieId;"/>
     </bean>
+    <bean id="getStoredRatingsSql" class="java.lang.String">
+        <constructor-arg value="select movie_id, user_id, rating from rating where movie_id = :movieId;"/>
+    </bean>
 
 </beans>

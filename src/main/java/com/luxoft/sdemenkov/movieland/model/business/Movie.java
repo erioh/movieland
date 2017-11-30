@@ -15,6 +15,7 @@ public class Movie {
     private List<Country> countryList;
     private List<Genre> genreList;
     private List<Review> reviewList;
+    private int numberOfRates;
 
 
     public Movie() {
@@ -100,6 +101,14 @@ public class Movie {
 
     public void setGenreList(List<Genre> genreList) {
         this.genreList = genreList;
+    }
+
+    public int getNumberOfRates() {
+        return numberOfRates;
+    }
+
+    public void setNumberOfRates(int numberOfRates) {
+        this.numberOfRates = numberOfRates;
     }
 
     @Override

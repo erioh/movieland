@@ -28,7 +28,7 @@
 
     <root>
         <appender-ref ref="FILE" level="DEBUG"/>
-        <appender-ref ref="EMAIL" level="DEBUG"/>
+        <!--<appender-ref ref="EMAIL" level="DEBUG"/>-->
     </root>
 
 

@@ -2,10 +2,7 @@ package com.luxoft.sdemenkov.movieland.service.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
-import com.luxoft.sdemenkov.movieland.service.CountryService;
-import com.luxoft.sdemenkov.movieland.service.GenreService;
-import com.luxoft.sdemenkov.movieland.service.MovieService;
-import com.luxoft.sdemenkov.movieland.service.ReviewService;
+import com.luxoft.sdemenkov.movieland.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +28,8 @@ public class MovieServiceImpl implements MovieService {
     private CountryService countryService;
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private RateService rateService;
 
     @Override
     public List<Movie> getAll() {
@@ -44,6 +43,9 @@ public class MovieServiceImpl implements MovieService {
         List<Movie> threeRandomMovies = movieDao.getThreeRandomMovies();
         genreService.enrichMoviesWithGenres(threeRandomMovies);
         countryService.enrichMoviesWithCountries(threeRandomMovies);
+        for (Movie movie : threeRandomMovies) {
+            movieDao.enrichMovieWithActualRates(movie);
+        }
         log.debug("Calling method getThreeRandomMovies");
         return threeRandomMovies;
     }
@@ -61,6 +63,7 @@ public class MovieServiceImpl implements MovieService {
         genreService.enrichMoviesWithGenres(movieList);
         countryService.enrichMoviesWithCountries(movieList);
         reviewService.enrichMoviesWithReviews(movieList);
+        movieDao.enrichMovieWithActualRates(movieList.get(0));
         log.debug("Method getMovieById is called for iss = {} with result = {}", movieIds, movieList);
         return movieList;
     }

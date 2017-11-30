@@ -2,6 +2,8 @@ package com.luxoft.sdemenkov.movieland.dao.cache;
 
 import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Rate;
+import com.luxoft.sdemenkov.movieland.model.technical.RatingToCountPair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +97,38 @@ public class CachedMovieDao implements MovieDao {
 
         movieDao.update(movie);
         logger.debug("Cached update. movie {} is changed in DataBase ", movie);
+    }
+
+    @Override
+    public double recalculateRateForMovie(int movieId, RatingToCountPair pair) {
+        return movieDao.recalculateRateForMovie(movieId, pair);
+    }
+
+    @Override
+    public int flush() {
+        invalidate();
+        return movieDao.flush();
+    }
+
+    @Override
+    public void enrichMovieWithActualRates(Movie movie) {
+        movieDao.enrichMovieWithActualRates(movie);
+
+    }
+
+    @Override
+    public boolean saveRate(Rate rate) {
+        return movieDao.saveRate(rate);
+    }
+
+    @Override
+    public int deleteUsersRateForMovie(int userId, int movieId) {
+        return movieDao.deleteUsersRateForMovie(userId, movieId);
+    }
+
+    @Override
+    public RatingToCountPair getRatingToCountPair(int movieId) {
+        return movieDao.getRatingToCountPair(movieId);
     }
 
     @Override
