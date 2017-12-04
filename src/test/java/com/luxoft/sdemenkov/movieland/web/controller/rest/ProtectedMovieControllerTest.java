@@ -7,7 +7,7 @@ import com.luxoft.sdemenkov.movieland.security.ReviewSecurityFilter;
 import com.luxoft.sdemenkov.movieland.security.TokenPrincipal;
 import com.luxoft.sdemenkov.movieland.security.client.Client;
 import com.luxoft.sdemenkov.movieland.security.role.Role;
-import com.luxoft.sdemenkov.movieland.service.RateService;
+import com.luxoft.sdemenkov.movieland.service.MovieService;
 import com.luxoft.sdemenkov.movieland.service.impl.AuthenticationServiceImpl;
 import com.luxoft.sdemenkov.movieland.web.dto.request.RateDto;
 import com.luxoft.sdemenkov.movieland.web.interceptor.RequestInterceptor;
@@ -30,6 +30,7 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -44,7 +45,8 @@ public class ProtectedMovieControllerTest {
     @Mock
     private AuthenticationServiceImpl authenticationService;
     @Mock
-    private RateService mockedRateService;
+    private MovieService movieService;
+
 
     @Before
     public void setUp() {

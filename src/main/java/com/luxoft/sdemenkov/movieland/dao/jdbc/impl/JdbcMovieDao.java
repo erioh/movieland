@@ -7,19 +7,17 @@ import com.luxoft.sdemenkov.movieland.dao.mapper.RatingToCountOfRatedUsersRowMap
 import com.luxoft.sdemenkov.movieland.dao.mapper.UserToRateRowMapper;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.model.business.Rate;
-import com.luxoft.sdemenkov.movieland.model.technical.RatingToCounPair;
 import com.luxoft.sdemenkov.movieland.model.technical.RatingToCountPair;
 import com.luxoft.sdemenkov.movieland.web.exception.WrongMovieIdException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +27,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Repository
-public class InaccurateJdbcMovieDao implements MovieDao {
+public class JdbcMovieDao implements MovieDao {
     private final static MovieRowMapper MOVIE_ROW_MAPPER = new MovieRowMapper();
     private final static Random RANDOM_GENERATOR = new Random();
     private final static RatingToCountOfRatedUsersRowMapper RATING_TO_COUNT_OF_RATED_USERS_ROW_MAPPER = new RatingToCountOfRatedUsersRowMapper();
@@ -68,6 +66,11 @@ public class InaccurateJdbcMovieDao implements MovieDao {
     private String isRatingAddedSql;
 
     private Queue<Rate> rateQueue = new ConcurrentLinkedQueue<>();
+
+    @Override
+    public void removeRate(Rate rate) {
+        rateQueue.remove(rate);
+    }
 
     @Override
     public List<Movie> getAll() {
@@ -171,17 +174,18 @@ public class InaccurateJdbcMovieDao implements MovieDao {
         log.debug("searchByTitle. movies {} were received with title like {}", movieList, title);
         return movieList;
     }
+
     @Override
     public double recalculateRateForMovie(int movieId, RatingToCountPair pair) {
         log.debug("recalculateRateForMovieInacurate. recalculating rating for movie with id = {} with pair = {}", movieId, pair);
 
         BigDecimal rating = BigDecimal.valueOf(pair.getRatingSum());
         BigDecimal count = BigDecimal.valueOf(pair.getCount());
-        BigDecimal newRating = rating.divide(count, BigDecimal.ROUND_HALF_DOWN).setScale(2, BigDecimal.ROUND_HALF_DOWN);
+        BigDecimal newRating = rating.divide(count).setScale(2, BigDecimal.ROUND_DOWN);
 
         double result = newRating.doubleValue();
 
-        log.debug("recalculateRateForMovieInacurate. result of caclulation is {} for pair {}", result, pair);
+        log.debug("recalculateRateForMovie. result of calculation is {} for pair {}", result, pair);
 
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("newRating", result);
@@ -189,60 +193,29 @@ public class InaccurateJdbcMovieDao implements MovieDao {
 
         int countOfChangedRows = namedParameterJdbcTemplate.update(inAccurateUpdateRateForMovieSql, mapSqlParameterSource);
         if (countOfChangedRows == 0) {
-            log.warn("Movie with id = {} is not present in DB. Rating is not added", movieId);
+            log.warn("countOfChangedRows is {}", countOfChangedRows);
             throw new WrongMovieIdException(movieId);
         }
 
         return result;
     }
-
-    public double recalculateRateForMovieAcurate(int movieId, RatingToCountPair pair) {
-        log.debug("recalculateRateForMovieInacurate. recalculating rating for movie with id = {} with pair = {}", movieId, pair);
-
-        BigDecimal rating = BigDecimal.valueOf(pair.getRatingSum());
-        BigDecimal count = BigDecimal.valueOf(pair.getCount());
-        BigDecimal newRating = rating.divide(count, BigDecimal.ROUND_HALF_DOWN).setScale(2, BigDecimal.ROUND_HALF_DOWN);
-
-        double result = newRating.doubleValue();
-
-        log.debug("recalculateRateForMovieInacurate. result of caclulation is {} for pair {}", result, pair);
-
-        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("newRating", result);
-        mapSqlParameterSource.addValue("movieId", movieId);
-
-        int countOfChangedRows = namedParameterJdbcTemplate.update(updateRateForMovieSql, mapSqlParameterSource);
-        if (countOfChangedRows == 0) {
-            log.warn("Movie with id = {} is not present in DB. Rating is not added", movieId);
-            throw new WrongMovieIdException(movieId);
-        }
-
-        return result;
-    }
-
-
-
 
     @Override
-    @Scheduled(fixedDelayString = "${cron.dao.rates.buffered.flush}", initialDelayString = "${cron.dao.rates.buffered.flush}")
+    public Queue<Rate> getBufferedRates() {
+        return rateQueue;
+    }
+
+    @Override
     @Transactional
-    @PreDestroy
-    public int flush() {
+    public int flushAll() {
         log.debug("Flushing rates. List if rates = {}", rateQueue);
         int count = 0;
         for (Rate rate : rateQueue) {
             try {
-                deleteUsersRateForMovie(rate.getUserId(), rate.getMovieId());
-
-                MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-                mapSqlParameterSource.addValue("movieId", rate.getMovieId());
-                mapSqlParameterSource.addValue("userId", rate.getUserId());
-                mapSqlParameterSource.addValue("rating", rate.getRating());
-                namedParameterJdbcTemplate.update(saveRateSql, mapSqlParameterSource);
-
-                RatingToCountPair pair = getRatingToCountPair(rate.getMovieId());
-
-                recalculateRateForMovie(rate.getMovieId(), pair);
+                flush(rate);
+            } catch (WrongMovieIdException e) {
+                log.warn("Movie with id = {} is not present in DB. Rating is not added", rate.getMovieId());
+                log.warn(e.getMessage());
             } finally {
                 rateQueue.remove(rate);
             }
@@ -252,16 +225,35 @@ public class InaccurateJdbcMovieDao implements MovieDao {
     }
 
     @Override
-    public void enrichMovieWithActualRates(Movie movie) {
+    @Transactional
+    public double flush(Rate rate) {
+        deleteUsersRateForMovie(rate.getUserId(), rate.getMovieId());
+        saveRateToDb(rate);
+        RatingToCountPair pair = getRatingToCountPair(rate.getMovieId());
+        return recalculateRateForMovie(rate.getMovieId(), pair);
+    }
+
+    @Override
+    public void saveRateToDb(Rate rate) {
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("movieId", rate.getMovieId());
+        mapSqlParameterSource.addValue("userId", rate.getUserId());
+        mapSqlParameterSource.addValue("rating", rate.getRating());
+        namedParameterJdbcTemplate.update(saveRateSql, mapSqlParameterSource);
+    }
+
+    @Override
+    public Movie enrichMovieWithActualRates(Movie movie) {
         log.info("Starting enrich with actual rating");
 
+        Movie localMovie = new Movie(movie);
         log.debug("Getting sum of stored filtered rates and count of users");
-        int count = movie.getNumberOfRates();
-        double rating = movie.getRating()*count;
+        int count = localMovie.getNumberOfRates();
+        double rating = localMovie.getRating() * count;
 
         log.debug("Adding not stored ratings {}", rateQueue);
         for (Rate rate : rateQueue) {
-            if (rate.getMovieId() == movie.getId()) {
+            if (rate.getMovieId() == localMovie.getId()) {
                 count++;
                 rating += rate.getRating();
             }
@@ -269,11 +261,22 @@ public class InaccurateJdbcMovieDao implements MovieDao {
 
         log.debug("Calculating ratings AVG");
         BigDecimal sumOfRatings = BigDecimal.valueOf(rating);
+        log.debug("getting sumOfRatings {}", sumOfRatings);
         BigDecimal countOfRatings = BigDecimal.valueOf(count);
-        BigDecimal calculatedRating = sumOfRatings
-                .divide(countOfRatings, BigDecimal.ROUND_HALF_DOWN)
-                .setScale(2, BigDecimal.ROUND_HALF_DOWN);
-        movie.setRating(calculatedRating.doubleValue());
+        log.debug("getting countOfRatings {}", countOfRatings);
+
+        BigDecimal calculatedRating;
+        try {
+            calculatedRating = sumOfRatings
+                    .divide(countOfRatings)
+                    .setScale(2, BigDecimal.ROUND_DOWN);
+            log.debug("getting calculatedRating {}", calculatedRating);
+        } catch (ArithmeticException e) {
+            log.debug("Movie {} is not rated yet", movie);
+            calculatedRating = BigDecimal.ZERO;
+        }
+        localMovie.setRating(calculatedRating.doubleValue());
+        return localMovie;
     }
 
     @Override
@@ -301,8 +304,15 @@ public class InaccurateJdbcMovieDao implements MovieDao {
         log.debug("getRatingToCountPair. getting SUM(rating) and count of rated users for movie with id = {}", movieId);
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("movieId", movieId);
-        RatingToCountPair pair = namedParameterJdbcTemplate.queryForObject(getSumRatingWithCountOfRatedUsersSql, mapSqlParameterSource, RATING_TO_COUNT_OF_RATED_USERS_ROW_MAPPER);
-        log.debug("getRatingToCountPair. pair = {}", pair);
-        return pair;
+        RatingToCountPair pair = null;
+        try {
+            pair = namedParameterJdbcTemplate.queryForObject(getSumRatingWithCountOfRatedUsersSql, mapSqlParameterSource, RATING_TO_COUNT_OF_RATED_USERS_ROW_MAPPER);
+        } catch (EmptyResultDataAccessException e) {
+            log.debug("Looks like movie with id = {} is not rated yet", movieId);
+            pair = new RatingToCountPair(0, 0);
+        } finally {
+            log.debug("getRatingToCountPair. pair = {}", pair);
+            return pair;
+        }
     }
 }

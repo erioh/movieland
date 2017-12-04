@@ -4,7 +4,9 @@ import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.model.business.Rate;
 import com.luxoft.sdemenkov.movieland.model.technical.RatingToCountPair;
 
+import javax.annotation.PreDestroy;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 
 
@@ -28,8 +30,17 @@ public interface MovieDao {
     List<Movie> searchByTitle(String title, int pageNumber, int moviesPerPage);
 
     double recalculateRateForMovie(int movieId, RatingToCountPair pair);
-    int flush();
-    void enrichMovieWithActualRates(Movie movie);
+
+    void removeRate(Rate rate);
+
+    double flush(Rate rate);
+
+    Queue<Rate> getBufferedRates();
+
+    int flushAll();
+    void saveRateToDb(Rate rate);
+
+    Movie enrichMovieWithActualRates(Movie movie);
     boolean saveRate(Rate rate);
     int deleteUsersRateForMovie(int userId, int movieId);
     RatingToCountPair getRatingToCountPair(int movieId);

@@ -1,6 +1,7 @@
 package com.luxoft.sdemenkov.movieland.service;
 
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Rate;
 
 import java.util.List;
 import java.util.Set;
@@ -22,4 +23,6 @@ public interface MovieService {
     List<Movie> searchByTitle(String title);
 
     List<Movie> searchByTitle(String title, int pageNumber);
+
+    void saveRate(Rate rate);
 }

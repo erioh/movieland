@@ -4,12 +4,14 @@ import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.model.business.Rate;
 import com.luxoft.sdemenkov.movieland.model.technical.RatingToCountPair;
+import com.luxoft.sdemenkov.movieland.web.exception.WrongMovieIdException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
 import java.lang.ref.SoftReference;
@@ -41,12 +43,12 @@ public class CachedMovieDao implements MovieDao {
                         movieListForReturn.add(movieOptional.get());
                         logger.debug("Cached getMovieListByIds. movie {} is found in cache", movieOptional);
                     } else {
-                        throw new RuntimeException("cache is invalidated");
+                        throw new NullPointerException("cache is invalidated");
                     }
                 } else {
-                    throw new RuntimeException("cache is invalidated");
+                    throw new NullPointerException("cache is invalidated");
                 }
-            } catch (RuntimeException e) {
+            } catch (NullPointerException e) {
                 logger.debug("Cached getMovieListByIds. movie with id ={} is not found in cache", id);
                 Set<Integer> nonChachedMovieId = new HashSet<>();
                 nonChachedMovieId.add(id);
@@ -84,12 +86,12 @@ public class CachedMovieDao implements MovieDao {
                     logger.debug("Cached update. index of cached movie is  {} ", index);
                     logger.debug("Cached update. movie {} is changed in cache. ", movie);
                 } else {
-                    throw new RuntimeException("cache is invalidated");
+                    throw new NullPointerException("cache is invalidated");
                 }
             } else {
-                throw new RuntimeException("cache is invalidated");
+                throw new NullPointerException("cache is invalidated");
             }
-        } catch (RuntimeException e) {
+        } catch (NullPointerException e) {
             logger.debug("Cached update. movie {} is NOT present in cache. ", movie);
             cachedMovieMap.put(movie.getId(), new SoftReference<>(movie));
             logger.debug("Cached update. movie {} is putted into cache ", movie);
@@ -105,15 +107,47 @@ public class CachedMovieDao implements MovieDao {
     }
 
     @Override
-    public int flush() {
-        invalidate();
-        return movieDao.flush();
+    @Scheduled(fixedDelayString = "${cron.dao.rates.buffered.flush}", initialDelayString = "${cron.dao.rates.buffered.flush}")
+    public int flushAll() {
+        int count = 0;
+        Queue<Rate> rateQueue = getBufferedRates();
+        for (Rate rate : rateQueue) {
+            count++;
+            try {
+                double newRate = flush(rate);
+                SoftReference<Movie> movieSoftReference = cachedMovieMap.get(rate.getMovieId());
+                Movie movie = movieSoftReference.get();
+                movie.setRating(newRate);
+            } catch (NullPointerException e) {
+                logger.warn("movie with id = {} is removed from cache", rate.getMovieId());
+            } catch (WrongMovieIdException e) {
+                logger.warn("Movie with id = {} is not present in DB. Rating is not added", rate.getMovieId());
+            }finally {
+                removeRate(rate);
+            }
+        }
+        return count;
     }
 
     @Override
-    public void enrichMovieWithActualRates(Movie movie) {
-        movieDao.enrichMovieWithActualRates(movie);
+    public Queue<Rate> getBufferedRates() {
+        return movieDao.getBufferedRates();
+    }
 
+    @Override
+    public void removeRate(Rate rate) {
+        logger.debug("Rate {} is removed from buffer", rate);
+        movieDao.removeRate(rate);
+    }
+
+    @Override
+    public double flush(Rate rate) {
+        return movieDao.flush(rate);
+    }
+
+    @Override
+    public Movie enrichMovieWithActualRates(Movie movie) {
+        return movieDao.enrichMovieWithActualRates(movie);
     }
 
     @Override
@@ -162,6 +196,10 @@ public class CachedMovieDao implements MovieDao {
         return movieDao.getMoviesByGenre(genreId);
     }
 
+    @Override
+    public void saveRateToDb(Rate rate) {
+        movieDao.saveRateToDb(rate);
+    }
 
     @ManagedOperation
     public void invalidate() {

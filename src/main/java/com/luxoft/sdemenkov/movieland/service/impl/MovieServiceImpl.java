@@ -2,7 +2,9 @@ package com.luxoft.sdemenkov.movieland.service.impl;
 
 import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Rate;
 import com.luxoft.sdemenkov.movieland.service.*;
+import com.luxoft.sdemenkov.movieland.web.exception.WrongRateValueException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -28,8 +31,6 @@ public class MovieServiceImpl implements MovieService {
     private CountryService countryService;
     @Autowired
     private ReviewService reviewService;
-    @Autowired
-    private RateService rateService;
 
     @Override
     public List<Movie> getAll() {
@@ -63,9 +64,11 @@ public class MovieServiceImpl implements MovieService {
         genreService.enrichMoviesWithGenres(movieList);
         countryService.enrichMoviesWithCountries(movieList);
         reviewService.enrichMoviesWithReviews(movieList);
-        movieDao.enrichMovieWithActualRates(movieList.get(0));
+        Movie movie = movieDao.enrichMovieWithActualRates(movieList.get(0));
+        List<Movie> movieForReturn = new ArrayList<>();
+        movieForReturn.add(movie);
         log.debug("Method getMovieById is called for iss = {} with result = {}", movieIds, movieList);
-        return movieList;
+        return movieForReturn;
     }
 
     @Override
@@ -97,5 +100,18 @@ public class MovieServiceImpl implements MovieService {
             throw new RuntimeException("Page number " + pageNumber + " is not valid");
         }
         return movieDao.searchByTitle(title, pageNumber, moviesPerPage);
+    }
+
+    @Override
+    public void saveRate(Rate rate) {
+        validateRate(rate);
+        movieDao.saveRate(rate);
+    }
+
+    public void validateRate(Rate rate) {
+        double rating = rate.getRating();
+        if (rating < 1 || rating > 10) {
+            throw new WrongRateValueException(rating);
+        }
     }
 }

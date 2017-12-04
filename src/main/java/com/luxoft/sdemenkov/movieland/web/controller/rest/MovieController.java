@@ -42,8 +42,6 @@ public class MovieController {
     @Autowired
     private SortService sortService;
     @Autowired
-    private RateService rateService;
-    @Autowired
     private CurrencyExchangeService currencyExchangeService;
 
     @Autowired
@@ -201,7 +199,7 @@ public class MovieController {
         Token token = principal.getToken().get();
         User user = token.getUser();
         Rate rate = RateBuilder.from(rateDto).withMovieId(movieId).withUser(user).build();
-        rateService.saveRate(rate);
+        movieService.saveRate(rate);
 
     }
 

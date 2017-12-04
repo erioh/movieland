@@ -1,6 +1,8 @@
 package com.luxoft.sdemenkov.movieland.model.business;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Movie {
@@ -19,6 +21,24 @@ public class Movie {
 
 
     public Movie() {
+    }
+
+    public Movie(Movie movie) {
+        id = movie.getId();
+        nameRussian = movie.getNameRussian();
+        nameNative = movie.getNameNative();
+        yearOfRelease = movie.getYearOfRelease();
+        description = movie.getDescription();
+        rating = movie.getRating();
+        price = movie.price;
+        picturePath = movie.getPicturePath();
+        numberOfRates = movie.numberOfRates;
+        countryList = new ArrayList<>();
+        countryList.addAll(movie.countryList);
+        genreList = new ArrayList<>();
+        genreList.addAll(movie.genreList);
+        reviewList = new ArrayList<>();
+        reviewList.addAll(movie.reviewList);
     }
 
     public int getId() {
