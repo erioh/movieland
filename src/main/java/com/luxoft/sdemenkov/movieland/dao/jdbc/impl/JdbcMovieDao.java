@@ -253,14 +253,10 @@ public class JdbcMovieDao implements MovieDao {
 
         log.debug("Adding not stored ratings {}", rateQueue);
         for (Rate rate : rateQueue) {
-            try {
                 if (rate.getMovieId() == localMovie.getId()) {
                     count++;
-                    double rateRating = rate.getRating();
+                    rating += rate.getRating();
                 }
-            } catch (NullPointerException e) {
-                log.warn("enrichMovieWithActualRates. Rate for movie with id {} is not available any more in buffer", localMovie.getId());
-            }
         }
 
         log.debug("Calculating ratings AVG");
