@@ -20,7 +20,7 @@ public class MovieEnrichmentServiceImpl implements MovieEnrichmentService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Value("${cron.movie.enrich.timeout.milliseconds}")
-    private int timeoutSeconds;
+    private int timeoutMilliseconds;
     @Autowired
     private GenreService genreService;
     @Autowired
@@ -33,7 +33,7 @@ public class MovieEnrichmentServiceImpl implements MovieEnrichmentService {
     @Override
     public void enrich(List<Movie> movieList) {
         logger.info("Parallel Enrichment is started");
-        long deadLine = timeoutSeconds + System.currentTimeMillis();
+        long deadLine = timeoutMilliseconds + System.currentTimeMillis();
         Future<?> enrichWithGenre = threadPool.submit(() -> genreService.enrichMoviesWithGenres(movieList));
         Future<?> enrichWithCountry = threadPool.submit(() -> countryService.enrichMoviesWithCountries(movieList));
         Future<?> enrichWithReview = threadPool.submit(() -> reviewService.enrichMoviesWithReviews(movieList));
@@ -44,7 +44,10 @@ public class MovieEnrichmentServiceImpl implements MovieEnrichmentService {
         enrichServiceFutureList.add(enrichWithReview);
         for (Future<?> enrichService : enrichServiceFutureList) {
             try {
-                long timeToDie = deadLine - System.currentTimeMillis();
+                long timeToDie;
+                if(( timeToDie= deadLine - System.currentTimeMillis()) < 0) {
+                    timeToDie = 0;
+                }
                 enrichService.get(timeToDie, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
                 logger.warn("Enrichment  is interrupted");
@@ -55,8 +58,9 @@ public class MovieEnrichmentServiceImpl implements MovieEnrichmentService {
                 enrichService.cancel(true);
                 logger.warn("Enrichment is interrupted by Timeout");
             }
-            logger.debug("Enrichment is finished. ");
+
         }
+        logger.debug("Enrichment is finished. ");
     }
 
 }
