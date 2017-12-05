@@ -35,14 +35,23 @@ public class MovieByIdDto {
         this.rating = movie.getRating();
         this.price = movie.getPrice();
         this.picturePath = movie.getPicturePath();
-        for (Country country : movie.getCountryList()) {
-            this.countries.add(new CountryDto(country));
+        List<Country> countryList = movie.getCountryList();
+        if (null != countryList) {
+            for (Country country : countryList) {
+                this.countries.add(new CountryDto(country));
+            }
         }
-        for (Genre genre : movie.getGenreList()) {
-            this.genres.add(new GenreDto(genre));
+        List<Genre> genreList =movie.getGenreList();
+        if (null != genreList) {
+            for (Genre genre : genreList) {
+                this.genres.add(new GenreDto(genre));
+            }
         }
-        for (Review review : movie.getReviewList()) {
-            this.reviews.add(new ReviewDto(review));
+        List<Review> reviewList = movie.getReviewList();
+        if (null != reviewList) {
+            for (Review review : reviewList) {
+                this.reviews.add(new ReviewDto(review));
+            }
         }
     }
 
