@@ -91,11 +91,6 @@ public class MovieController {
             @RequestParam(value = "currency", required = false) String currency) {
         log.info("Method getMoviesById is called");
         log.debug("Start validation of input parameter");
-        try {
-            Currency cur = currencyValidationService.getCurrency(currency);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(new ExceptionMessageDto(e.getMessage()), HttpStatus.BAD_REQUEST);
-        }
         log.debug("Validation of input parameter is finished");
 
         long startTime = System.currentTimeMillis();

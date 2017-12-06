@@ -59,6 +59,10 @@ public class JdbcCountryDao implements CountryDao {
         for (Movie movie : movieList) {
             List<Country> countryList = new ArrayList<>();
             for (Map<String, Object> map : list) {
+                if(Thread.currentThread().isInterrupted()) {
+                    log.info("enrichMoviesWithCountries was interrupted due to timeout");
+                    break;
+                }
                 if ((Integer) map.get("movie_id") == movie.getId()) {
                     Country country = new Country();
                     country.setId((Integer) map.get("country_id"));

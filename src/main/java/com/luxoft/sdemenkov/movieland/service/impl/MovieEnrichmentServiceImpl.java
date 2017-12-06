@@ -52,8 +52,7 @@ public class MovieEnrichmentServiceImpl implements MovieEnrichmentService {
             } catch (InterruptedException e) {
                 logger.warn("Enrichment  is interrupted");
             } catch (ExecutionException e) {
-                logger.error("Enrichment is interrupted with exception {}", e.getMessage());
-                logger.error(e.getMessage());
+                logger.error("Enrichment is interrupted with exception {}", e);
             } catch (TimeoutException e) {
                 enrichService.cancel(true);
                 logger.warn("Enrichment is interrupted by Timeout");

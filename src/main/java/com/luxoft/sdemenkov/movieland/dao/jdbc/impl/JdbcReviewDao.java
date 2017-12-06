@@ -39,6 +39,10 @@ public class JdbcReviewDao implements ReviewDao {
         for (Movie movie : movieList) {
             List<Review> reviewList = new ArrayList<>();
             for (Pair<Integer, Review> integerReviewPair : responseList) {
+                if(Thread.currentThread().isInterrupted()) {
+                    log.info("enrichMoviesWithReviews was interrupted due to timeout");
+                    break;
+                }
                 if (movie.getId() == integerReviewPair.getFirstValue()) {
                     reviewList.add(integerReviewPair.getSecondValue());
                 }
