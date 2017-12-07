@@ -57,12 +57,12 @@ public class JdbcCountryDao implements CountryDao {
         List<Map<String, Object>> list = namedParameterJdbcTemplate.queryForList(getCountryWithMappedMovieIdSQL, sqlParameterSource);
 
         for (Movie movie : movieList) {
+            if(Thread.currentThread().isInterrupted()) {
+                log.info("enrichMoviesWithCountries was interrupted due to timeout");
+                break;
+            }
             List<Country> countryList = new ArrayList<>();
             for (Map<String, Object> map : list) {
-                if(Thread.currentThread().isInterrupted()) {
-                    log.info("enrichMoviesWithCountries was interrupted due to timeout");
-                    break;
-                }
                 if ((Integer) map.get("movie_id") == movie.getId()) {
                     Country country = new Country();
                     country.setId((Integer) map.get("country_id"));

@@ -34,27 +34,27 @@ public class MovieEnrichmentServiceImpl implements MovieEnrichmentService {
     public void enrich(List<Movie> movieList) {
         logger.info("Parallel Enrichment is started");
         long deadLine = timeoutMilliseconds + System.currentTimeMillis();
-        Future<?> enrichWithGenre = threadPool.submit(() -> genreService.enrichMoviesWithGenres(movieList));
-        Future<?> enrichWithCountry = threadPool.submit(() -> countryService.enrichMoviesWithCountries(movieList));
-        Future<?> enrichWithReview = threadPool.submit(() -> reviewService.enrichMoviesWithReviews(movieList));
+        Future<?> enrichWithGenreFuture = threadPool.submit(() -> genreService.enrichMoviesWithGenres(movieList));
+        Future<?> enrichWithCountryFuture = threadPool.submit(() -> countryService.enrichMoviesWithCountries(movieList));
+        Future<?> enrichWithReviewFuture = threadPool.submit(() -> reviewService.enrichMoviesWithReviews(movieList));
 
         List<Future<?>> enrichServiceFutureList = new ArrayList<>();
-        enrichServiceFutureList.add(enrichWithGenre);
-        enrichServiceFutureList.add(enrichWithCountry);
-        enrichServiceFutureList.add(enrichWithReview);
-        for (Future<?> enrichService : enrichServiceFutureList) {
+        enrichServiceFutureList.add(enrichWithGenreFuture);
+        enrichServiceFutureList.add(enrichWithCountryFuture);
+        enrichServiceFutureList.add(enrichWithReviewFuture);
+        for (Future<?> enrichServiceFutue : enrichServiceFutureList) {
             try {
                 long timeToDie;
                 if(( timeToDie= deadLine - System.currentTimeMillis()) < 0) {
                     timeToDie = 0;
                 }
-                enrichService.get(timeToDie, TimeUnit.MILLISECONDS);
+                enrichServiceFutue.get(timeToDie, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
-                logger.warn("Enrichment  is interrupted");
+                logger.warn("Enrichment  is interrupted by somebody else");
             } catch (ExecutionException e) {
                 logger.error("Enrichment is interrupted with exception {}", e);
             } catch (TimeoutException e) {
-                enrichService.cancel(true);
+                enrichServiceFutue.cancel(true);
                 logger.warn("Enrichment is interrupted by Timeout");
             }
 

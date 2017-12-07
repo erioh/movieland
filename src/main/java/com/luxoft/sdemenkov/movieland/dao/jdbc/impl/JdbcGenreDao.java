@@ -61,13 +61,13 @@ public class JdbcGenreDao implements GenreDao {
         List<Map<String, Object>> list = namedParameterJdbcTemplate.queryForList(getGenreWithMappedMovieSQL, sqlParameterSource);
 
         for (Movie movie : movieList) {
+            if(Thread.currentThread().isInterrupted()) {
+                log.info("enrichMoviesWithGenres was interrupted due to timeout");
+                break;
+            }
             List<Genre> genreList = new ArrayList<>();
             for (Map<String, Object> map : list) {
                 if ((Integer) map.get("movie_id") == movie.getId()) {
-                    if(Thread.currentThread().isInterrupted()) {
-                        log.info("enrichMoviesWithGenres was interrupted due to timeout");
-                        break;
-                    }
                     Genre genre = new Genre((Integer) map.get("genre_id"), (String) map.get("name"));
                     genreList.add(genre);
                 }
