@@ -37,6 +37,10 @@ public class JdbcReviewDao implements ReviewDao {
         mapSqlParameterSource.addValue("ids", ids);
         List<Pair<Integer, Review>> responseList = namedParameterJdbcTemplate.query(getReviewByMovieIdsSQL, mapSqlParameterSource, REVIEW_TO_MOVIE_ROW_MAPPER);
         for (Movie movie : movieList) {
+            if(Thread.currentThread().isInterrupted()) {
+                log.info("enrichMoviesWithReviews was interrupted due to timeout");
+                break;
+            }
             List<Review> reviewList = new ArrayList<>();
             for (Pair<Integer, Review> integerReviewPair : responseList) {
                 if (movie.getId() == integerReviewPair.getFirstValue()) {

@@ -38,7 +38,6 @@ public class MovieBuilder {
         if (this.saveMovieDto.getCountries() == null) {
             return this;
         }
-        countryList = new ArrayList<>();
         for (Integer countryId : this.saveMovieDto.getCountries()) {
             this.countryList.add(new Country(countryId));
         }
