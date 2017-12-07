@@ -50,7 +50,7 @@ public class MovieEnrichmentServiceImpl implements MovieEnrichmentService {
                 }
                 enrichServiceFutue.get(timeToDie, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
-                logger.warn("Enrichment  is interrupted by somebody else");
+                logger.warn("Enrichment  is suddenly interrupted");
             } catch (ExecutionException e) {
                 logger.error("Enrichment is interrupted with exception {}", e);
             } catch (TimeoutException e) {
