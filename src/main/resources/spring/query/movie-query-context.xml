@@ -42,6 +42,9 @@ where movie_id = :movieId;"/>
         where lower(m.name_russian) like CONCAT('%', lower(:nameRussian), '%')
         or lower(m.name_native) like CONCAT('%',lower(:nameNative),'%');"/>
     </bean>
+    <bean id="saveRateMovieSql" class="java.lang.String">
+        <constructor-arg value=""/>
+    </bean>
 
 
 

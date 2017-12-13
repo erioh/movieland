@@ -2,6 +2,7 @@ package com.luxoft.sdemenkov.movieland.dao.cache;
 
 import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Rate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,6 +105,26 @@ public class CachedMovieDao implements MovieDao {
     @Override
     public List<Movie> searchByTitle(String title, int pageNumber, int moviesPerPage) {
         return movieDao.searchByTitle(title, pageNumber, moviesPerPage);
+    }
+
+    @Override
+    public void rateMovies(Queue<Rate> rateQueue) {
+        movieDao.rateMovies(rateQueue);
+        for (Rate rate : rateQueue) {
+            SoftReference<Movie> movieSoftReference = cachedMovieMap.get(rate.getMovieId());
+            if (movieSoftReference != null) {
+                Movie movie = movieSoftReference.get();
+                if (movie != null) {
+                    double rating = movie.getRating();
+                    int numberOfRates = movie.getNumberOfRates();
+                    rating += rate.getRating();
+                    numberOfRates++;
+                    double newAvgRate = rating/numberOfRates;
+                    movie.setRating(newAvgRate);
+                    movie.setNumberOfRates(numberOfRates);
+                }
+            }
+        }
     }
 
 

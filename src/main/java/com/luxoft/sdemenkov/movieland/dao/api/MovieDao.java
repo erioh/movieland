@@ -1,8 +1,10 @@
 package com.luxoft.sdemenkov.movieland.dao.api;
 
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Rate;
 
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 
 
@@ -24,4 +26,6 @@ public interface MovieDao {
     List<Movie> searchByTitle(String title);
 
     List<Movie> searchByTitle(String title, int pageNumber, int moviesPerPage);
+
+    void rateMovies(Queue<Rate> rateQueue);
 }

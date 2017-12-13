@@ -1,9 +1,10 @@
 package com.luxoft.sdemenkov.movieland.service.impl;
 
 
-import com.luxoft.sdemenkov.movieland.dao.jdbc.impl.JdbcRateDao;
+import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
 import com.luxoft.sdemenkov.movieland.model.business.Rate;
+import com.luxoft.sdemenkov.movieland.service.MovieService;
 import com.luxoft.sdemenkov.movieland.service.RateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,7 @@ public class RateServiceImpl implements RateService {
 
     private Queue<Rate> rateQueue = new ConcurrentLinkedQueue<>();
     @Autowired
-    private JdbcRateDao rateDao;
+    private MovieDao movieDao;
 
     @Override
     public void saveRate(Rate rate) {
@@ -36,14 +37,13 @@ public class RateServiceImpl implements RateService {
         rateQueue.add(rate);
 
     }
-
-
+    
     @Override
     @Transactional
     @Scheduled(fixedDelayString = "${cron.dao.rates.buffered.flush}", initialDelayString = "${cron.dao.rates.buffered.flush}")
     public void flushAll() {
         logger.debug("Flushing rates. List if rates = {}", rateQueue);
-        rateDao.saveBufferedRates(rateQueue);
+            movieDao.rateMovies(rateQueue);
         rateQueue.clear();
     }
 
@@ -73,7 +73,6 @@ public class RateServiceImpl implements RateService {
         if(countOfRatings.equals(BigDecimal.ZERO)) {
             logger.debug("Movie {} is not rated yet", movie);
             calculatedRating = BigDecimal.ZERO;
-
         } else  {
             calculatedRating = sumOfRatings
                     .divide(countOfRatings)

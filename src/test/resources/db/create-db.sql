@@ -22,6 +22,7 @@ CREATE TABLE movie (
   rating double NOT NULL,
   price double NOT NULL,
   PICTURE_PATH varchar(5000),
+  NUMBER_OF_RATES integer DEFAULT 0,
   PRIMARY KEY (movie_id)
 );
 drop TABLE IF EXISTS movie_country;

@@ -4,20 +4,20 @@ import com.luxoft.sdemenkov.movieland.dao.api.MovieDao;
 import com.luxoft.sdemenkov.movieland.dao.jdbc.impl.util.QueryBuilder;
 import com.luxoft.sdemenkov.movieland.dao.mapper.MovieRowMapper;
 import com.luxoft.sdemenkov.movieland.model.business.Movie;
+import com.luxoft.sdemenkov.movieland.model.business.Rate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 public class JdbcMovieDao implements MovieDao {
@@ -42,6 +42,8 @@ public class JdbcMovieDao implements MovieDao {
     private String updateMovieSQL;
     @Autowired
     private String searchByTitleSQL;
+    @Autowired
+    private String saveRateMovieSql;
 
     @Override
     public List<Movie> getAll() {
@@ -144,6 +146,12 @@ public class JdbcMovieDao implements MovieDao {
         List<Movie> movieList = namedParameterJdbcTemplate.query(searchByTitleSQLLimited, mapSqlParameterSource, MOVIE_ROW_MAPPER);
         log.debug("searchByTitle. movies {} were received with title like {}", movieList, title);
         return movieList;
+    }
+
+    @Override
+    public void rateMovies(Queue<Rate> rateQueue) {
+        SqlParameterSource[] sqlParameterSources = SqlParameterSourceUtils.createBatch(rateQueue.toArray());
+        namedParameterJdbcTemplate.batchUpdate(saveRateMovieSql, sqlParameterSources);
     }
 
 

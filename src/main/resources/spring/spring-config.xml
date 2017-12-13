@@ -9,7 +9,6 @@
     <import resource="query/genre-query-context.xml"/>
     <import resource="query/review-query-context.xml"/>
     <import resource="query/user-query-context.xml"/>
-    <import resource="query/rating-query-context.xml"/>
     <mvc:annotation-driven/>
 
     <context:component-scan base-package="com.luxoft.sdemenkov.movieland">
