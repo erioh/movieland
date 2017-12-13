@@ -1,6 +1,8 @@
 package com.luxoft.sdemenkov.movieland.model.business;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Movie {
@@ -15,9 +17,28 @@ public class Movie {
     private List<Country> countryList;
     private List<Genre> genreList;
     private List<Review> reviewList;
+    private int numberOfRates;
 
 
     public Movie() {
+    }
+
+    public Movie(Movie movie) {
+        id = movie.getId();
+        nameRussian = movie.getNameRussian();
+        nameNative = movie.getNameNative();
+        yearOfRelease = movie.getYearOfRelease();
+        description = movie.getDescription();
+        rating = movie.getRating();
+        price = movie.price;
+        picturePath = movie.getPicturePath();
+        numberOfRates = movie.numberOfRates;
+        countryList = new ArrayList<>();
+        countryList.addAll(movie.countryList);
+        genreList = new ArrayList<>();
+        genreList.addAll(movie.genreList);
+        reviewList = new ArrayList<>();
+        reviewList.addAll(movie.reviewList);
     }
 
     public int getId() {
@@ -100,6 +121,14 @@ public class Movie {
 
     public void setGenreList(List<Genre> genreList) {
         this.genreList = genreList;
+    }
+
+    public int getNumberOfRates() {
+        return numberOfRates;
+    }
+
+    public void setNumberOfRates(int numberOfRates) {
+        this.numberOfRates = numberOfRates;
     }
 
     @Override

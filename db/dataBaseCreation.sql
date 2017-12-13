@@ -325,3 +325,22 @@ CREATE TABLE `user_role` (
   PRIMARY KEY (`user_id`, `role_id`));
 
 insert into user_role (user_id, role_id) values (1,1);
+
+DROP PROCEDURE IF EXISTS `add_rating`;
+
+create procedure `add_rating` (in_movie_id INT, in_user_id, INT, in_rating double)
+begin
+declare is_movie_present, count_of_rates INT default 0;
+declare sum_of_rates DOUBLE default 0;
+
+select count(1) into is_movie_present from movie where movie_id = in_movie_id;
+IF count_of_rows != 0 THEN
+        DELETE from rating where movie_id = in_movie_id and user_id = in_rating_id;
+        insert into rating (movie_id, user_id, rating) values(in_movie_id, in_user_id, in_rating);
+        select sum(rating) into sum_of_rating, count(*) into count_of_rates from rating
+                where movie_id = in_movieId
+                group by movie_id;
+        update movie set rating = sum_of_rating/number_of_rates, number_of_rates = count_of_rates where movie_id = in_movie_id;
+        commit;
+END IF;
+end;

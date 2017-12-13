@@ -6,25 +6,25 @@
 
     <bean id="getMoviesByGenreIdSQL" class="java.lang.String">
         <constructor-arg value="select m.movie_id, m.name_russian, m.name_native,
-        m.year_of_release, m.description, m.rating, m.price, m.picture_path from movie m
+        m.year_of_release, m.description, m.rating, m.price, m.picture_path, m.number_of_rates from movie m
         inner join movie_genre mg on m.movie_id = mg.movie_id
         where mg.genre_id = ?"/>
     </bean>
     <bean id="getAllMoviesSQL" class="java.lang.String">
         <constructor-arg value="select m.movie_id, m.name_russian, m.name_native,
-        m.year_of_release, m.description, m.rating, m.price, m.picture_path from movie m"/>
+        m.year_of_release, m.description, m.rating, m.price, m.picture_path, m.number_of_rates from movie m"/>
     </bean>
     <bean id="getCountOfMoviesSQL" class="java.lang.String">
         <constructor-arg value="select count(*) from movie;"/>
     </bean>
     <bean id="getMovieByIdSQL" class="java.lang.String">
         <constructor-arg value="select m.movie_id, m.name_russian, m.name_native,
-        m.year_of_release, m.description, m.rating, m.price, m.picture_path from movie m
+        m.year_of_release, m.description, m.rating, m.price, m.picture_path, m.number_of_rates from movie m
         where m.movie_id in (:ids);"/>
     </bean>
     <bean id="saveMovieSQL" class="java.lang.String">
         <constructor-arg
-                value="insert into movie (name_Russian, name_Native, year_Of_Release, description, rating, price, picture_path) values (:nameRussian, :nameNative, :yearOfRelease, :description, :rating, :price, :picturePath);"/>
+                value="insert into movie (name_Russian, name_Native, year_Of_Release, description, rating, price, picture_path, number_of_rates) values (:nameRussian, :nameNative, :yearOfRelease, :description, :rating, :price, :picturePath, 0);"/>
     </bean>
     <bean id="updateMovieSQL" class="java.lang.String">
         <constructor-arg value="update movie set name_Russian = :nameRussian
@@ -38,10 +38,11 @@ where movie_id = :movieId;"/>
     </bean>
     <bean id="searchByTitleSQL" class="java.lang.String">
         <constructor-arg value="select m.movie_id, m.name_russian, m.name_native,
-        m.year_of_release, m.description, m.rating, m.price, m.picture_path from movie m
+        m.year_of_release, m.description, m.rating, m.price, m.picture_path, m.number_of_rates from movie m
         where lower(m.name_russian) like CONCAT('%', lower(:nameRussian), '%')
         or lower(m.name_native) like CONCAT('%',lower(:nameNative),'%');"/>
     </bean>
+
 
 
 </beans>
